@@ -41,8 +41,8 @@ def send_notification():
 
         name = "이무진"
         place = "신촌역 2번 출구"
-        showtime = "26/05/2022 01:25"
-        receiver = "01077362856"
+        showtime = "26/05/2022 22:00"
+        receiver = "01084366647"
         alert_timing = '1일 전'
         send_date = (showtime.split()[0]).split('/')
         year = send_date[2]
@@ -83,8 +83,8 @@ def send_notification():
                 "subject": "공연 알림",
                 "content": message,
                 "messages": [{"to": receiver}],
-                #"reserveTime": notification_time,
-                #"reserveTimeZone": "Asia/Seoul"
+                "reserveTime": notification_time,
+                "reserveTimeZone": "Asia/Seoul"
         }
 
         # body를 json으로 변환
