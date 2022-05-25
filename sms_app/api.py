@@ -41,9 +41,9 @@ def send_notification():
 
         name = "이무진"
         place = "신촌역 2번 출구"
-        showtime = "26/05/2022 22:00"
+        showtime = "25/05/2022 22:30"
         receiver = "01084366647"
-        alert_timing = '1일 전'
+        alert_timing = '30분 전'
         send_date = (showtime.split()[0]).split('/')
         year = send_date[2]
         month = send_date[1]
