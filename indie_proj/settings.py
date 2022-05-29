@@ -31,6 +31,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+     # The following apps are required:
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.naver',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.kakao',
+    # ... include the providers you want to enable:
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +53,8 @@ INSTALLED_APPS = [
     'map_app',
     'sms_app',
 ]
+
+SITE_ID = 1 #소셜로그인
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -125,3 +138,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#소셜로그인
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend', #기존 장고 인증 기능
+    'allauth.account.auth_backends.AuthenticationBackend', #추가한 소셜 로그인 기능
+]
+
+#소셜로그인
+LOGIN_REDIRECT_URL = '/' #로그인 후 이동할 페이지 

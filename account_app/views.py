@@ -4,3 +4,6 @@ from django.shortcuts import render
 
 def account(request):
     return render(request, 'account.html')
+
+def callback(requset):
+    return render(requset,'callback.html')
