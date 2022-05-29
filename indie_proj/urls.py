@@ -24,3 +24,4 @@ urlpatterns = [
     path('map/', include('map_app.urls')),
     path('sms/', include('sms_app.urls')),
 ]
+
