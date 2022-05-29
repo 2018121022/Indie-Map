@@ -4,7 +4,6 @@
   <head>
     <!-- Add the evo-calendar.css for styling -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.2/evo-calendar/css/evo-calendar.min.css"/>
-
   </head>
 
   <div id="evoCalendar"></div>
@@ -46,4 +45,16 @@
     }
   ]);
   </script>
+      <script>
+        function dp_menu(){
+            let click = document.getElementById("drop-content");
+            let clickable = document.getElementById("evoCalendar");
+            if(click.style.display === "none" || click.style.display === ""){
+                click.style.display = "inline-block";
+                clickable.style.zIndex = "0";
+            }else{
+                click.style.display = "none";
+            }
+        }
+    </script>
 {% endblock %}
