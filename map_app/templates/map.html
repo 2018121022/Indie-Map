@@ -4,9 +4,107 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>로그인 전 홈화면 지도</title>
 </head>
 <body>
-    <h1>지도</h1>
+    <h1>로그인 전 홈화면 지도</h1>
+    <!--지도를 담을 영역-->
+    <div id = "logout_map" style = "width:500px; height: 400px;"></div>
+    <!--지도 아래 공연 정보 리스트-->
+    <section id = "inform_list">
+        <p>오늘 공연 정보</p>
+    </section>    
+    <!--지도 api 불러오기-->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8692f5c3c759c152297171d014cffebe"></script>
+    
+    <!--지도를 생성해 영역에 담기-->
+    <script>
+        var container = document.getElementById('logout_map'); //지도를 담을 영역의 DOM 레퍼런스
+        var options = { //지도를 생성할 때 필요한 기본 옵션
+        center: new kakao.maps.LatLng(37.55534870467689, 126.93710965061135), //지도의 중심좌표: 신촌역
+        level: 4, //지도의 레벨(확대, 축소 정도. 숫자가 클수록 지도 축소)
+        draggable: false // 지도 이동 및 확대 축소 불가 
+        };
+
+        var logout_map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+        // 모든 공연 일반 마커 표시 
+        // all_positions: 마커의 이름과 공연 위치, 공연 소개 모음 
+        var all_positions = [
+            {
+                title: '이독수',  // 가수 이름으로
+                latlng: new kakao.maps.LatLng(37.555961261903036, 126.93688278758694),
+                message: "저의 첫 버스킹 많은 기대 바랍니다",
+                date: new Date(2022, 4, 29, 5, 0)
+            },
+            {
+                title: '유무진', 
+                latlng: new kakao.maps.LatLng(37.55765513907933, 126.93688701769658),
+                message: "오늘 신곡 '신호등' 공연 예정입니다!'",
+                date: new Date(2022, 4, 29, 5, 0)
+            },
+
+            {
+                title: 'MC 연세',
+                latlng: new kakao.maps.LatLng(37.55572667440016, 126.93627184712138),
+                message: "연세 버스킹!",
+                date: new Date(2022, 4, 29, 5, 0)
+            },
+
+            {
+                title: '라이온킹',
+                latlng: new kakao.maps.LatLng(37.55689796127638,126.9362538733116),
+                message: "밴드 공연입니다 구경오세요~",
+                date: new Date(2022, 4, 29, 5, 0)
+            },
+            {
+                title: '냠냐', 
+                latlng: new kakao.maps.LatLng(37.484022123688185, 126.78253836856217),
+                message: "수박 먹고싶다",
+                date: new Date(2022, 4, 29, 5, 0)
+            },
+            {
+                title: '부천맨', 
+                latlng: new kakao.maps.LatLng(37.48335519999797, 126.78244137024062),
+                message: '부천 다이내믹 시티',
+                date: new Date(2022, 4, 29, 5, 0)
+            },
+            {
+                title: '돈까스', 
+                latlng: new kakao.maps.LatLng(37.48517619625516, 126.78296467837502),
+                message: '돈까스 먹고싶다',
+                date: new Date(2022, 4, 29, 5, 0)
+            },
+
+        ];
+        
+        var today = new Date(); 
+        
+        // 오늘 공연(date)만 마커 표시 
+        for (var i = 0; i < all_positions.length; i ++) {
+            if (today.getFullYear() == all_positions[i].date.getFullYear() && 
+            today.getMonth() == all_positions[i].date.getMonth() && today.getDate() == all_positions[i].date.getDate())
+                // 마커 생성
+                var marker = new kakao.maps.Marker({
+                    map: logout_map, // 마커를 표시할 지도
+                    position: all_positions[i].latlng, // 마커를 표시할 위치
+                    title : all_positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시
+                });
+        } 
+        
+        // 공연 정보 리스트 띄우기  
+        // 오늘 공연 정보만 뜨게 코드 수정하기 
+        for (var i = 0; i < all_positions.length; i ++){
+            var live_inform = document.createTextNode("공연 이름: " + all_positions[i].title + 
+            " / 공연 소개: " + all_positions[i].message + 
+            " / 공연 시간: " + all_positions[i].date.toString() + " / ");
+            live_inform.id = all_positions[i].title;
+            document.getElementById('inform_list').appendChild(live_inform);
+        }
+
+    </script>
+    <br>
+    <button><a href = "{%url 'login_map' %}">로그인 후 홈화면</a></button>
+    
 </body>
 </html>
