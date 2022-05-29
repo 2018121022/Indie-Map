@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'account_app',
     'map_app',
     'sms_app',
+    'mypage_app',
 ]
 
 SITE_ID = 1 #소셜로그인

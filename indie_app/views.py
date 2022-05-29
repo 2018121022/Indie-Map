@@ -10,34 +10,10 @@ def home(request):
     return render(request, 'home.html')
 
 @login_required(login_url='login')
-def mypage_1(request):
-    return render(request, 'mypage_1.html')
-
-@login_required(login_url='login')
-def mypage_2(request):
-    return render(request, 'mypage_2.html')
-
-@login_required(login_url='login')
-def mypage_3(request):
-    return render(request, 'mypage_3.html')
-
-@login_required(login_url='login')
 def transition(request):
     user = request.user
     user.status = 1
     user.save()
-    return render(request, 'musicpage_1.html')
-
-@login_required(login_url='login')
-def musicpage_3(request):
-    return render(request, 'musicpage_3.html')
-
-@login_required(login_url='login')
-def musicpage_2(request):
-    return render(request, 'musicpage_2.html')
-
-@login_required(login_url='login')
-def musicpage_1(request):
     return render(request, 'musicpage_1.html')
 
 @login_required(login_url='login')
@@ -100,5 +76,6 @@ def comment(request, community_id):
         finished_form.save()
     return redirect('detail', community_id)
 
+@login_required(login_url='login')
 def calendar(request):
     return render(request, 'calendar.html')
