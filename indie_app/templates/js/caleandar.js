@@ -3,6 +3,7 @@
   Version: 0.1.0;
   (◠‿◠✿)
 */
+
 var Calendar = function(model, options, date){
   // Default Values
   this.Options = {

@@ -2,15 +2,47 @@
 
 {% block content%}
   <head>
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
-    <link rel="stylesheet" href="css/demo.css"/>
-    <link rel="stylesheet" href="css/theme1.css"/>
+    <!-- Add the evo-calendar.css for styling -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.2/evo-calendar/css/evo-calendar.min.css"/>
   </head>
 
-    <div id="caleandar">
+  <div id="evoCalendar"></div>
 
-    </div>
+  <!-- Add jQuery library (required) -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
 
-    <script type="text/javascript" src="js/caleandar.js"></script>
-    <script type="text/javascript" src="js/demo.js"></script>
+  <!-- Add the evo-calendar.js for functionality -->
+  <script src="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.2/evo-calendar/js/evo-calendar.min.js"></script>
+
+  <script>
+    $("#evoCalendar").evoCalendar({
+    calendarEvents: [
+      {
+        id: '1', // Event's ID (required)
+        name: "이무진", // Event name (required)
+        date: "May/1/2022", // Event date (required)
+        description: "홍대입구역 1번 출구 20:30", // Event description (optional)
+        type: "event" // Event type (required - USE event!!)
+      },
+      {
+        id: '2', // Event's ID (required)
+        name: "이독수", // Event name (required)
+        badge: "즐겨찾기", // Event badge (optional)
+        date: "May/13/2022", // Date range
+        description: "신촌역 1번 출구 20:30", // Event description (optional)
+        type: "event", // Event type (required - USE event!!)
+        color: "#63d867" // Event custom color (optional)
+      }
+    ]
+  });
+  $("#evoCalendar").evoCalendar('addCalendarEvent', [
+    {
+      id: '3', // Event's ID (required)
+      name: "잔나비", // Event name (required)
+      date: "May/15/2022", // Date range
+      description: "신촌 명품 거리 20:30", // Event description (optional)
+      type: "event" // Event type (required - USE event!!)
+    }
+  ]);
+  </script>
 {% endblock %}

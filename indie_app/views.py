@@ -76,6 +76,6 @@ def comment(request, community_id):
         finished_form.save()
     return redirect('detail', community_id)
 
-@login_required(login_url='login')
+
 def calendar(request):
     return render(request, 'calendar.html')
