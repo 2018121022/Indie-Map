@@ -10,9 +10,18 @@
         </div>
         <div style="display: flex;margin:auto 4% auto 0;"><img src="{% static 'search.png' %}"></div>
     </div>
-    <img src="{% static '가짜_지도.png' %}" width=100% height="500px">
-    <button><a href="{% url 'map' %}">map</a></button>
-    <button><a href="{% url 'account'%}">account</a></button>
-    <button><a href="{% url 'sms'%}">sms</a></button>
+
+    <div style="display:flex;flex-wrap: wrap;">
+        {% for musician in musician_list %}
+        <div style="width:80px;margin: 20px 0 20px 20px;">
+            {% if musician.image %}
+            <img src="{{musician.image.url}}" alt="" style="width:80px;height:80px">
+            {% else %}
+            <img src="{% static 'profile_color.png' %}" alt="" style="width:80px;height:80px">
+            {% endif %}
+            <div style="font-size:25px;text-align: center;">{{musician.name}}</div>    
+        </div>
+        {% endfor %}
+    </div>
 
 {% endblock %}
