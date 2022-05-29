@@ -32,59 +32,72 @@
         // all_positions: 마커의 이름과 공연 위치, 공연 소개 모음 
         var all_positions = [
             {
-                title: '이독수',  // 가수 이름으로 
+                title: '이독수',  // 가수 이름으로
                 latlng: new kakao.maps.LatLng(37.555961261903036, 126.93688278758694),
-                message: "저의 첫 버스킹 많은 기대 바랍니다"
+                message: "저의 첫 버스킹 많은 기대 바랍니다",
+                date: new Date(2022, 4, 29, 5, 0)
             },
             {
                 title: '유무진', 
                 latlng: new kakao.maps.LatLng(37.55765513907933, 126.93688701769658),
-                message: "오늘 신곡 '신호등' 공연 예정입니다!'"
+                message: "오늘 신곡 '신호등' 공연 예정입니다!'",
+                date: new Date(2022, 4, 29, 5, 0)
             },
 
             {
                 title: 'MC 연세',
                 latlng: new kakao.maps.LatLng(37.55572667440016, 126.93627184712138),
-                message: "연세 버스킹!"
+                message: "연세 버스킹!",
+                date: new Date(2022, 4, 29, 5, 0)
             },
 
             {
                 title: '라이온킹',
                 latlng: new kakao.maps.LatLng(37.55689796127638,126.9362538733116),
-                message: "밴드 공연입니다 구경오세요~"
+                message: "밴드 공연입니다 구경오세요~",
+                date: new Date(2022, 4, 29, 5, 0)
             },
             {
                 title: '냠냐', 
                 latlng: new kakao.maps.LatLng(37.484022123688185, 126.78253836856217),
-                message: "수박 먹고싶다"
+                message: "수박 먹고싶다",
+                date: new Date(2022, 4, 29, 5, 0)
             },
             {
                 title: '부천맨', 
                 latlng: new kakao.maps.LatLng(37.48335519999797, 126.78244137024062),
-                message: '부천 다이내믹 시티'
+                message: '부천 다이내믹 시티',
+                date: new Date(2022, 4, 29, 5, 0)
             },
             {
                 title: '돈까스', 
                 latlng: new kakao.maps.LatLng(37.48517619625516, 126.78296467837502),
-                message: '돈까스 먹고싶다'
+                message: '돈까스 먹고싶다',
+                date: new Date(2022, 4, 29, 5, 0)
             },
 
         ];
         
-
+        var today = new Date(); 
+        
+        // 오늘 공연(date)만 마커 표시 
         for (var i = 0; i < all_positions.length; i ++) {
-
-            // 마커 생성
-            var marker = new kakao.maps.Marker({
-                map: logout_map, // 마커를 표시할 지도
-                position: all_positions[i].latlng, // 마커를 표시할 위치
-                title : all_positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시
-            });
+            if (today.getFullYear() == all_positions[i].date.getFullYear() && 
+            today.getMonth() == all_positions[i].date.getMonth() && today.getDate() == all_positions[i].date.getDate())
+                // 마커 생성
+                var marker = new kakao.maps.Marker({
+                    map: logout_map, // 마커를 표시할 지도
+                    position: all_positions[i].latlng, // 마커를 표시할 위치
+                    title : all_positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시
+                });
         } 
         
         // 공연 정보 리스트 띄우기  
+        // 오늘 공연 정보만 뜨게 코드 수정하기 
         for (var i = 0; i < all_positions.length; i ++){
-            var live_inform = document.createTextNode("공연 이름: " + all_positions[i].title + " / 공연 소개: " + all_positions[i].message + " / " );
+            var live_inform = document.createTextNode("공연 이름: " + all_positions[i].title + 
+            " / 공연 소개: " + all_positions[i].message + 
+            " / 공연 시간: " + all_positions[i].date.toString() + " / ");
             live_inform.id = all_positions[i].title;
             document.getElementById('inform_list').appendChild(live_inform);
         }

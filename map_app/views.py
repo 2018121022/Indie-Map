@@ -10,3 +10,6 @@ def login_map(request):
 
 def each_map(request):
     return render(request, 'each_map.html')
+
+def concert_input(request):
+    return render(request, 'concert_input.html')
