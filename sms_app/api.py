@@ -1,4 +1,7 @@
 from django.http import HttpResponse
+from rest_framework.views import APIView
+from rest_framework import status
+from rest_framework.response import Response
 from .keys import (
                             serviceId,
                             AUTH_SECRET_KEY,
@@ -38,15 +41,19 @@ def send_notification():
 
         name = "이무진"
         place = "신촌역 2번 출구"
-        showtime = "25/05/2022 22:30"
+        showtime = "28/05/2022 22:30"
         receiver = "01084366647"
-        alert_timing = '30분 전'
+        #alert_timing = '1일 전'
         send_date = (showtime.split()[0]).split('/')
         year = send_date[2]
         month = send_date[1]
         day = send_date[0]
         send_time = showtime.split()[1]
 
+        notification_time = year + "-" + month + "-" + str(day) + " " + "09:00"
+        message = name + "님 오늘 " + showtime + " " + place + "에서 라이브 공연할 예정입니다!"
+
+        '''
         if alert_timing == '1일 전':
             day = int(day) - 1
             notification_time = year + "-" + month + "-" + str(day) + " " + send_time
@@ -72,7 +79,7 @@ def send_notification():
             send_time = hour + ":" + minute
             notification_time = year + "-" + month + "-" + str(day) + " " + send_time
             message = name + "님 30분 후 " + showtime + " " + place + "에서 라이브 공연할 예정입니다!"
-        
+        '''
         body = {
                 "type": "SMS",
                 "contentType": "COMM",
