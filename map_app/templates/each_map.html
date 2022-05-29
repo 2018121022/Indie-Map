@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id = "musician_name"></h1>
+    <!--지도를 담을 영역-->
+    <div id = "each_map" style = "width:500px; height: 400px;"></div>
+    <!--지도 api 불러오기-->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8692f5c3c759c152297171d014cffebe"></script>
+    
+    <!--지도를 생성해 영역에 담기-->
+    <script>
+        var container = document.getElementById('each_map'); //지도를 담을 영역의 DOM 레퍼런스
+        var options = { //지도를 생성할 때 필요한 기본 옵션
+	    center: new kakao.maps.LatLng(37.55534870467689, 126.93710965061135), //지도의 중심좌표: 디폴트로 신촌역 -> 마커 표시 후 마커 위치를 중심점으로 바꿈
+	    level: 3 //지도의 레벨(확대, 축소 정도)
+        };
+
+        var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+        // 마커 위치 지정
+        var markerPosition  = {
+                title: '이독수',  
+                latlng: new kakao.maps.LatLng(37.555961261903036, 126.93688278758694),
+                message: "저의 첫 버스킹 많은 기대 바랍니다"
+            };
+
+        // 마커를 생성
+        var marker = new kakao.maps.Marker({
+            position: markerPosition.latlng,
+            title: markerPosition.title,
+        });
+
+        // 마커가 지도 위에 표시되도록 설정
+        marker.setMap(map);
+        // 마커 위치를 지도의 중심점으로 설정 
+        map.setCenter(markerPosition.latlng);
+        // 공연 가수 이름(title) 띄우기
+        document.getElementById('musician_name').innerHTML = markerPosition.title;
+    </script>
+</body>
+</html>
