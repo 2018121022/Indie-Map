@@ -17,4 +17,5 @@ urlpatterns = [
     path('search/', search, name="search"),
     path('musician_list/', musician_list, name="musician_list"),
     path('comment/<int:community_id>/', comment, name="comment"),
+    path('calendar/', calendar, name="calendar"),
 ]

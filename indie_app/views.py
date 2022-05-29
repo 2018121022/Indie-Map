@@ -75,6 +75,7 @@ def like(request, community_id):
         like_b.save()
     return redirect('detail', community_id)
 
+
 @login_required(login_url='login')
 def search(request):
     query = request.GET['query']
@@ -98,3 +99,6 @@ def comment(request, community_id):
         finished_form.post = get_object_or_404(Community, pk=community_id)
         finished_form.save()
     return redirect('detail', community_id)
+
+def calendar(request):
+    return render(request, 'calendar.html')
