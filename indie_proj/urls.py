@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,5 +25,4 @@ urlpatterns = [
     path('account/', include('account_app.urls')), #
     path('map/', include('map_app.urls')),
     path('sms/', include('sms_app.urls')),
-]
-
+] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<style>
+    #profile_img {
+        text-align: center;
+        margin-top: 30px;
+    }
+    
+    #profile_name {
+        display: flex;
+        margin-left:46%;
+    }
+</style>
+
+<div id="profile_img">
+    <img src="{% static 'profile_color.png' %}" alt="menu" width="100px" height="100px">
+</div>
+
+<div id="profile_name">
+    <div style="margin-right:10px;">{{user.name}}</div>
+    <a href="{% url 'transition' %}">
+        <img src="{% static 'no_check.png'%}" alt="no_check" width="20px" height="20px">
+    </a>
+</div>
+<a href="" ><button style="margin-top:20px;">프로필 편집</button></a>
+<br>
+<div style="display:flex; border-width: 1px 0 0 0; border-style: solid; margin-top: 20px;">
+    <div style="flex-grow:1;text-align: center; border-width: 0 1px 1px 0; border-style: solid;">
+        <a href="{% url 'mypage_1' %}">게시판</a>
+    </div>
+    <div style="flex-grow:1;text-align: center;">달력</div>
+    <div style="flex-grow:1;text-align: center; border-width: 0 0 1px 1px; border-style: solid;">
+        <a href="{% url 'mypage_3' %}">즐겨찾기</a>
+    </div>
+
+</div>
+<br>
+<a href="{% url 'logout' %}"><button>로그아웃</button></a>
+{% endblock %}

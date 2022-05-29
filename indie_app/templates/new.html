@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static%}
+
+<style>
+    section {
+        text-align: center;
+    }
+</style>
+
+<script type="text/javascript">
+    function readImage(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            
+            reader.onload = (e) => {
+                const previewImage = document.getElementById('previewImage');
+                previewImage.src = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    document.getElementById('input-file').addEventListener('change', (e) => {
+        readImage(e.target);
+    })
+</script>
+
+<section>
+    <form action="{% url 'new' %}" method="POST" enctype="multipart/form-data" style="margin-top:30px;">
+        {% csrf_token %}
+        <div class = "contentbox"  wrap = "hard" style = "display:flex;justify-content:center;flex-direction:row;margin-top:3vh;font-size: 17px;font-family: Nanum Gothic;">
+            <textarea placeholder="내용을 입력해주세요." name="content" cols="40" rows="10" required="" id="id_내용" style = "height: 17.5vh;width:90%;display:flex;border-radius: 10px;background: #f5f5f5;border:0px;font-size: 15px;font-family: Nanum Gothic;"></textarea>
+        </div>
+        <div class = "imagefilebox" style = "margin-top:3vh;height: 15vh; width:99%; border: 1px solid; border-color: #d3d3d3 white;align-items: center;
+        display: flex;flex-direction: row; justify-content: space-around;">
+            <div class = "image_file">
+                <label className="input-file-button" for="input-file" >
+                    <img src="{%static 'preview.png'%}" id="previewImage" style="height: 80px; width: 100px;margin-top:8px; margin-bottom: 5px;border-radius: 10px;">
+                </label>
+                <input type="file" class="file" id="input-file" name="photo" style="display:none" onchange="readImage(this);">
+            </div>
+        </div>
+        <div class = "button" style="display:flex;justify-content: center;margin-top:3vh;">
+            <button type="submit" style="width: 274px;height: 41px;border-radius: 10px;background: #f6b955;border:0px;font-size: 15.5px;font-family: Nanum Gothic;color:white;font-weight: bold;">작성하기</button>
+        </div>    
+    </form>
+    <a href="{% url 'home' %}">
+        <button style="margin-top:10px;">홈으로</button>
+    </a>
+</section>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+    <div style="display:flex; background-color: rgb(193, 255, 255);height:45px;justify-content: space-around;">
+        <div style="font-family: 'Noto Sans KR', sans-serif;display: flex;margin:auto 0 auto 4%;">뮤지션 검색</div>
+        <div style="font-family: 'Noto Sans KR', sans-serif;display: flex;margin:auto 0; width: 50%;">
+            <input type="text" style="border-width: 0; height: 20px; border-radius: 10px;">
+        </div>
+        <div style="display: flex;margin:auto 4% auto 0;"><img src="{% static 'search.png' %}"></div>
+    </div>
+
+    {{query}}
+
+{% endblock %}
