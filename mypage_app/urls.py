@@ -1,6 +1,4 @@
 from django.urls import path
-
-from indie_app.views import mypage_1
 from .views import *
 
 urlpatterns = [
