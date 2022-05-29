@@ -19,7 +19,9 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('indie_app.urls')),
-    path('account/', include('account_app.urls')),
+    path('accounts/', include('allauth.urls')), #소셜로그인
+    path('account/', include('account_app.urls')), #
     path('map/', include('map_app.urls')),
     path('sms/', include('sms_app.urls')),
 ]
+
