@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 
 from django.http import JsonResponse
-from .api import send_notification
+from .api import *
 from .keys import (
                             serviceId,
                             AUTH_SECRET_KEY,
@@ -16,6 +16,7 @@ def sms(request):
     return render(request, 'sms.html')
     
 def alarm_sms(request):
+    if (user.alarm == 1):
         try:
             #data = json.loads(request.body)
             send_notification()

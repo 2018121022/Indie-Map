@@ -2,6 +2,7 @@
 
 {% block content %}
 {% load static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
     #profile_img {
         text-align: center;
@@ -10,29 +11,110 @@
     
     #profile_name {
         display: flex;
-        margin-left:46%;
+        justify-content: center;
+        font-size: 20px;
+    }
+
+    #social_media {
+        margin-left: 30%;
+    }
+
+    #description {
+        margin: 5px;
+        text-align: center;
+    }
+
+    #description span {
+        border-bottom: 1px solid grey ;
+    }
+    .edit-button {
+        font-size: inherit;
+        font-family: inherit;
+        margin:10px 0px 3px 45px; 
+        width: 300px;
+        background-color: lightgray;
+        border: 2px solid gray;
+        border-radius: 0.75em;
+        transform-style: preserve-3d;
+    }
+
+    .logout-button {
+        font-size: inherit;
+        font-family: inherit;
+        margin-top:20px; 
+        margin-left:10%;
+        width: 300px;
+        position: fixed;
+        bottom: 30px;
+        background-color: lightpink;
+        border-radius: 0.75em;
+        transform-style: preserve-3d;
+    }
+    .bar {
+        flex-grow:1;
+        text-align: center;
+        padding: 5px 0 5px 0;
+    }
+    .fa {
+        padding: 5px;
+        font-size: 20px;
+        width: 20px;
+        text-align: center;
+        text-decoration: none;
+        margin: 2px 7px 3px 0;
+        border-radius: 50%;
+    }
+    .fa-youtube {
+        background: #bb0000;
+        color: white;
+    }
+
+    .fa-instagram {
+        background: #d63197;
+        color: white;
     }
 </style>
 
 <div id="profile_img">
-    <img src="{% static 'profile_color.png' %}" alt="menu" width="100px" height="100px">
+    {% if user.image %}
+    <img src="{{user.image.url}}" alt="profile" width="100px" height="100px">
+    {% else %}
+    <img src="{% static 'profile_color.png' %}" alt="profile" width="100px" height="100px">
+    {% endif %}
 </div>
 
 <div id="profile_name">
     <div style="margin-right:10px;">{{user.name}}</div>
     <img src="{% static 'yes_check.png'%}" alt="yes_check" width="20px" height="20px">
 </div>
-<a href="" ><button style="margin-top:20px;">프로필 편집</button></a>
+
+<div id="social_media">
+    {% if user.insta %}
+    <a href="#" id="instagram" class="fa fa-instagram"></a>{{user.insta}}
+    {% endif %}
+    <br>
+    {% if user.youtube %}
+    <a href="#" id="youtube" class="fa fa-youtube"></a>{{user.youtube}}
+    {% endif %}
+</div>
+
+<div id="description">
+    {% if user.intro %}
+    <span>{{user.intro}}</span>
+    {% endif %}
+</div>
+<a href="" ><button class="edit-button">프로필 편집</button></a>
 <br>
+<div style="text-align:center">Highlight</div>
 <div style="display:flex; border-width: 1px 0 0 0; border-style: solid; margin-top: 20px;">
-    <div style="flex-grow:1;text-align: center; border-width: 0 1px 1px 0; border-style: solid;">
-        <a href="{% url 'musicpage_1' %}">게시판</a>
+    <div class="bar" style="border-width: 0 1px 1px 1px; border-style: solid;">
+        <a href="{% url 'musicpage_1' %}"><img src="{% static 'megaphone.png'%}" alt="posts" width="30px" height="30px"></a>
     </div>
-    <div style="flex-grow:1;text-align: center; border-width: 0 1px 1px 0; border-style: solid;">
-        <a href="{% url 'musicpage_2' %}">달력</a>
+    <div class="bar" style="border-width: 0 1px 1px 1px; border-style: solid;">
+        <a href="{% url 'musicpage_2' %}"><img src="{% static 'calendar.png'%}" alt="calendar" width="30px" height="30px"></a>
     </div>
-    <div style="flex-grow:1;text-align: center;">후기</div>
+    <div class="bar"><img src="{% static 'review.png'%}" alt="review" width="30px" height="30px"></div>
 </div>
 <br>
-<a href="{% url 'logout' %}"><button>로그아웃</button></a>
+<a href="{% url 'logout' %}"><button class="logout-button" style="position:fixed;">로그아웃</button></a>
 {% endblock %}
