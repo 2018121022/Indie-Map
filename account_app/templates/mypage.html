@@ -5,7 +5,6 @@
 <style>
     #profile_img {
         text-align: center;
-        margin-top: 30px;
     }
     
     #profile_name {
@@ -14,7 +13,27 @@
         margin-top: 5px;
     }
 </style>
+
+{% if request.user == person %}
+    <div id="profile_img" style="margin-top:30px;">
+{% else %}
+    {% if user in person.follower.all %}
+    <a href="{% url 'follow' person.id %}">
+    <div style="margin-left:85%; margin-top:15px;">
+        <img src="{% static 'full_star.png' %}" width="30px" height="30px">
+    </div>
+    </a>
+    {% else %}
+    <a href="{% url 'follow' person.id %}">
+    <div style="margin-left:85%; margin-top:15px;">
+        <img src="{% static 'blank_star.png' %}" width="30px" height="30px">
+    </div>
+    </a>
+    {% endif %}
+
 <div id="profile_img">
+{% endif %}
+
     {% if person.image %}
     <img src="{{person.image.url}}" alt="profile" width="100px" height="100px" style="object-fit:cover;border-radius: 100px;">
     {% else %}
@@ -66,17 +85,37 @@
 </a>
 
 <div style="display:flex; border-width: 1px 0 0 0; border-style: solid;">
-    <div style="flex-grow:1;text-align: center;">게시판</div>
+    <div style="flex-grow:1;text-align: center; border-width: 0 0 1px 0; border-style: solid;">게시판</div>
     <div style="flex-grow:1;text-align: center; border-width: 0 1px 1px 1px; border-style: solid;">
         달력
     </div>
-    <div style="flex-grow:1;text-align: center; border-width: 0 0 1px 0; border-style: solid;">
+    <div style="flex-grow:1;text-align: center;">
         즐겨찾기
     </div>
     <div style="flex-grow:1;text-align: center; border-width: 0 0 1px 1px; border-style: solid;">
         후기</div>
 </div>
-<br>
+
+<div style="display:flex; flex-direction:column; margin-left: 35%; margin-top:30px; justify-content: center;">
+{% if request.user == person %}
+    {% for person in people %}
+        {% if request.user in person.follower.all %}
+            {% if person.image %}
+            <img src="{{person.image.url}}" alt="profile" width="100px" height="100px" style="object-fit:cover;border-radius: 100px;">
+            {% else %}
+            <img src="{% static 'profile_color.png' %}" alt="profile" width="100px" height="100px">
+            {% endif %}
+            <div>{{person.name}}</div>
+            <div>{{person.intro}}</div>
+        {% else %}
+        {% endif %}
+    {% endfor %}
+{% else %}
+{% endif %}
+</div>
+
+
+
 <a href="{% url 'account_logout' %}" style="display:flex;justify-content: center;">
     <button class="yellow_button" style="font-size:14px; display:flex; justify-content:center; margin: 50px auto; padding-top:7px;width:80px;height:33px;background-color: rgb(145, 144, 144);">로그아웃</button>
 </a>

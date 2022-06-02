@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
+from .models import User
 
 # Create your views here.
 
@@ -12,7 +13,8 @@ def userpage(request):
 @login_required(login_url='/accounts/naver/login/')
 def mypage(request, user_id):
     person = get_object_or_404(get_user_model(), id=user_id)
-    return render(request, 'mypage.html', {'person' : person})
+    people = User.objects.all()
+    return render(request, 'mypage.html', {'person' : person, 'people': people})
 
 @login_required(login_url='/accounts/naver/login/')
 def transition(request):
@@ -42,7 +44,16 @@ def edit(request):
             user.save()
         return redirect('mypage', user.id)
 
-
+@login_required(login_url='/accounts/naver/login/')
+def follow(request, user_id):
+    person = get_object_or_404(get_user_model(), id=user_id)
+    if request.user in person.follower.all():
+        person.follower.remove(request.user)
+        person.save()
+    else:
+        person.follower.add(request.user)
+        person.save()
+    return redirect('mypage', user_id)
 
 from allauth.socialaccount.models import SocialAccount
 

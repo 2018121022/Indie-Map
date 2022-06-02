@@ -16,7 +16,5 @@ class User(AbstractUser):
     insta = models.CharField(max_length=200, null=True)
     youtube = models.CharField(max_length=200, null=True)
     image = models.ImageField(blank = True, null = True)
+    follower = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="followers", blank=True)
 
-class Mypage(models.Model):
-    post = models.ForeignKey(User, on_delete = models.CASCADE)
-    scrap = models.ManyToManyField(User, related_name = "scraps", blank = True)

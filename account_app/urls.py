@@ -6,4 +6,5 @@ urlpatterns = [
     path('mypage/<int:user_id>', mypage, name="mypage"),
     path('transition/', transition, name="transition"),
     path('edit/', edit, name="edit"),
+    path('scrap/<int:user_id>', follow, name="follow"),
 ]
