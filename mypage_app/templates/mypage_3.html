@@ -14,6 +14,7 @@
         font-size: 20px;
     }
 
+
     .edit-button {
         font-size: inherit;
         font-family: inherit;
@@ -70,6 +71,27 @@
     </div>
     <div class="bar"><img src="{% static 'musician.png'%}" alt="review" width="30px" height="30px"></div>
 </div>
-<br>
+
+<section style="padding-top: 5px; padding-bottom: 80px;">
+    <a href=#>
+    <div id="content_index" style="display:flex; padding: 15px; border-bottom: solid 1px grey;">
+        <div>
+        {% if user.image %}
+        <img src="{{user.image.url}}" alt="profile" style="width:40px;height:40px;margin: 2px;">
+        {% else %}
+        <img src="{% static 'profile_color.png' %}" alt="profile" style="width:40px;height:40px;margin: 2px;">
+        {% endif %}
+        </div>
+        <div>
+            <div style="align-self: center; padding:0 0 5px 10px;margin: 2px; font-weight: bold; font-size: large;">{{user.name}}</div>
+            <div style="align-self: center; padding-left: 10px;margin: 2px;">{{user.intro}}</div>
+        </div>
+        
+        <div>
+            <img src = "{%static 'star.png'%}" alt="" width="30px" height="30px">
+        </div>
+    </div>
+    </a>
+</section>
 <a href="{% url 'logout' %}"><button class="logout-button">로그아웃</button></a>
 {% endblock %}

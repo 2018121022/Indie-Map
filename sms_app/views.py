@@ -16,7 +16,7 @@ def sms(request):
     return render(request, 'sms.html')
     
 def alarm_sms(request):
-    if (user.alarm == 1):
+    #if (user.alarm == 1):
         try:
             #data = json.loads(request.body)
             send_notification()
