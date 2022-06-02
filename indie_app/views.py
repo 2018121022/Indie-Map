@@ -56,7 +56,7 @@ def search(request):
 
 @login_required(login_url='/accounts/naver/login/')
 def musician_list(request):
-    musician_list = User.objects.filter(status__contains=1)
+    musician_list = User.objects.filter(status__contains=1).order_by("?")
     return render(request, 'musician_list.html', {'musician_list': musician_list})
 
 @login_required(login_url='/accounts/naver/login/')

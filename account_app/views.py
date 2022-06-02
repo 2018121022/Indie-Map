@@ -59,5 +59,4 @@ from allauth.socialaccount.models import SocialAccount
 
 def callback(request):
     social_user = SocialAccount.objects.all()
-    {{social_user.extra_data.mobile}}
     return render(request, 'callback.html', {'social_user' : social_user})
