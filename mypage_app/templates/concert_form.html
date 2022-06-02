@@ -11,11 +11,6 @@
 
     <div>공연 날짜: <input type="date" name="date" id="date"></div><br>
     <div>공연 시간: <input type="time" name="time" id="time"></div><br>
-
-    <div>
-        <label for="place">공연 장소 주소: </label>
-        <input type="text" name="place" id="place">
-    </div><br>
     
     <div id = "search_map" style = "width:400px; height: 300px;"></div><br>
     <div id = "click_address"></div>
@@ -56,29 +51,6 @@
         geocoder.coord2Address(latlng.getLng(), latlng.getLat(), callback);            
     });
 
-
-    // 2. position에서 입력한 주소를 위도 경도 값으로 변환해 서버에 보내기 
-    var concert_form = document.concert_form;
-    var position = concert_form.position.value;
-
-    // 주소-좌표 변환 객체 생성
-    var geocoder = new kakao.maps.services.Geocoder();
-
-    // 주소 검색-정확한 주소여야 한다 
-    geocoder.addressSearch("서울 서대문구 창천동 57-18", function(result, status) {
-    
-     // 정상적으로 검색이 완료됐으면 
-     if (status === kakao.maps.services.Status.OK) {
-        var latitude = result[0].y;
-        var longitude = result[0].x;
-        // var coords = new kakao.maps.LatLng(result[0].y, result[0].x); // 위도 경도 좌표 
-        concert_form.latitude.value = latitude;
-        concert_form.longitude.value = longitude;
-    } 
-    }); 
-    
-        
-    
     
 </script>
 
