@@ -1,15 +1,17 @@
 from django.shortcuts import render
+from indie_app.models import Concert
+from datetime import date # import 필요 
 
-# Create your views here.
 
 def map(request):
-    return render(request, 'map.html')
+    # dateField가 오늘 날짜인 공연만 전송 
+    concerts = Concert.objects.filter(date__range=[date.today(), date.today()]).values().all()    
+    return render(request, 'map.html', {'concerts': concerts})
 
 def login_map(request):
-    return render(request, 'login_map.html')
+    concerts = Concert.objects.filter(date__range=[date.today(), date.today()]).values().all()
+    return render(request, 'login_map.html', {'concerts': concerts})
 
 def each_map(request):
     return render(request, 'each_map.html')
 
-def concert_input(request):
-    return render(request, 'concert_input.html')

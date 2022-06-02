@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>공연 등록</h1>
+<br>
+<form action = "{% url 'concert_create' %}" method="POST" name="concert_form"> 
+    {% csrf_token %} <!--보안문제 해결-->
+    <div>
+        <label for="introduce">공연 소개: </label><br/>
+        <textarea name="introduce" id="introduce" cols="30" rows="10"></textarea>
+    </div><br>
+
+    <div>공연 날짜: <input type="date" name="date" id="date"></div><br>
+    <div>공연 시간: <input type="time" name="time" id="time"></div><br>
+
+    <div>
+        <label for="place">공연 장소 주소: </label>
+        <input type="text" name="place" id="place">
+    </div><br>
+    
+    <div id = "search_map" style = "width:400px; height: 300px;"></div><br>
+    <div id = "click_address"></div>
+    <br>
+    <input type="hidden" name="latitude" id="latitude">
+    <input type="hidden" name="longitude" id="longitude">
+    <input type="submit" value="공연 등록">
+</form>
+
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8692f5c3c759c152297171d014cffebe&libraries=services"></script>        
+<script>
+    var mapContainer = document.getElementById('search_map'), // 지도를 표시할 div 
+        mapOption = {
+        center: new kakao.maps.LatLng(37.55534870467689, 126.93710965061135), // 지도의 중심좌표: 신촌역
+        level: 1 // 지도의 확대 레벨
+    };    
+    var search_map = new kakao.maps.Map(mapContainer, mapOption); 
+
+    var search_marker = new kakao.maps.Marker();
+
+    // 1. 지도에서 위치 지정
+    // 지도 내 마커 표시가 안된다 (왜지) 
+    kakao.maps.event.addListener(search_map, 'click', function(mouseEvent) {
+
+        // 클릭 지점 위도경도 반환 -> form에 넣기
+        var latlng = mouseEvent.latLng;
+        var concert_form = document.concert_form;
+        concert_form.latitude.value = latlng.getLat();
+        concert_form.longitude.value = latlng.getLng();
+        
+        // 지도 아래에 클릭한 위치의 주소 표시 
+        var geocoder = new kakao.maps.services.Geocoder();
+        var callback = function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                document.getElementById("click_address").innerText = result[0].address.address_name;                    
+        }};
+        geocoder.coord2Address(latlng.getLng(), latlng.getLat(), callback);            
+    });
+
+
+    // 2. position에서 입력한 주소를 위도 경도 값으로 변환해 서버에 보내기 
+    var concert_form = document.concert_form;
+    var position = concert_form.position.value;
+
+    // 주소-좌표 변환 객체 생성
+    var geocoder = new kakao.maps.services.Geocoder();
+
+    // 주소 검색-정확한 주소여야 한다 
+    geocoder.addressSearch("서울 서대문구 창천동 57-18", function(result, status) {
+    
+     // 정상적으로 검색이 완료됐으면 
+     if (status === kakao.maps.services.Status.OK) {
+        var latitude = result[0].y;
+        var longitude = result[0].x;
+        // var coords = new kakao.maps.LatLng(result[0].y, result[0].x); // 위도 경도 좌표 
+        concert_form.latitude.value = latitude;
+        concert_form.longitude.value = longitude;
+    } 
+    }); 
+    
+        
+    
+    
+</script>
+
+
+{% endblock %}
