@@ -44,15 +44,15 @@ def like(request, community_id):
         like_b.save()
     return redirect('detail', community_id)
 
-
 @login_required(login_url='/accounts/naver/login/')
 def search(request):
     query = request.GET['query']
     if query:
-        musician = User.objects.filter(name__contains=query) 
-        return render(request, 'search.html', {'musician': musician})
+        musician_list = User.objects.filter(status__contains=1, name__contains=query).order_by("?")
+        return render(request, 'search.html', {'musician_list': musician_list, 'query' : query})
     else:
-        return render(request,'search.html')
+        error = "검색어를 입력받지 못했습니다"
+        return render(request,'search.html', {'error' : error})
 
 @login_required(login_url='/accounts/naver/login/')
 def musician_list(request):
