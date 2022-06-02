@@ -13,15 +13,17 @@
 
     <div style="display:flex;flex-wrap: wrap;">
         {% for musician in musician_list %}
+        <a href="{% url 'mypage' musician.id %}">
         <div style="width:80px;margin: 20px 0 20px 20px;">
             {% if musician.image %}
-            <img src="{{musician.image.url}}" alt="" style="width:80px;height:80px">
+            <img src="{{musician.image.url}}" alt="" style="width:80px;height:80px;border-radius: 100px;">
             {% else %}
             <img src="{% static 'profile_color.png' %}" alt="" style="width:80px;height:80px">
             {% endif %}
-            <div style="font-size:25px;text-align: center;">{{musician.name}}</div>    
+            <div style="font-size:19px;text-align: center;">{{musician.name}}</div>    
         </div>
         {% endfor %}
+        </a>
     </div>
 
 {% endblock %}

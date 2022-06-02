@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
+
 # Create your models here.
 
 class User(AbstractUser):
@@ -14,3 +16,7 @@ class User(AbstractUser):
     insta = models.CharField(max_length=200, null=True)
     youtube = models.CharField(max_length=200, null=True)
     image = models.ImageField(blank = True, null = True)
+
+class Mypage(models.Model):
+    post = models.ForeignKey(User, on_delete = models.CASCADE)
+    scrap = models.ManyToManyField(User, related_name = "scraps", blank = True)

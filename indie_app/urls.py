@@ -3,7 +3,6 @@ from .views import *
 
 urlpatterns = [
     path('', home, name="home"),
-    path('transition/', transition, name="transition"),
     path('new/', new, name="new"),
     path('detail/<int:community_id>/', detail, name="detail"),
     path('community/', community, name="community"),

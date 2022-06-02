@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<style>
+    #profile_img {
+        text-align: center;
+        margin-top: 30px;
+    }
+    
+    #profile_name {
+        display: flex;
+        justify-content: center; padding-left: 30px;
+        margin-top: 5px;
+    }
+</style>
+
+<form action="{% url 'edit' %}" method="POST" enctype="multipart/form-data" >
+    {%csrf_token%}
+
+    <div class="imgbox" style="margin-bottom:2vh;" id="profile_img">
+        <label className="input-file-button" for="input-file">
+            {% if user.image %}
+            <img src="{{user.image.url}}" id="previewImage" style = "width: 60px; height: 60px; object-fit:cover;border-radius: 100px;">
+            {% else %}
+            <img src="{%static 'profile_color.png'%}" id="previewImage" style = "width: 60px; height: 60px;object-fit:cover;border-radius: 100px;">
+            {% endif %}
+        </label>
+        <input type="file" class="file" id="input-file" name="image" style="display:none" onchange="imageView(this);">
+        <script type="text/javascript">
+        function readImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = (e) => {
+                    const previewImage = document.getElementById('previewImage');
+                    previewImage.src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        document.getElementById('input-file').addEventListener('change', (e) => {
+            readImage(e.target);
+        })
+        </script>
+    </div>
+    
+    <div id="profile_name">
+        <input type="text" maxlength="8" name="name" placeholder="이름" value={{user.name}}>
+    </div>
+    
+    <div id="profile_detail" style="display:column; margin-top: 15px; font-size:14px; ">
+        <div style="display: flex; justify-content: center; margin: 8px 0;">
+            <img src="{% static 'instagram.png' %}" width="25" height="25" style="margin-right: 5px;">
+            <input type="text" maxlength="8" name="insta" placeholder="인스타 계정" value={{user.insta}}>
+        </div>
+        <div style="display:flex; justify-content: center; margin: 8px 0;">
+            <img src="{% static 'youtube.png' %}" width="25" height="25" style="margin-right: 5px;">
+            <input type="text" maxlength="8" name="youtube" placeholder="유튜브 계정" value={{user.youtube}}>
+        </div>
+        <div style="padding-bottom: 5px; width:250px; display: flex; margin: 12px auto; justify-content: center;">
+            <input type="text" maxlength="15" name="intro" placeholder="한 줄 소개" value={{user.intro}}>
+        </div>
+    </div>
+    
+    <button class="yellow_button" style="font-size:14px; display:flex; justify-content:center; margin: 30px auto; padding-top:7px;width:100px;height:33px;">수정 완료</button>
+    
+</form>
+
+{% endblock %}
