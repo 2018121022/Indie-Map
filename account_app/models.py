@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
+
 # Create your models here.
 
 class User(AbstractUser):
@@ -14,3 +16,5 @@ class User(AbstractUser):
     insta = models.CharField(max_length=200, null=True)
     youtube = models.CharField(max_length=200, null=True)
     image = models.ImageField(blank = True, null = True)
+    follower = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="followers", blank=True)
+

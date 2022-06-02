@@ -42,6 +42,10 @@
 
     #comment_index {
         font-size:16px;
+<<<<<<< HEAD
+=======
+        padding:10px 10px 10px 20px;
+>>>>>>> jinhyo
         border-bottom: 1px solid rgb(206, 203, 203);
         display: flex;
     }
@@ -112,9 +116,28 @@
         </a>
         <div id ="like_count" style="padding-left: 15px; font-size: 25px;">{{community.like_count}}</div>
     </div>
+
+    <div id="detail_to_home">
+        <a href="{% url 'community' %}"><button style="float:right">자유게시판</button></a>
+    </div>
+
+
 </section>
 <div id="comment_container" >
     <h4>댓글 작성</h4>
+
+    {% for comment in community.comment_set.all %}
+    <div id="comment_index">
+        {% if comment.writer.image %}
+        <img src="{{comment.writer.image.url}}" alt="" style="width:20px;height:20px">
+        {% else %}
+        <img src="{% static 'profile_color.png' %}" alt="" style="width:20px;height:20px">
+        {% endif %}
+        <div style="width:50px;text-align: center;">{{comment.writer.name}}</div>
+        <div style="width:100px; margin-left: 20px;">{{comment.comment}}</div>
+        <div style="width:130px;">{{comment.created_at}}</div>
+    </div>
+    {% endfor %}
 
     <form method="POST" action="{% url 'comment' community.id %}" id="comment_create">
         {% csrf_token %}
@@ -122,21 +145,12 @@
         <button type="submit">입력</button>
     </form>
 
-    {% for comment in community.comment_set.all %}
-    <div id="comment_index">
-        <div style="width:50%;">{{comment.comment}}</div>
-        <div style="width:20%;text-align: center;">{{comment.writer.name}}</div>
-        <div style="width:30%;">{{comment.created_at}}</div>
+    <div id="detail_to_home">
+        <a href="{% url 'community' %}" class="subscribe-button">
+            <span class="subscribe-text">뒤로 가기</span>
+        </a>
     </div>
-    {% endfor %}
+
 </div>
-
-<div id="detail_to_home">
-    <a href="{% url 'community' %}" class="subscribe-button">
-        <span class="subscribe-text">뒤로 가기</span>
-    </a>
-</div>
-
-
 
 {% endblock %}

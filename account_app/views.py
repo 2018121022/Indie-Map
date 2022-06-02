@@ -1,43 +1,62 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from .models import User
 
 # Create your views here.
 
-def login_view(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request=request, data = request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(request=request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-        return redirect('home')
+@login_required(login_url='/accounts/naver/login/')
+def userpage(request):
+    user = request.user
+    return redirect('mypage', user.id)
+
+@login_required(login_url='/accounts/naver/login/')
+def mypage(request, user_id):
+    person = get_object_or_404(get_user_model(), id=user_id)
+    people = User.objects.all()
+    return render(request, 'mypage.html', {'person' : person, 'people': people})
+
+@login_required(login_url='/accounts/naver/login/')
+def transition(request):
+    user = request.user
+    if user.status == 0:
+        user.status = 1
+        user.save()
     else:
-        return render(request, 'login.html')
+        user.status = 0
+        user.save()
+    return redirect('mypage', user.id)
 
-def logout_view(request):
-    logout(request)
-    return redirect('home')
-
-def register_view(request):
-    errMsg = {}
-    if request.method == "POST":
-        if request.POST["password1"] == request.POST["password2"]:
-            user = User.objects.create_user(username=request.POST["username"], password=request.POST["password1"])
+@login_required(login_url='/accounts/naver/login/')
+def edit(request):
+    user = request.user
+    if request.method == "GET":
+        return render(request, "edit.html")
+    else:
+        user.name = request.POST['name']
+        user.intro = request.POST['intro']
+        user.insta = request.POST['insta']
+        user.youtube = request.POST['youtube']
+        try:
+            user.image = request.FILES['image']
             user.save()
-            login(request, user)
-            return redirect("home")
-        else:
-            errMsg = "Passwords do not match. Please check it again."
-            return render(request, 'signup.html', {'error': errMsg})
+        except:
+            user.save()
+        return redirect('mypage', user.id)
+
+@login_required(login_url='/accounts/naver/login/')
+def follow(request, user_id):
+    person = get_object_or_404(get_user_model(), id=user_id)
+    if request.user in person.follower.all():
+        person.follower.remove(request.user)
+        person.save()
     else:
-        return render(request, 'signup.html')
+        person.follower.add(request.user)
+        person.save()
+    return redirect('mypage', user_id)
 
-def account(request):
-    return render(request, 'account.html')
+from allauth.socialaccount.models import SocialAccount
 
-def callback(requset):
-    return render(requset,'callback.html')
+def callback(request):
+    social_user = SocialAccount.objects.all()
+    return render(request, 'callback.html', {'social_user' : social_user})

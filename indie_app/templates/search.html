@@ -3,12 +3,43 @@
 {% block content %}
 
 {% load static %}
-    <div style="display:flex; background-color: rgb(193, 255, 255);height:45px;justify-content: space-around;">
-        <div style="font-family: 'Noto Sans KR', sans-serif;display: flex;margin:auto 0 auto 4%;">뮤지션 검색</div>
-        <div style="font-family: 'Noto Sans KR', sans-serif;display: flex;margin:auto 0; width: 50%;">
-            <input type="text" style="border-width: 0; height: 20px; border-radius: 10px;">
+    <form method="GET" action="{% url 'search' %}">
+        {% csrf_token %}
+        <div style="display:flex; background-color: rgb(193, 255, 255);height:45px;justify-content: space-around;">
+            <div style="font-family: 'Noto Sans KR', sans-serif;display: flex;margin:auto 0 auto 4%;">뮤지션 검색</div>
+            <div style="font-family: 'Noto Sans KR', sans-serif;display: flex;margin:auto 0; width: 50%;">
+                <input type="text" name="query" style="border-width: 0; height: 20px; border-radius: 10px;width: 100%;">
+            </div>
+            <button type="submit" style="display: flex;margin:auto 4% auto 0; background: transparent;border: none;">
+                <div ><img src="{% static 'search.png' %}">
+            </button>
         </div>
-        <div style="display: flex;margin:auto 4% auto 0;"><img src="{% static 'search.png' %}"></div>
-    </div>
+    </form>
+
+    {% if error %}
+        <div style="font-size:18px; margin: 20px 20px 6px 20px;">
+            <strong>{{error}}</strong>
+        </div>
+    {% else %}
+        <div style="font-size:18px; margin: 20px 20px 6px 20px;">
+            <strong>{{query}}</strong> 의 검색 결과
+        </div>
+        <div style="display:flex;flex-wrap: wrap;">
+            {% for musician in musician_list %}
+            <a href="{% url 'mypage' musician.id %}">
+            <div style="width:80px;margin: 15px 0 15px 20px;">
+                {% if musician.image %}
+                <img src="{{musician.image.url}}" alt="" style="width:80px;height:80px;border-radius: 100px;">
+                {% else %}
+                <img src="{% static 'profile_color.png' %}" alt="" style="width:80px;height:80px">
+                {% endif %}
+                <div style="font-size:19px;text-align: center;">{{musician.name}}</div>    
+            </div>
+            {% endfor %}
+            </a>
+        </div>
+    {% endif %}
+
+
 
 {% endblock %}
