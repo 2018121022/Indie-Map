@@ -16,10 +16,10 @@
         </div>
     </form>
 
-    <div style="display:flex;flex-wrap: wrap; justify-content: space-between;">
+    <div style="display:flex;flex-wrap: wrap; justify-content: center;">
         {% for musician in musician_list %}
         <a href="{% url 'mypage' musician.id %}">
-        <div style="width:80px;margin: 20px 0 20px 20px;">
+        <div style="width:80px;margin: 20px;">
             {% if musician.image %}
             <img src="{{musician.image.url}}" alt="" style="width:80px;height:80px;border-radius: 100px;">
             {% else %}
