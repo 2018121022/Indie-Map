@@ -242,7 +242,7 @@
             <div id="content_index" style="margin: 5px; border: solid 1px grey; ">
                 <div id="detail_title">
                     {% if user.image %}
-                    <img src="{{user.image.url}}" alt="profile" style="width:40px;height:40px">
+                    <img src="{{user.image.url}}" alt="profile" style="width:40px;height:40px;border-radius:100px;">
                     {% else %}
                     <img src="{% static 'profile_color.png' %}" alt="profile" style="width:40px;height:40px">
                     {% endif %}
@@ -341,9 +341,9 @@
             <div id="content_index" style="margin: 5px; border: solid 1px grey; ">
                 <div id="detail_title">
                     {% if user.image %}
-                    <img src="{{user.image.url}}" alt="profile" style="width:40px;height:40px">
+                    <img src="{{user.image.url}}" alt="profile" style="width:40px;height:40px;border-radius:100px;">
                     {% else %}
-                    <img src="{% static 'profile_color.png' %}" alt="profile" style="width:40px;height:40px">
+                    <img src="{% static 'profile_color.png' %}" alt="profile" style="width:40px;height:40px;border-radius:100px;">
                     {% endif %}
                     <div style="align-self: center; padding-left: 10px;">{{user.name}}</div>
                 </div>
