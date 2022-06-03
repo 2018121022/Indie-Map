@@ -88,7 +88,7 @@
         position: absolute;
         opacity: 0;
         transition: opacity 0.4s;
-        padding-bottom:80px;
+        padding-bottom:100px;
     }
     section.active{
         opacity: 1;    
@@ -96,8 +96,8 @@
 
     .subscribe-button {
         position: fixed;
-        bottom: 80px; 
-        right: 20px;
+        bottom: 8%; 
+        right: 5%;
         padding: 5px 7px;
         font-family: inherit;
         font-size: inherit;
@@ -257,11 +257,13 @@
                     <img src = "{%static 'full_like.png'%}" alt="" width="30px" height="30px">
         
                     <div id ="like_count" style="padding-left: 15px; font-size: 25px;">3</div>
-        
-                    <button style="margin: 0 5px 0 151px; border-radius: 50px; background-color: #ff7e7e; width: 50px;">삭제</button>
+                    {% if request.user == person %}
+                    <button style="margin-left: 50%; margin-right:2%; border-radius: 50px; background-color: #ff7e7e; width: 50px;">삭제</button>
                     <button style="border-radius: 50px; background-color: beige;width: 50px;">수정</button>
+                    {% endif %}
                 </div>
             </div>
+            <!--새 글 작성하기-->
             {% if request.user == person %}
             <div>
                 <a href="{% url 'new' %}" class="subscribe-button">
@@ -279,11 +281,11 @@
 
         <!--달력-->
         <section><span>달력
-            <!--공연 등록-->
             {% if request.user == person %}
+                <!--공연 등록-->
                 {% if person.status == 1 %}
                 <div>
-                    <a href="{% url 'new' %}" class="subscribe-button">
+                    <a href="#" class="subscribe-button">
                         <svg xmlns="http://www.w3.org/2000/svg">
                         <g>
                             <rect class="plus__line1" width="2" height="12" x="5" y="0"></rect>
@@ -293,6 +295,13 @@
                         <span class="subscribe-text">공연 등록</span>
                     </a>
                 </div>
+                {% endif %}
+                <!--알림 설정-->
+                {% if person.status == 0%}
+                <!--user.alarm 데이터베이스 추가해야 함-->
+                <a href=#>
+                    <img style="z-index: 3; position: absolute; margin:60px 60px 0 0; right: 5px;" src="{% static 'notification.png'%}" alt="alarm_on" width="30px" height="30px">
+                </a>
                 {% endif %}
             {% endif %}
         </span></section>
@@ -325,19 +334,49 @@
             {% endif %}
         </div></span></section>
         {% else %}
-
         <!--후기-->
-        <section><span>후기
+        <section><span>
+            <div id="content_index" style="margin: 5px; border: solid 1px grey; ">
+                <div id="detail_title">
+                    {% if user.image %}
+                    <img src="{{user.image.url}}" alt="profile" style="width:40px;height:40px">
+                    {% else %}
+                    <img src="{% static 'profile_color.png' %}" alt="profile" style="width:40px;height:40px">
+                    {% endif %}
+                    <div style="align-self: center; padding-left: 10px;">{{user.name}}</div>
+                </div>
+                <div id="detail_content">지금 신촌역 2분 출구 할리스 커피 앞에 무진님 깜짝 공연이 있어요!! 빨리 보러 오세요~~~</div>
+                <div style="display:flex; margin: 10px;">
+                    <!--뮤지션만 후기 삭제-->
+                    {% if request.user == person %}
+                    <button style="margin-left:80%; border-radius: 50px; background-color: #ff7e7e; width: 50px;">삭제</button>
+                    {% endif %}
+                </div>
+            </div>
+            <!--관객만 후기 작성-->
+            {% if request.user.status == 0 %}
+            <div>
+                <a href="#" class="subscribe-button">
+                    <svg xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                        <rect class="plus__line1" width="2" height="12" x="5" y="0"></rect>
+                        <rect class="plus__line2" width="12" height="2" x="0" y="5"></rect>
+                    </g>
+                    </svg>
+                    <span class="subscribe-text">후기 작성</span>
+                </a>
+            </div>
+            {% endif %}
         </span></section>
         {% endif %}
     </div>
 </div>
 
-
+{% if request.user == person %}
 <a href="{% url 'account_logout' %}" style="display:flex;justify-content: center;">
     <button class="yellow_button" style="font-size:14px; display:flex; justify-content:center; bottom:3px; margin: 30px auto; padding-top:7px;width:80px;height:33px;background-color: rgb(240, 100, 121);position: fixed;">로그아웃</button>
 </a>
-
+{% endif %}
 <script>
     const items=document.querySelectorAll('.item');
     const sections=document.querySelectorAll('section');
