@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from indie_app.models import Concert
+from account_app.models import Concert
 from datetime import date # import 필요 
 
 

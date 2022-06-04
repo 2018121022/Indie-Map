@@ -8,6 +8,5 @@ urlpatterns = [
     path('musicpage_1/', musicpage_1, name="musicpage_1"),
     path('musicpage_2/', musicpage_2, name="musicpage_2"),
     path('musicpage_3/', musicpage_3, name="musicpage_3"),
-    path('concert_form/', concert_form, name="concert_form"),
-    path('concert_create/', concert_create, name='concert_create'),
+
 ]

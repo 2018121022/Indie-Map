@@ -18,3 +18,10 @@ class User(AbstractUser):
     image = models.ImageField(blank = True, null = True)
     follower = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="followers", blank=True)
 
+class Concert(models.Model):
+    musician = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    introduce = models.TextField()
+    date = models.DateField()
+    time = models.TimeField()
+    latitude = models.TextField()  # 위도
+    longitude = models.TextField() # 경도

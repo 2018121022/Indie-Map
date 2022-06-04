@@ -8,4 +8,6 @@ urlpatterns = [
     path('edit/', edit, name="edit"),
     path('scrap/<int:user_id>', follow, name="follow"),
     path('callback/', callback, name="callback"),
+    path('concert_form/', concert_form, name="concert_form"),
+    path('concert_create/', concert_create, name='concert_create'),
 ]

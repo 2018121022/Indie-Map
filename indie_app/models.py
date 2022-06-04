@@ -26,12 +26,6 @@ class Comment(models.Model):
     def __str__(self):
         return self.comment
 
-class Concert(models.Model):
-    musician = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
-    introduce = models.TextField()
-    date = models.DateField()
-    time = models.TimeField()
-    latitude = models.TextField()  # 위도
-    longitude = models.TextField() # 경도
+
 
     

@@ -287,7 +287,7 @@
                 <!--공연 등록-->
                 {% if person.status == 1 %}
                 <div>
-                    <a href="#" class="subscribe-button">
+                    <a href="{% url 'concert_form' %}" class="subscribe-button">
                         <svg xmlns="http://www.w3.org/2000/svg">
                         <g>
                             <rect class="plus__line1" width="2" height="12" x="5" y="0"></rect>
