@@ -48,24 +48,6 @@
     <div id = "login_map" style="width:100%; height:300px;"></div>
     {% endif %} 
     
-    <!-- <section style="padding-top: 5px;">
-        <a href=#>
-            <div id="content_index" >
-                <div id="detail_title" style="flex-direction: row;">
-                    <img src="{% static 'profile_color.png' %}" alt="" style="width:40px;height:40px;margin-right: 10px;">
-                    <div style="flex-direction: column;">
-                        <div style="display:flex; flex-wrap: wrap; flex-direction: row; justify-content: space-between;">
-                            <span style="font-weight: bold;">핑핑 </span>
-                            <span>2022년 6월 1일 20:30</span>
-                        </div>
-                        <div>공연 장소: 홍대입구역 2번 출구</div>
-                    </div>
-                </div>
-                <div id="detail_content">오늘 신곡 '독수수' 공연할 예정입니다!</div>
-            </div>
-        </a>
-    </section> -->
-    
     <!--공연정보 리스트-->
     <section id = "concert_list">
         {% for concert in concerts %}
@@ -76,10 +58,10 @@
                         <img src= "{{ concert.musician.image.url }}" alt="" style="width:40px;height:40px;margin-right: 10px;">
                         <div style="flex-direction: column;">
                             <div style="display:flex; flex-wrap: wrap; flex-direction: row; justify-content: space-between;">
-                                <span style="font-weight: bold;"> {{ concert.musician }} </span>
+                                <span style="font-weight: bold;"> {{ concert.musician.name }}</span>
                                 <span>{{ concert.date }} {{ concert.time }}</span>
                             </div>
-                            <div>공연 장소: {{ concert.address }}</div>
+                            <div>{{ concert.address }}</div>
                         </div>
                     </div>
                     <div id="detail_content"> {{ concert.introduce }}</div>
@@ -158,11 +140,7 @@
         let concerts = [
             {% for concert in concerts %}
             {
-                musician: "{{ concert.musician.name }}",
-                image_url: "{{ concert.musician.image.url }}",
                 introduce: "{{ concert.introduce }}",
-                time: "{{ concert.time }}",
-                date: "{{ concert.date }}",
                 latitude: "{{ concert.latitude }}",
                 longitude: "{{ concert.longitude }}"
             },
@@ -182,7 +160,10 @@
          });
         }        
 
+        // 로그인 후 
         var selectedMarker = null;
+        var markers = [];
+
         // 로그인 후 지도에 마커 생성
         for (var i = 0; i < concerts.length; i ++) {
             // 위도 경도 객체 생성 
@@ -195,20 +176,51 @@
             position: latlng, // 마커를 표시할 위치
          });
 
-        kakao.maps.event.addListener(marker, 'click', function() {
+            markers.push(marker);
+
+        // kakao.maps.event.addListener(marker, 'click', function() {
         
-            if (!selectedMarker || selectedMarker !== marker) {
-                var click_concert = document.getElementById(marker.getTitle());
-                click_concert.style.backgroundColor = "yellow";
-            }
-            if (selectedMarker == marker) {
-                var dbclick_concert = document.getElementById(marker.getTitle());
-                dbclick_concert.style.backgroundColor = "white";
-            }
-            selectedMarker = marker;
-        });            
+        //     if (!selectedMarker || selectedMarker !== marker) {
+        //         var click_concert = document.getElementById(marker.getTitle());
+        //         click_concert.style.backgroundColor = "yellow";
+        //     }
+        //     if (selectedMarker == marker) {
+        //         var dbclick_concert = document.getElementById(marker.getTitle());
+        //         dbclick_concert.style.backgroundColor = "white";
+        //     }
+        //     selectedMarker = marker;
+        // });            
         }               
 
+        // 즐겨찾기 마커만
+
+
+
+
+        // favorite = document.getElementById('favorite');
+        // favorite.onclick = function() {   
+        //     // 기존 마커 삭제 
+        //     for (var i = 0; i < markers.length; i++) {
+        //         markers[i].setMap(null);
+        //     };
+
+            
+            // for (var i = 0; i < favorite_concerts.length; i ++) {
+            //     // 위도 경도 객체 생성 
+            //     latlng = new kakao.maps.LatLng(Number(favorite_concerts[i].latitude), Number(favorite_concerts[i].longitude));
+
+            //     // 마커를 생성
+            //     var marker = new kakao.maps.Marker({
+            //     map: login_map, // 마커를 표시할 지도
+            //     position: latlng, // 마커를 표시할 위치
+            //     });                                          
+            // }
+            // };
+            //}
+        
+
+        
+        
     </script>
     
 {% endblock %}
