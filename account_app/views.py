@@ -91,6 +91,5 @@ def concert_create(request):
         for user in social_user:
             # if user in person.follower.all():  
             #     if user.alarm == 1:
-        # 공연 장소, 파라미터에 넣기
                 send_notification(concert.musician, concert.date, concert.time, concert.address, user.extra_data['mobile']) 
     return redirect('home') 
