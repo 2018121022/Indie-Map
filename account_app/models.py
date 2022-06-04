@@ -20,7 +20,7 @@ class User(AbstractUser):
 
 class Concert(models.Model):
     musician = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
-    introduce = models.TextField()
+    introduce = models.TextField(null=True)
     date = models.DateField()
     time = models.TimeField()
     latitude = models.TextField()  # 위도

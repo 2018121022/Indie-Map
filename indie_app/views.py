@@ -9,7 +9,7 @@ from datetime import date
 
 def home(request):
     # dateField가 오늘 날짜인 공연만 전송 
-    concerts = Concert.objects.filter(date__range=[date.today(), date.today()]).values().all()    
+    concerts = Concert.objects.filter(date__range=[date.today(), date.today()]).all()    
     return render(request, 'home.html', {'concerts': concerts})
 
 @login_required(login_url='/accounts/naver/login/')
