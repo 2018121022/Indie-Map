@@ -11,50 +11,65 @@
   <!-- Add jQuery library (required) -->
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
 
-  <!-- Add the evo-calendar.js for.. obviously, functionality! -->
+  <!-- Add the evo-calendar.js for functionality! -->
   <script src="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.2/evo-calendar/js/evo-calendar.min.js"></script>
 
   <script>
     $("#evoCalendar").evoCalendar({
     calendarEvents: [
       {
-        id: '1', // Event's ID (required)
-        name: "이무진", // Event name (required)
-        date: "May/1/2022", // Event date (required)
-        description: "홍대입구역 1번 출구 20:30", // Event description (optional)
+        id: '100', // Event's ID (required)
+        name:  '이진진', // Event name (required)
+        date: 'June/05/2022', // Event date (required)
+        description:  '7:30 pm 신곡 나왔습니다!', // Event description (optional)
         type: "event" // Event type (required - USE event!!)
-      },
-      {
-        id: '2', // Event's ID (required)
-        name: "이독수", // Event name (required)
-        badge: "즐겨찾기", // Event badge (optional)
-        date: "May/13/2022", // Date range
-        description: "신촌역 1번 출구 20:30", // Event description (optional)
-        type: "event", // Event type (required - USE event!!)
-        color: "#63d867" // Event custom color (optional)
       }
     ]
   });
+
+  concerts = concerts.objects.all();
+  $(document).ready(function(){
+    $.each(concerts, function(index, value) {
+      $("#evoCalendar").evoCalendar('addCalendarEvent', [
+        {
+          id: '80', // Event's ID (required)
+          name:  '이진진', // Event name (required)
+          date: 'June/3/2022', // Event date MONTH/dd/yyyy (required)
+          description:  '7:30 pm 신곡 나왔습니다!', // Event description (optional)
+          type: "event" // Event type (required - USE event!!)
+        },
+      ]);
+    });
+ });
+/*
+  {% for concert in concerts %}
+  text = {{ concert.date }}; // Format: June 15, 2022 
+  var month = text.split(",")[0].split(" ")[0];
+  var day = text.split(",")[0].split(" ")[1];
+  var year = text.split(",")[1];
+  var concert_date = month + "/" + day + "/" + year; // Format: June/15/2022
   $("#evoCalendar").evoCalendar('addCalendarEvent', [
     {
-      id: '3', // Event's ID (required)
-      name: "잔나비", // Event name (required)
-      date: "May/15/2022", // Date range
-      description: "신촌 명품 거리 20:30", // Event description (optional)
+      id: String({{ concert.id }}), // Event's ID (required)
+      name: {{ concert.musician.name }}, // Event name (required)
+      date: 'June/3/2022', // Event date MONTH/dd/yyyy (required)
+      description: {{ concert.time }} + {{ concert.introduce }}, // Event description (optional)
       type: "event" // Event type (required - USE event!!)
     }
   ]);
+  {% endfor %}
+  */
   </script>
-      <script>
-        function dp_menu(){
-            let click = document.getElementById("drop-content");
-            let clickable = document.getElementById("evoCalendar");
-            if(click.style.display === "none" || click.style.display === ""){
-                click.style.display = "inline-block";
-                clickable.style.zIndex = "0";
-            }else{
-                click.style.display = "none";
-            }
+  <script>
+    function dp_menu(){
+        let click = document.getElementById("drop-content");
+        let clickable = document.getElementById("evoCalendar");
+        if(click.style.display === "none" || click.style.display === ""){
+            click.style.display = "inline-block";
+            clickable.style.zIndex = "0";
+        }else{
+            click.style.display = "none";
         }
-    </script>
+    }
+</script>
 {% endblock %}
