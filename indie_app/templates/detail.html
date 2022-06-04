@@ -10,7 +10,8 @@
 
     section {
         margin:30px auto;
-        border: 1px solid rgb(139, 134, 134);
+        border: 1px solid rgb(139 134 134 / 27%);
+        border-radius: 10px;
         width:90%;
     }
 
@@ -48,8 +49,7 @@
     }
 
     #comment_create {
-        width:fit-content;
-        margin:20px 0 20px 20px;
+        display: flex;
     }
     .subscribe-button {
         position: fixed;
@@ -86,11 +86,11 @@
     .heart-like-button:before {
         position: absolute;
         top: 0;
-        left: 18px;
+        left: 15px;
         transform: rotate(-45deg);
         transform-origin: 0 100%;
-        width: 20px;
-        height: 30px;
+        width: 15px;
+        height: 25px;
         border-radius: 40px 40px 0 0;
         background-color: rgb(206 203 203);
         content: "";
@@ -103,8 +103,8 @@
         left: 0;
         transform: rotate(45deg);
         transform-origin :100% 100%;
-        width: 20px;
-        height: 30px;
+        width: 15px;
+        height: 25px;
         border-radius: 40px 40px 0 0;
         background-color: rgb(206 203 203);
         content: "";
@@ -130,34 +130,26 @@
         }
     }
     .button-enter {
-        align-items: center;
-        background-color: rgb(158 229 236 / 20%);
-        border-radius: 24px;
-        border-style: none;
-        box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
-        box-sizing: border-box;
-        color: #3c4043;
-        height: 30px;
-        padding: 2px 24px;
-        margin-left: 3px;
+        align-self: center;
+        background-color: transparent;
+        color: lightblue;
+        height: 38px;
+        margin-left: 20px;
+        font-weight: 800;
+        border: none;
+        flex:1;
     }
 
     .button-39 {
-    background-color: #FFFFFF;
-    border: 1px solid rgb(209,213,219);
-    border-radius: .5rem;
-    box-sizing: border-box;
+    flex: 3;
+    margin: 5px;
     color: #111827;
+    border: none;
     font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     font-size: .875rem;
     font-weight: 600;
     line-height: 1.25rem;
     padding: .75rem 1rem;
-    text-align: center;
-    text-decoration: none #D1D5DB solid;
-    text-decoration-thickness: auto;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    cursor: pointer;
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
@@ -199,7 +191,7 @@
     </div>
     {% endif %}
 
-    <div style="display:flex; margin: 10px;">
+    <div style="display:flex; margin-left: 15px;">
         <a href="{% url 'like' community.id %}">
             {% if user in community.like.all %}
             <div class="heart-like-button liked" style="animation:none"></div>
@@ -207,18 +199,17 @@
             <div class="heart-like-button"></div>
             {% endif %}
         </a>
-        <div id ="like_count" style="padding-left: 15px; font-size: 25px;">{{community.like_count}}</div>
+        <div id ="like_count" style="font-size: 20px;">{{community.like_count}}</div>
     </div>
-
+    <div style="border-top: 1px solid rgb(139 134 134 / 27%);"></div>
+        <form method="POST" action="{% url 'comment' community.id %}" id="comment_create">
+            {% csrf_token %}
+            <input type="text" class="button-39" placeholder="댓글 달기..." name="comment" maxlength="50">
+            <button type="submit" class="button-enter">입력</button>
+        </form>
 </section>
 <div id="comment_container" >
-    <h4>댓글 작성</h4>
-
-    <form method="POST" action="{% url 'comment' community.id %}" id="comment_create">
-        {% csrf_token %}
-        <input type="text" class="button-39" placeholder="댓글을 달아주세요." name="comment" maxlength="50">
-        <button type="submit" class="button-enter">입력</button>
-    </form>
+    
     
     {% for comment in community.comment_set.all %}
     <div id="comment_index">
@@ -232,16 +223,13 @@
         <div>{{community.created_at.date}}<br>{{community.created_at.time}}</div>
     </div>
     {% endfor %}
-
-
-
-    <div id="detail_to_home">
+</div>
+    
+<div id="detail_to_home">
         <a href="{% url 'community' %}" class="subscribe-button">
             <span class="subscribe-text">뒤로 가기</span>
         </a>
     </div>
-
-</div>
 <script>
     const button = document.querySelector(".heart-like-button");
 
