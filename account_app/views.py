@@ -2,7 +2,15 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from .models import User, Concert
-
+from django.http import JsonResponse
+from .api import *
+from .keys import (
+                            serviceId,
+                            AUTH_SECRET_KEY,
+                            AUTH_ACCESS_KEY,
+                            SMS_SEND_PHONE_NUMBER,
+)
+import json
 
 # Create your views here.
 
@@ -77,4 +85,11 @@ def concert_create(request):
         concert.latitude = request.POST['latitude']
         concert.longitude = request.POST['longitude']
         concert.save() 
+        # social_user = SocialAccount.objects.all()
+        # person = get_object_or_404(get_user_model(), id=request.user.id)
+        for user in social_user:
+            # if user in person.follower.all():  
+            #     if user.alarm == 1:
+        # 공연 장소, 파라미터에 넣기
+                send_notification(concert.musician, concert.date, concert.time, user.extra_data['mobile']) 
     return redirect('home') 

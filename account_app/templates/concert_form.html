@@ -1,25 +1,85 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>공연 등록</h1>
-<br>
+{% load static %}
+<style>
+    * {
+    box-sizing: border-box;
+    }
+    input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+    }
+    .container {
+    border-radius: 50px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    margin: 5px;
+    margin-bottom:30px;
+    }
+    
+    label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+    }
+
+    .col-25 {
+    float: left;
+    width: 30%;
+    }
+
+    .col-75 {
+    float: left;
+    width: 70%;
+    margin: 15px 0 15px 0;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+    content: "";
+    display: table;
+    clear: both;
+    }
+</style>
 <form action = "{% url 'concert_create' %}" method="POST" name="concert_form"> 
     {% csrf_token %} <!--보안문제 해결-->
-    <div>
-        <label for="introduce">공연 소개: </label><br/>
-        <textarea name="introduce" id="introduce" cols="30" rows="10"></textarea>
-    </div><br>
+    <div><h2 style="text-align:center;">공연등록</h2></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-25">
+                <label for="introduce">공연 소개: </label>
+            </div>
+            <div class="col-75">
+                <textarea name="introduce" id="introduce" cols="30" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label>공연 날짜: </label>
+            </div>
+            <div class="col-75">
+                <input type="date" name="date" id="date" style="padding: 5px;margin: 3px;">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label>공연 시간: </label>
+            </div>
+            <div class="col-75">
+                <input type="time" name="time" id="time" style="padding: 5px;margin: 3px;">
+            </div>
+        </div>
+    </div>
 
-    <div>공연 날짜: <input type="date" name="date" id="date"></div><br>
-    <div>공연 시간: <input type="time" name="time" id="time"></div><br>
-    
-    <div id = "search_map" style = "width:400px; height: 300px;"></div><br>
-    <div id = "click_address"></div>
+    <div id = "search_map" style = "width:100%; height: 300px;"></div><br>
+    <div id = "click_address" style="text-align:center;"></div>
     <br>
     <input type="hidden" name="latitude" id="latitude">
     <input type="hidden" name="longitude" id="longitude">
-    <input type="submit" value="공연 등록">
+    <button type="submit" class="yellow_button" style="font-size:14px;display:flex;justify-content:center;margin:5px auto;margin-bottom:30px;padding-top:7px;width:100px;height:33px;">공연 등록</button>
 </form>
-
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8692f5c3c759c152297171d014cffebe&libraries=services"></script>        
 <script>
