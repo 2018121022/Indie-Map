@@ -289,8 +289,8 @@
     <!--내용-->
     <div class="content">
         <!--게시판-->
-        <section class="active"><span>
-            <div id="content_index" style="margin: 5px; border: solid 1px grey; ">
+        <section class="active"><span> 
+            <div id="content_index" style="width:95%;margin:10px auto;border: 1px solid rgb(139 134 134 / 27%);border-radius: 10px; ">
                 <div id="detail_title">
                     {% if user.image %}
                     <img src="{{user.image.url}}" alt="profile" style="width:40px;height:40px;border-radius:100px;">
@@ -391,7 +391,7 @@
         {% else %}
         <!--후기-->
         <section><span>
-            <div id="content_index" style="margin: 5px; border: solid 1px grey; ">
+            <div id="content_index" style="width:95%;margin:10px auto;border: 1px solid rgb(139 134 134 / 27%);border-radius: 10px; ">
                 <div id="detail_title">
                     {% if user.image %}
                     <img src="{{user.image.url}}" alt="profile" style="width:40px;height:40px;border-radius:100px;">
