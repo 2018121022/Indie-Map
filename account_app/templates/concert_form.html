@@ -17,6 +17,7 @@
     <br>
     <input type="hidden" name="latitude" id="latitude">
     <input type="hidden" name="longitude" id="longitude">
+    <input type="hidden" name="address" id="address">
     <input type="submit" value="공연 등록">
 </form>
 
@@ -46,7 +47,8 @@
         var geocoder = new kakao.maps.services.Geocoder();
         var callback = function(result, status) {
             if (status === kakao.maps.services.Status.OK) {
-                document.getElementById("click_address").innerText = result[0].address.address_name;                    
+                document.getElementById("click_address").innerText = result[0].address.address_name;  
+                concert_form.address.value = result[0].address.address_name;                    
         }};
         geocoder.coord2Address(latlng.getLng(), latlng.getLat(), callback);            
     });
