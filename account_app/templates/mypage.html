@@ -98,7 +98,8 @@
 
     .subscribe-button {
         position: fixed;
-        bottom: 8%; 
+        bottom: 3px;
+        margin: 30px auto;
         right: 5%;
         padding: 5px 7px;
         font-family: inherit;
@@ -149,6 +150,43 @@
     }
     .subscribe-button * {
         vertical-align: middle;
+    }
+    .heart-like-button {
+        position: relative;
+        width: 40px;
+        height: 40px;
+    }
+    .heart-like-button:before {
+        position: absolute;
+        top: 0;
+        left: 18px;
+        transform: rotate(-45deg);
+        transform-origin: 0 100%;
+        width: 20px;
+        height: 30px;
+        border-radius: 40px 40px 0 0;
+        background-color: rgb(206 203 203);
+        content: "";
+        cursor: pointer;
+        transition: background .4s;
+    }
+    .heart-like-button:after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: rotate(45deg);
+        transform-origin :100% 100%;
+        width: 20px;
+        height: 30px;
+        border-radius: 40px 40px 0 0;
+        background-color: rgb(206 203 203);
+        content: "";
+        cursor: pointer;
+        transition: background .4s;
+    }
+    .heart-like-button.liked::before,
+    .heart-like-button.liked::after {
+        background-color: #d65076;
     }
 </style>
 
@@ -224,7 +262,7 @@
 </a>
 {% endif %}
 
-<div style="border-top: 1px solid #86e4e1;">
+<div style="border-top: 1px solid #86e4e1; margin-top:25px">
     <!--메뉴바-->
     <div class="nav">
         <div class="item active"><img src="{% static 'megaphone.png'%}" alt="posts" width="30px" height="30px"></div>
@@ -256,12 +294,14 @@
                 
                 <div style="display:flex; margin: 10px;">
         
-                    <img src = "{%static 'full_like.png'%}" alt="" width="30px" height="30px">
+                    <div class="heart-like-button liked"></div>
         
                     <div id ="like_count" style="padding-left: 15px; font-size: 25px;">3</div>
                     {% if request.user == person %}
-                    <button style="margin-left: 50%; margin-right:2%; border-radius: 50px; background-color: #ff7e7e; width: 50px;">삭제</button>
-                    <button style="border-radius: 50px; background-color: beige;width: 50px;">수정</button>
+                    <button style="margin-left: 50%; margin-right:2%; border-radius: 50px; background-color: #ff7e7e; width: 50px; height: 25px;
+                    align-self: center;">삭제</button>
+                    <button style="border-radius: 50px; background-color: beige;width: 50px; height: 25px;
+                    align-self: center;">수정</button>
                     {% endif %}
                 </div>
             </div>

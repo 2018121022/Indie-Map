@@ -15,8 +15,8 @@
             </button>
         </div>
     </form>
-
-    <div style="display:flex;flex-wrap: wrap; justify-content: center;">
+    <div style="display:flex;">
+        <div style="display:flex;flex-wrap: wrap; justify-content: flex-start;">
         {% for musician in musician_list %}
         <a href="{% url 'mypage' musician.id %}">
         <div style="width:80px;margin: 20px;">
@@ -30,5 +30,7 @@
         {% endfor %}
         </a>
     </div>
+    </div>
+    
 
 {% endblock %}

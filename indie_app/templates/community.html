@@ -87,6 +87,43 @@
     .subscribe-button * {
         vertical-align: middle;
     }
+    .heart-like-button {
+        position: relative;
+        width: 40px;
+        height: 40px;
+    }
+    .heart-like-button:before {
+        position: absolute;
+        top: 0;
+        left: 18px;
+        transform: rotate(-45deg);
+        transform-origin: 0 100%;
+        width: 20px;
+        height: 30px;
+        border-radius: 40px 40px 0 0;
+        background-color: rgb(206 203 203);
+        content: "";
+        cursor: pointer;
+        transition: background .4s;
+    }
+    .heart-like-button:after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: rotate(45deg);
+        transform-origin :100% 100%;
+        width: 20px;
+        height: 30px;
+        border-radius: 40px 40px 0 0;
+        background-color: rgb(206 203 203);
+        content: "";
+        cursor: pointer;
+        transition: background .4s;
+    }
+    .heart-like-button.liked::before,
+    .heart-like-button.liked::after {
+        background-color: #d65076;
+    }
 </style>
 
 <div style="float: right; padding-top: 5px; padding-right: 20px;" class="filtering">
@@ -128,9 +165,9 @@
             {% endif %}
             <div style="display:flex; margin: 10px;">
                 {% if user in community.like.all %}
-                <img src = "{%static 'full_like.png'%}" alt="" width="30px" height="30px">
+                <div class="heart-like-button liked"></div>
                 {% else %}
-                <img src = "{%static 'blank_like.png'%}" alt=""width="30px" height="30px">
+                <div class="heart-like-button"></div>
                 {% endif %}
                 <div id ="like_count" style="padding-left: 15px; font-size: 25px;">{{community.like_count}}</div>
             </div>

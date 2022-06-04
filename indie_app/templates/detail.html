@@ -37,7 +37,7 @@
     #comment_container {
         margin:30px auto;
         width:90%;
-        padding:0 5px 0 5px;
+        padding:0 5px 30px 5px;
     }
 
     #comment_index {
@@ -49,7 +49,7 @@
 
     #comment_create {
         width:fit-content;
-        margin:25px auto 30px auto;
+        margin:20px 0 20px 20px;
     }
     .subscribe-button {
         position: fixed;
@@ -78,7 +78,103 @@
     .subscribe-button * {
         vertical-align: middle;
     }
+    .heart-like-button {
+        position: relative;
+        width: 40px;
+        height: 40px;
+    }
+    .heart-like-button:before {
+        position: absolute;
+        top: 0;
+        left: 18px;
+        transform: rotate(-45deg);
+        transform-origin: 0 100%;
+        width: 20px;
+        height: 30px;
+        border-radius: 40px 40px 0 0;
+        background-color: rgb(206 203 203);
+        content: "";
+        cursor: pointer;
+        transition: background .4s;
+    }
+    .heart-like-button:after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: rotate(45deg);
+        transform-origin :100% 100%;
+        width: 20px;
+        height: 30px;
+        border-radius: 40px 40px 0 0;
+        background-color: rgb(206 203 203);
+        content: "";
+        cursor: pointer;
+        transition: background .4s;
+    }
+    .heart-like-button.liked::before,
+    .heart-like-button.liked::after {
+        background-color: #d65076;
+    }
+    .heart-like-button.liked {
+        animation: liked .4s ease;
+    }
+    @keyframes liked {
+        0% {
+            transform: scale(.8);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+    .button-enter {
+        align-items: center;
+        background-color: rgb(158 229 236 / 20%);
+        border-radius: 24px;
+        border-style: none;
+        box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+        box-sizing: border-box;
+        color: #3c4043;
+        height: 30px;
+        padding: 2px 24px;
+        margin-left: 3px;
+    }
 
+    .button-39 {
+    background-color: #FFFFFF;
+    border: 1px solid rgb(209,213,219);
+    border-radius: .5rem;
+    box-sizing: border-box;
+    color: #111827;
+    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: .875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    padding: .75rem 1rem;
+    text-align: center;
+    text-decoration: none #D1D5DB solid;
+    text-decoration-thickness: auto;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    }
+
+    .button-39:hover {
+    background-color: rgb(249,250,251);
+    }
+
+    .button-39:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    }
+
+    .button-39:focus-visible {
+    box-shadow: none;
+    }
 </style>
 
 <section>
@@ -106,9 +202,9 @@
     <div style="display:flex; margin: 10px;">
         <a href="{% url 'like' community.id %}">
             {% if user in community.like.all %}
-            <img src = "{%static 'full_like.png'%}" alt="" width="30px" height="30px">
+            <div class="heart-like-button liked" style="animation:none"></div>
             {% else %}
-            <img src = "{%static 'blank_like.png'%}" alt=""width="30px" height="30px">
+            <div class="heart-like-button"></div>
             {% endif %}
         </a>
         <div id ="like_count" style="padding-left: 15px; font-size: 25px;">{{community.like_count}}</div>
@@ -120,8 +216,8 @@
 
     <form method="POST" action="{% url 'comment' community.id %}" id="comment_create">
         {% csrf_token %}
-        <input type="text" placeholder="댓글을 달아주세요." name="comment" maxlength="50">
-        <button type="submit">입력</button>
+        <input type="text" class="button-39" placeholder="댓글을 달아주세요." name="comment" maxlength="50">
+        <button type="submit" class="button-enter">입력</button>
     </form>
     
     {% for comment in community.comment_set.all %}
@@ -146,5 +242,15 @@
     </div>
 
 </div>
+<script>
+    const button = document.querySelector(".heart-like-button");
 
+    button.addEventListener("click", () => {
+    if (button.classList.contains("liked")) {
+        button.classList.remove("liked");
+    } else {
+        button.classList.add("liked");
+    }
+    });
+</script>
 {% endblock %}
