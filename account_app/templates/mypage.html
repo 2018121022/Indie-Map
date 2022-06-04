@@ -258,13 +258,22 @@
     </div>
 </div>
 
-{% if request.user == person %}
-<a href="{% url 'edit'%}" >
-    <button class="yellow_button" style="font-size:14px; display:flex; justify-content:center; margin: 15px auto; padding-top:7px;width:100px;height:33px;">
-        프로필 편집
-    </button>
-</a>
-{% endif %}
+<div style="font-size:14px; display:flex; justify-content:center; margin: 15px auto; padding-top:7px;width:100px;height:33px;">
+    {% if request.user == person %}
+    <a href="{% url 'edit'%}" >
+        <button class="yellow_button" >
+            프로필 편집
+        </button>
+    </a>
+    {% endif %}
+
+    {% if request.user == person %}
+    <a href="{% url 'account_logout' %}" style="display:flex;justify-content: center;">
+        <button class="yellow_button" style="background-color: rgb(240, 100, 121); margin-left:10px;">로그아웃</button>
+    </a>
+    {% endif %}
+</div>
+
 
 <div style="border-top: 1px solid #86e4e1; margin-top:25px">
     <!--메뉴바-->
@@ -418,11 +427,6 @@
     </div>
 </div>
 
-{% if request.user == person %}
-<a href="{% url 'account_logout' %}" style="display:flex;justify-content: center;">
-    <button class="yellow_button" style="font-size:14px; display:flex; justify-content:center; bottom:3px; margin: 30px auto; padding-top:7px;width:80px;height:33px;background-color: rgb(240, 100, 121);position: fixed;">로그아웃</button>
-</a>
-{% endif %}
 <script>
     const items=document.querySelectorAll('.item');
     const sections=document.querySelectorAll('section');
