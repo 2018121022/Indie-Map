@@ -106,9 +106,16 @@
                 <a href="{% url 'home' %}">Indie Map</a>
             </div>
             <a href="{% url 'userpage' %}" id="profile">
-                <img src="{% static 'profile_color.png' %}" alt="menu" width="40px" height="40px">
+                {% if user.is_authenticated %}
+                    {% if user.image %}
+                    <img src="{{user.image.url}}" alt="profile" style="width:40px;height:40px;border-radius:100px;">
+                    {% else %}
+                    <img src="{% static 'profile_color.png' %}" alt="profile" style="width:40px;height:40px">
+                    {% endif %}
+                {% else %}
+                    <img src="{% static 'profile_color.png' %}" alt="menu" width="40px" height="40px">
+                {% endif %}
             </a>
-
         </header>
     </div>
     <div id="drop-content">
