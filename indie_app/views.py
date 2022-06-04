@@ -1,13 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import CommentForm
-from account_app.models import User
+from account_app.models import User, Concert
 from .models import Community
+from datetime import date
 
 # Create your views here.
 
 def home(request):
-    return render(request, 'home.html')
+    # dateField가 오늘 날짜인 공연만 전송 
+    concerts = Concert.objects.filter(date__range=[date.today(), date.today()]).values().all()    
+    return render(request, 'home.html', {'concerts': concerts})
 
 @login_required(login_url='/accounts/naver/login/')
 def new(request):

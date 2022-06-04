@@ -76,5 +76,6 @@ def concert_create(request):
         concert.time = request.POST['time']
         concert.latitude = request.POST['latitude']
         concert.longitude = request.POST['longitude']
+        concert.address = request.POST['address']
         concert.save() 
     return redirect('home') 

@@ -25,3 +25,4 @@ class Concert(models.Model):
     time = models.TimeField()
     latitude = models.TextField()  # 위도
     longitude = models.TextField() # 경도
+    address = models.TextField(null=True) # 주소

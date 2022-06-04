@@ -4,7 +4,11 @@
 
 {% load static %}
 <style>
-    #content_index {
+    /* #content_index {
+        border: 1px solid rgb(139, 134, 134);
+    } */
+
+    .one_concert {
         border: 1px solid rgb(139, 134, 134);
     }
 
@@ -15,8 +19,13 @@
 
     #detail_content, #detail_time {
         padding:10px 10px 10px 10px;
+        padding-top: 5px;
     }
+
+    
+
 </style>
+    <!--검색바-->
     <form method="GET" action="{% url 'search' %}">
         {% csrf_token %}
         <div style="display:flex; background-color: rgb(193, 255, 255);height:45px;justify-content: space-around;">
@@ -29,11 +38,22 @@
             </button>
         </div>
     </form>
-    <img src="{% static '가짜_지도.png' %}" width=100% height="500px">
+
+    <!--api 및 라이브러리(services) 불러오기-->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8692f5c3c759c152297171d014cffebe&libraries=services"></script>
+    
+    <!--지도(로그인 여부에 따라 다른 지도)-->
+    {% if not user.is_authenticated %}
+    <div id = "logout_map" style="width:100%;height:300px;"></div>
+    {% else %}
+    <div id = "login_map" style="width:100%; height:300px;"></div>
+    {% endif %}
+
     <button><a href="{% url 'map' %}">map</a></button>
     <button><a href="{% url 'sms'%}">sms</a></button>
     
-    <section style="padding-top: 5px;">
+    
+    <!-- <section style="padding-top: 5px;">
         <a href=#>
             <div id="content_index" >
                 <div id="detail_title" style="flex-direction: row;">
@@ -66,5 +86,119 @@
                 <div id="detail_content">저의 첫 버스킹 많은 기대 바랍니다.</div>
             </div>
         </a>
+    </section> -->
+    
+    <!--공연정보 리스트-->
+    <section id = "inform_list">
+        
     </section>
+
+    <!--로그인 전-->
+    <script>
+
+        // 지도 생성 및 영역에 담기
+        var logout_container = document.getElementById('logout_map');
+        var options = {
+            center: new kakao.maps.LatLng(37.555199964715605, 126.93696830939987),
+            level: 3,
+            draggable: false
+        };
+
+        var logout_map = new kakao.maps.Map(logout_container, options);
+    
+    </script>
+
+    <!--로그인 후-->
+    <script>
+        // 지도 생성 및 영역에 담기
+        var login_container = document.getElementById('login_map');
+        var options = {
+            center: new kakao.maps.LatLng(37.555199964715605, 126.93696830939987),
+            level: 3,
+            draggable: true
+        };
+
+        var login_map = new kakao.maps.Map(login_container, options);        
+
+        // 사용자 위치 표시 및 지도 중심으로 설정 
+        if (navigator.geolocation){ //geolocation 사용 가능할 때
+            // 현재 위치 
+            navigator.geolocation.getCurrentPosition(function(position){
+                var lat = position.coords.latitude, // 위도
+                lon = position.coords.longitude; // 경도 
+
+                var locPosition = new kakao.maps.LatLng(lat, lon); // 현재 위치 생성
+                displayMarker(locPosition); // 마커 표시 및 지도 중심 옮기기 
+            })
+        }
+        else{ // geolocation 사용 불가  
+            var locPosition = new kakao.maps.LatLng(37.555199964715605, 126.93696830939987);
+            displayMarker(locPosition);
+        }
+
+        function displayMarker(locPosition){
+            // 사용자 위치 마커(빨간색)
+            var imageSrc = "https://ifh.cc/g/p8Gfpv.png";
+            // 마커 이미지 크기 
+            var imageSize = new kakao.maps.Size(24, 30);
+            // 마커 이미지 생성  
+            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+            var marker = new kakao.maps.Marker({
+                map: login_map,
+                position: locPosition,
+                image: markerImage
+            });
+
+            // 지도 중심좌표를 현재 위치로 변경 
+            login_map.setCenter(locPosition);
+        }
+
+    </script>
+
+    <!--로그인 전후 지도에 마커 표시-->
+    <script>
+        // 공연 정보
+        let concerts = [
+            {% for concert in concerts %}
+            {
+                musician: "{{ concert.musician.name }}",
+                image_url: "{{ concert.musician.image.url }}",
+                introduce: "{{ concert.introduce }}",
+                time: "{{ concert.time }}",
+                date: "{{ concert.date }}",
+                latitude: "{{ concert.latitude }}",
+                longitude: "{{ concert.longitude }}"
+            },
+            {% endfor %}
+        ]; 
+
+        // 로그인 전 지도에 마커 생성
+        for (var i = 0; i < concerts.length; i ++) {
+            // 위도 경도 객체 생성 
+            latlng = new kakao.maps.LatLng(Number(concerts[i].latitude), Number(concerts[i].longitude));
+
+            // 마커를 생성
+            var marker = new kakao.maps.Marker({
+            map: logout_map, // 마커를 표시할 지도
+            title: concerts[i].musician, // 마커에 마우스 오버 시 뜨는 이름 
+            position: latlng, // 마커를 표시할 위치
+         });
+        }        
+
+        // 로그인 후 지도에 마커 생성
+        for (var i = 0; i < concerts.length; i ++) {
+            // 위도 경도 객체 생성 
+            latlng = new kakao.maps.LatLng(Number(concerts[i].latitude), Number(concerts[i].longitude));
+
+            // 마커를 생성
+            var marker = new kakao.maps.Marker({
+            map: login_map, // 마커를 표시할 지도
+            title: concerts[i].musician, // 마커에 마우스 오버 시 뜨는 이름 
+            position: latlng, // 마커를 표시할 위치
+         });
+        }               
+
+    </script>
+    
 {% endblock %}
