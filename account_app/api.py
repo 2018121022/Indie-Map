@@ -17,7 +17,7 @@ import requests
 import time
 import json
 
-def send_notification(concert_name, concert_date, concert_time, concert_receiver):
+def send_notification(concert_name, concert_date, concert_time, concert_address, concert_receiver):
         SMS_URL = 'https://sens.apigw.ntruss.com/sms/v2/services/' + f'{serviceId}' + '/messages'
         timestamp = str(int(time.time() * 1000))
         secret_key = bytes(AUTH_SECRET_KEY, 'utf-8')
@@ -38,10 +38,12 @@ def send_notification(concert_name, concert_date, concert_time, concert_receiver
             'x-ncp-apigw-signature-v2': signingKey,
         }
 
+        #수신인 전화번호
         receiver = ''.join(concert_receiver.split('-'))
-        place = "신촌역 2번 출구" # 파라미터 값 가져옴
-        notification_time = str(concert_date) + " " + "09:00" # 공연 당일 날 오전 9시 문자 알린 전송
-        message = str(concert_name) + "님 오늘 " + str(concert_date) + " " + str(concert_time) + " " + str(place) + "에서 라이브 공연할 예정입니다!"
+        # 공연 당일 날 오전 9시 문자 알린 전송
+        notification_time = str(concert_date) + " " + "09:00" 
+        #메세지 내용
+        message = str(concert_name) + "님 오늘 " + str(concert_date) + " " + str(concert_time) + " " + str(concert_address) + "에서 라이브 공연할 예정입니다!"
 
         body = {
                 "type": "SMS",

@@ -85,11 +85,11 @@ def concert_create(request):
         concert.latitude = request.POST['latitude']
         concert.longitude = request.POST['longitude']
         concert.save() 
-        # social_user = SocialAccount.objects.all()
+        social_user = SocialAccount.objects.all()
         # person = get_object_or_404(get_user_model(), id=request.user.id)
         for user in social_user:
             # if user in person.follower.all():  
             #     if user.alarm == 1:
         # 공연 장소, 파라미터에 넣기
-                send_notification(concert.musician, concert.date, concert.time, user.extra_data['mobile']) 
+                send_notification(concert.musician, concert.date, concert.time, concert.address, user.extra_data['mobile']) 
     return redirect('home') 
