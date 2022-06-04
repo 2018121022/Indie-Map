@@ -155,19 +155,19 @@
     <!--로그인 전후 지도에 마커 표시-->
     <script>
         // 공연 정보
-        let concerts = [
-            {% for concert in concerts %}
-            {
-                musician: "{{ concert.musician.name }}",
-                image_url: "{{ concert.musician.image.url }}",
-                introduce: "{{ concert.introduce }}",
-                time: "{{ concert.time }}",
-                date: "{{ concert.date }}",
-                latitude: "{{ concert.latitude }}",
-                longitude: "{{ concert.longitude }}"
-            },
-            {% endfor %}
-        ]; 
+        // let concerts = [
+        //     {% for concert in concerts %}
+        //     {
+        //         musician: "{{ concert.musician.name }}",
+        //         image_url: "{{ concert.musician.image.url }}",
+        //         introduce: "{{ concert.introduce }}",
+        //         time: "{{ concert.time }}",
+        //         date: "{{ concert.date }}",
+        //         latitude: "{{ concert.latitude }}",
+        //         longitude: "{{ concert.longitude }}"
+        //     },
+        //     {% endfor %}
+        // ]; 
 
         // 로그인 전 지도에 마커 생성
         for (var i = 0; i < concerts.length; i ++) {
