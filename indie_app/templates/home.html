@@ -4,13 +4,9 @@
 
 {% load static %}
 <style>
-    /* #content_index {
+    .content_index {
         border: 1px solid rgb(139, 134, 134);
-    } */
-
-    .one_concert {
-        border: 1px solid rgb(139, 134, 134);
-    }
+    } 
 
     #detail_title {
         display:flex;
@@ -49,7 +45,6 @@
     <div id = "login_map" style="width:100%; height:300px;"></div>
     {% endif %}
 
-    <button><a href="{% url 'map' %}">map</a></button>
     <button><a href="{% url 'sms'%}">sms</a></button>
     
     
@@ -69,28 +64,29 @@
                 <div id="detail_content">오늘 신곡 '독수수' 공연할 예정입니다!</div>
             </div>
         </a>
-    </section>
-    <section style="padding-top: 5px;">
-        <a href=#>
-            <div id="content_index" >
-                <div id="detail_title" style="flex-direction: row;">
-                    <img src="{% static 'profile_color.png' %}" alt="" style="width:40px;height:40px;margin-right: 10px;">
-                    <div style="flex-direction: column;">
-                        <div style="display:flex; flex-wrap: wrap; flex-direction: row; justify-content: space-between;">
-                            <span style="font-weight: bold;">이무무 </span>
-                            <span>2022년 6월 1일 21:00</span>
-                        </div>
-                        <div>공연 장소: 신촌 명품 거리 버스킹존</div>
-                    </div>
-                </div>
-                <div id="detail_content">저의 첫 버스킹 많은 기대 바랍니다.</div>
-            </div>
-        </a>
     </section> -->
     
     <!--공연정보 리스트-->
-    <section id = "inform_list">
-        
+    <section id = "concert_list">
+        {% for concert in concerts %}
+        <section style="padding-top: 5px;" id = "{{ concert.introduce }}">
+            <a href=#>
+                <div id="content_index" >
+                    <div id="detail_title" style="flex-direction: row;">
+                        <img src= "{{ concert.musician.image.url }}" alt="" style="width:40px;height:40px;margin-right: 10px;">
+                        <div style="flex-direction: column;">
+                            <div style="display:flex; flex-wrap: wrap; flex-direction: row; justify-content: space-between;">
+                                <span style="font-weight: bold;"> {{ concert.musician }} </span>
+                                <span>{{ concert.date }} {{ concert.time }}</span>
+                            </div>
+                            <div>공연 장소: {{ concert.address }}</div>
+                        </div>
+                    </div>
+                    <div id="detail_content"> {{ concert.introduce }}</div>
+                </div>
+            </a>
+        </section>         
+        {% endfor %}
     </section>
 
     <!--로그인 전-->
@@ -181,11 +177,12 @@
             // 마커를 생성
             var marker = new kakao.maps.Marker({
             map: logout_map, // 마커를 표시할 지도
-            title: concerts[i].musician, // 마커에 마우스 오버 시 뜨는 이름 
+            title: concerts[i].introduce, // 마커에 마우스 오버 시 뜨는 이름 
             position: latlng, // 마커를 표시할 위치
          });
         }        
 
+        var selectedMarker = null;
         // 로그인 후 지도에 마커 생성
         for (var i = 0; i < concerts.length; i ++) {
             // 위도 경도 객체 생성 
@@ -194,9 +191,22 @@
             // 마커를 생성
             var marker = new kakao.maps.Marker({
             map: login_map, // 마커를 표시할 지도
-            title: concerts[i].musician, // 마커에 마우스 오버 시 뜨는 이름 
+            title: concerts[i].introduce, // 마커에 마우스 오버 시 뜨는 이름 
             position: latlng, // 마커를 표시할 위치
          });
+
+        kakao.maps.event.addListener(marker, 'click', function() {
+        
+            if (!selectedMarker || selectedMarker !== marker) {
+                var click_concert = document.getElementById(marker.getTitle());
+                click_concert.style.backgroundColor = "yellow";
+            }
+            if (selectedMarker == marker) {
+                var dbclick_concert = document.getElementById(marker.getTitle());
+                dbclick_concert.style.backgroundColor = "white";
+            }
+            selectedMarker = marker;
+        });            
         }               
 
     </script>
