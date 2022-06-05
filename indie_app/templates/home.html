@@ -168,33 +168,42 @@
         var selectedMarker = null;
         var markers = [];
 
-        // 로그인 후 지도에 마커 생성
         for (var i = 0; i < concerts.length; i ++) {
             // 위도 경도 객체 생성 
             latlng = new kakao.maps.LatLng(Number(concerts[i].latitude), Number(concerts[i].longitude));
+            addMarker(latlng);        
+        };
 
-            // 마커를 생성
+
+        function addMarker(latlng) {
             var marker = new kakao.maps.Marker({
             map: login_map, // 마커를 표시할 지도
             title: concerts[i].introduce, // 마커에 마우스 오버 시 뜨는 이름 
             position: latlng, // 마커를 표시할 위치
-         });
-
+            });
             markers.push(marker);
 
-        // kakao.maps.event.addListener(marker, 'click', function() {
-        
-        //     if (!selectedMarker || selectedMarker !== marker) {
-        //         var click_concert = document.getElementById(marker.getTitle());
-        //         click_concert.style.backgroundColor = "yellow";
-        //     }
-        //     if (selectedMarker == marker) {
-        //         var dbclick_concert = document.getElementById(marker.getTitle());
-        //         dbclick_concert.style.backgroundColor = "white";
-        //     }
-        //     selectedMarker = marker;
-        // });            
-        }               
+            kakao.maps.event.addListener(marker, 'click', function() {
+
+            
+            if (!selectedMarker || selectedMarker !== marker) {
+            
+                // 클릭된 마커 객체가 null이 아니면 기존 selectedMarker은 배경색 흰색으로 
+                if (selectedMarker !== null){
+                    var unclick_concert = document.getElementById(selectedMarker.getTitle());
+                    unclick_concert.style.backgroundColor = "white";
+                };
+            
+                // 새로 클릭된 마커의 공연정보 배경색 변경 
+                var click_concert = document.getElementById(marker.getTitle());
+                click_concert.style.backgroundColor = "rgb(222, 250, 249)";
+            }
+
+            // 새로 클릭된 마커를 selectedMarker로 지정 
+            selectedMarker = marker;
+            });            
+        };
+
 
         // 즐겨찾기 마커만
         favorite = document.getElementById('favorite');
