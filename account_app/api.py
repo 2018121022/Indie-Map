@@ -43,7 +43,7 @@ def send_notification(concert_name, concert_date, concert_time, concert_address,
         # 공연 당일 날 오전 9시 문자 알린 전송
         notification_time = str(concert_date) + " " + "09:00" 
         #메세지 내용
-        message = str(concert_name) + "님 오늘 " + str(concert_date) + " " + str(concert_time) + " " + str(concert_address) + "에서 라이브 공연할 예정입니다!"
+        message = str(concert_name) + "님이 오늘 " + str(concert_date) + " " + str(concert_time) + " " + str(concert_address) + "에서 라이브 공연할 예정입니다!"
 
         body = {
                 "type": "SMS",
