@@ -17,12 +17,14 @@
 
     #detail_title {
         display:flex;
-        padding:10px 10px 5px 10px;
+        padding: 10px 5px 5px 10px;
         font-weight: bold;
+        flex-direction:row;
     }
 
     #detail_content {
         padding:10px 20px 10px 10px;
+        margin-bottom: 10px;
     }
 
     #detail_image {
@@ -46,6 +48,7 @@
         padding:10px;
         border-bottom: 1px solid rgb(206, 203, 203);
         display: flex;
+        padding: 5px;
     }
 
     #comment_create {
@@ -86,11 +89,11 @@
     .heart-like-button:before {
         position: absolute;
         top: 0;
-        left: 15px;
+        left: 9px;
         transform: rotate(-45deg);
         transform-origin: 0 100%;
-        width: 15px;
-        height: 25px;
+        width: 10px;
+        height: 20px;
         border-radius: 40px 40px 0 0;
         background-color: rgb(206 203 203);
         content: "";
@@ -103,8 +106,8 @@
         left: 0;
         transform: rotate(45deg);
         transform-origin :100% 100%;
-        width: 15px;
-        height: 25px;
+        width: 10px;
+        height: 20px;
         border-radius: 40px 40px 0 0;
         background-color: rgb(206 203 203);
         content: "";
@@ -167,6 +170,12 @@
     .button-39:focus-visible {
     box-shadow: none;
     }
+    @media screen and (max-width: 280px) {
+        #writing { 
+        width: 100px;
+    }
+    }
+
 </style>
 
 <section>
@@ -180,14 +189,14 @@
         {% if community.author.status == 1 %}
         <img src="{% static 'yes_check.png'%}" alt="yes_check" width="20px" height="20px" style="align-self: center; padding-left: 5px; margin-right: 5px;">
         {% endif %}
-        <div style="font-size:15px;margin-left:auto; align-self: center;">{{community.created_at.date}}<br>{{community.created_at.time}}</div>
+        <div id="writing" style="font-size:15px;margin-left:auto; align-self: center;">{{community.created_at}}</div>
     </div>
 
     <div id="detail_content">{{community.content}}</div>
 
     {% if community.photo %}
     <div id="detail_image">
-        <img src="{{community.photo.url}}" alt="" width="200px" height="150px">
+        <img src="{{community.photo.url}}" alt="" width="200px" height="150px" style="border-radius: 10px;">
     </div>
     {% endif %}
 
@@ -218,9 +227,9 @@
         {% else %}
         <img src="{% static 'profile_color.png' %}" alt="" style="width:20px;height:20px;border-radius:100px;">
         {% endif %}
-        <div style="width:50px;text-align: center;">{{comment.writer.name}}</div>
+        <div style="width:50px;text-align: center;margin-left: 5px;margin-right: 5px;">{{comment.writer.name}}</div>
         <div style="width:100px; flex:1; margin-left: 20px;">{{comment.comment}}</div>
-        <div>{{community.created_at.date}}<br>{{community.created_at.time}}</div>
+        <div style="font-size:15px;margin-left:5px;width: 100px;">{{community.created_at}}</div>
     </div>
     {% endfor %}
 </div>

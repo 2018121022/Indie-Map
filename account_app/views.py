@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
-from .models import User, Concert, Feedback
+from allauth.socialaccount.models import SocialAccount
+from .models import User, Concert, Feedback, Highlight
 from indie_app.models import Community
 from django.http import JsonResponse
 from .api import *
@@ -12,6 +13,8 @@ from .keys import (
     SMS_SEND_PHONE_NUMBER,
     )
 import json
+from django.utils import timezone
+
 
 # Create your views here.
 
@@ -27,16 +30,15 @@ def mypage(request, user_id):
     concerts = Concert.objects.all()
     community = Community.objects.all().order_by('-created_at')
     feedback_set = Feedback.objects.filter(feedback_post = person).order_by('-feedback_time')
-    return render(request, 'mypage.html', {'person' : person, 'people': people, 'concerts': concerts, 'community': community, 'feedback_set' : feedback_set})
+    highlight_set = Highlight.objects.filter(uploader = person).order_by()
+    return render(request, 'mypage.html', {'person' : person, 'people': people, 'concerts': concerts, 
+    'community': community, 'feedback_set' : feedback_set, 'highlight_set' : highlight_set })
 
 @login_required(login_url='/accounts/naver/login/')
 def transition(request):
     user = request.user
     if user.status == 0:
         user.status = 1
-        user.save()
-    else:
-        user.status = 0
         user.save()
     return redirect('mypage', user.id)
 
@@ -67,12 +69,6 @@ def follow(request, user_id):
         person.follower.add(request.user)
         person.save()
     return redirect('mypage', user_id)
-
-from allauth.socialaccount.models import SocialAccount
-
-def callback(request):
-    social_user = SocialAccount.objects.all()
-    return render(request, 'callback.html', {'social_user' : social_user})
 
 # 공연 등록 창
 @login_required(login_url='/accounts/naver/login/')
@@ -128,3 +124,54 @@ def alarm(request):
         user.save()
     return redirect('mypage', user.id)
 
+@login_required(login_url='/accounts/naver/login/')
+def highlight(request, user_id):
+    if request.method == "GET":
+        person = get_object_or_404(get_user_model(), id=user_id)
+        return render(request, "highlight_form.html", {'person': person})
+    else:
+        high = Highlight()
+        high.uploader = request.user
+        high.highlight = request.FILES.get('highlight')
+        high.save()
+        return redirect('mypage', user_id)
+
+@login_required(login_url='/accounts/naver/login/')
+def highlight_detail(request, high_id):
+    high = get_object_or_404(Highlight, pk=high_id)
+    return render(request, 'highlight_detail.html', {'high': high})
+
+# 게시글 삭제 
+@login_required(login_url='/accounts/naver/login/')
+def delete_post(request, post_id):
+    post = get_object_or_404(Community, pk=post_id)
+    if request.method == 'GET':
+        post.delete()
+    return redirect('mypage', request.user.id)
+
+# 게시글 수정
+@login_required(login_url='/accounts/naver/login/')
+def modify_post(request, post_id):
+    post = get_object_or_404(Community, pk=post_id)
+    if request.method == 'POST':
+        post.author = request.user
+        post.content = request.POST['content']
+        post.created_at = timezone.now()
+        try:
+            #user.image = request.FILES['image']
+            post.photo = request.FILES['photo']
+            post.save()
+        except:
+            post.save()
+        return redirect('mypage', request.user.id)
+
+    else:
+        return render(request, 'modify_post.html', {'post': post})
+
+# 후기 삭제
+@login_required(login_url='/accounts/naver/login/')
+def delete_feedback(request, feedback_id):
+    feedback = get_object_or_404(Feedback, pk=feedback_id)
+    if request.method == 'GET':
+        feedback.delete()
+    return redirect('mypage', request.user.id)

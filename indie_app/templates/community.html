@@ -13,16 +13,19 @@
         border: 1px solid rgb(139 134 134 / 27%);
         width:90%;
         border-radius: 10px;
+        padding: 5px;
     }
 
     #detail_title {
         display:flex;
-        padding:10px 10px 5px 10px;
+        padding: 10px 5px 5px 10px;
         font-weight: bold;
+        flex-direction:row;
     }
 
     #detail_content {
         padding:10px 20px 10px 10px;
+        margin-bottom: 10px;
     }
 
     #detail_image {
@@ -96,11 +99,11 @@
     .heart-like-button:before {
         position: absolute;
         top: 0;
-        left: 15px;
+        left: 9px;
         transform: rotate(-45deg);
         transform-origin: 0 100%;
-        width: 15px;
-        height: 25px;
+        width: 10px;
+        height: 20px;
         border-radius: 40px 40px 0 0;
         background-color: rgb(206 203 203);
         content: "";
@@ -113,8 +116,8 @@
         left: 0;
         transform: rotate(45deg);
         transform-origin :100% 100%;
-        width: 15px;
-        height: 25px;
+        width: 10px;
+        height: 20px;
         border-radius: 40px 40px 0 0;
         background-color: rgb(206 203 203);
         content: "";
@@ -125,6 +128,7 @@
     .heart-like-button.liked::after {
         background-color: #d65076;
     }
+<<<<<<< HEAD
 
     form{
         display: flex;
@@ -163,6 +167,30 @@
 </script>
 
 <section style="padding-top: 30px;">
+=======
+    @media screen and (max-width: 280px) {
+        #writing { 
+        width: 100px;
+    }
+    }
+</style>
+
+<div style="padding-top: 5px; padding-right: 20px; margin:5px;margin-bottom: 10px;position: absolute;right: 0;" class="filtering">
+    <select class="who" style="padding: 4px; width:95px;">
+        <a href="">
+            <option value="전체" name="who">전체</option>
+        </a>
+        <option value="뮤지션" name="who">뮤지션</option>
+        <option value="관객" name="who">관객</option>
+    </select>
+    <select class="how" name="how" style="padding: 4px;width:95px">
+        <option value="최신순">최신순</option>
+        <option value="좋아요순">좋아요순</option>
+    </select>
+</div>    
+
+<section style="padding-top: 30px;margin-top: 10px;">
+>>>>>>> 2703596dcfb054cc79cbe2b7cb241a706cdeff32
     {% for community in community_index %}
         <a href="{% url 'detail' community.id %}">
         <div id="content_index">
@@ -176,17 +204,18 @@
                 {% if community.author.status == 1 %}
                 <img src="{% static 'yes_check.png'%}" alt="yes_check" width="20px" height="20px" style="align-self: center; padding-left: 5px; margin-right: 5px;">
                 {% endif %}
-                <div style="font-size:15px;margin-left:auto; align-self: center;">{{community.created_at.date}}<br>{{community.created_at.time}}</div>
+                <div id="writing" style="font-size:15px;margin-left:auto; align-self: center;">{{community.created_at}}</div>
+                
             </div>
         
             <div id="detail_content">{{community.content}}</div>
         
             {% if community.photo %}
             <div id="detail_image">
-                <img src="{{community.photo.url}}" alt="" width="200px" height="150px">
+                <img src="{{community.photo.url}}" alt="" width="200px" height="150px" style="border-radius: 10px;">
             </div>
             {% endif %}
-            <div style="display:flex; margin-left: 15px;">
+            <div style="display:flex;margin-left: 15px;">
                 {% if user in community.like.all %}
                 <div class="heart-like-button liked"></div>
                 {% else %}
@@ -200,14 +229,6 @@
     {% endfor %}
     
 </section>
-
-<!--
-   <div id="home_to_new">
-    <a href="{% url 'new' %}">
-        <button style="position:fixed; bottom: 20px; right: 20px;">새 글</button>
-    </a>
-</div> 
--->
 
 <div id="home_to_new">
     <a href="{% url 'new' %}" class="subscribe-button">

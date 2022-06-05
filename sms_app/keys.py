@@ -1,4 +1,0 @@
-serviceId = 'ncp:sms:kr:286287080248:livemusic'
-AUTH_ACCESS_KEY = '0r37enNMuwrbe8bM3zyQ'
-AUTH_SECRET_KEY = 'RxiZosrX2HZm3aqeyvsHk9O5Z2aaSZ2Lfd1ooowp'
-SMS_SEND_PHONE_NUMBER = '01084366647'

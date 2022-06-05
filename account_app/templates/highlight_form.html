@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<style>
+
+    #profile_img {
+        text-align: center;
+        margin-top: 45px;
+    }
+
+</style>
+
+
+<form action="{% url 'highlight' person.id %}" method="POST" enctype="multipart/form-data" >
+    {%csrf_token%}
+
+    <div class="imgbox" id="profile_img">
+        <label className="input-file-button" for="input-file">
+            <img src="{%static 'preview.png'%}" id="previewImage" style = "width: 80%; height: 350px;object-fit:cover;border-radius: 10px;">
+        </label>
+        <input type="file" class="file" id="input-file" name="highlight" style="display:none" onchange="imageView(this);">
+        <script type="text/javascript">
+        function readImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = (e) => {
+                    const previewImage = document.getElementById('previewImage');
+                    previewImage.src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        document.getElementById('input-file').addEventListener('change', (e) => {
+            readImage(e.target);
+        })
+        </script>
+    </div>
+    <button class="yellow_button" style="font-size:14px; display:flex; justify-content:center; margin: 30px auto; padding-top:7px;width:100px;height:33px;">엄로드</button>
+
+</form>
+
+{% endblock %}

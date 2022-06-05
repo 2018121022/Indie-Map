@@ -42,9 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'indie_app',
     'account_app',
-    'sms_app',
-    'mypage_app',
-    
+
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -56,7 +54,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
-SITE_ID = 2
+SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 
 MIDDLEWARE = [

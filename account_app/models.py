@@ -27,7 +27,6 @@ class User(AbstractUser):
     follower = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="followers", blank=True)
 
 
-
 class Concert(models.Model):
     musician = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     introduce = models.TextField(null=True)
@@ -49,4 +48,12 @@ class Feedback(models.Model):
     feedback_time = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.feedback
+        return self.feedback_content
+
+class Highlight(models.Model):
+    uploader = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    highlight = models.ImageField(blank = True, null = True)
+    highlight_time = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.uploader.name
