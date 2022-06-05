@@ -370,9 +370,10 @@
                     <div id ="like_count" style="font-size: 20px;">{{myWriting.like_count}}</div>
                     {% if request.user == person %}
                     <button style="right: 5%;position: absolute;margin-right: 55px;border-radius: 50px; background-color: #ff7e7e; width: 50px; height: 25px;
-                    align-self: center;">삭제</button>
+                    align-self: center;"><a href = "{% url 'delete_post' myWriting.id %}">삭제</a></button>
                     <button style="border-radius: 50px; background-color: beige;width: 50px; height: 25px;
-                    align-self: center; position: absolute; right: 5%;">수정</button>
+                    align-self: center; position: absolute; right: 5%;">
+                    <a href = "{% url 'modify_post' myWriting.id %}">수정</a></button>
                     {% endif %}
                 </div>
             </div>
@@ -471,9 +472,10 @@
                     {% endif %}    
                 </div>
                 <div style="display:flex; margin: 10px;">
-                    <!--뮤지션만 후기 삭제-->
+                    <!--뮤지션과 후기 작성자(관객)만 후기 삭제-->
                     {% if request.user.name == feedback.feedback_name or request.user == person %}
-                    <button style="align-self: center; position: absolute; right: 5%;border-radius: 50px; background-color: #ff7e7e; width: 50px;">삭제</button>
+                    <button style="align-self: center; position: absolute; right: 5%;border-radius: 50px; background-color: #ff7e7e; width: 50px;">
+                        <a href = "{% url 'delete_feedback' feedback.id %}">삭제</a></button>
                     
                     {% endif %}
                 </div>
