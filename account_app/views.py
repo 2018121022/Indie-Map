@@ -60,3 +60,4 @@ from allauth.socialaccount.models import SocialAccount
 def callback(request):
     social_user = SocialAccount.objects.all()
     return render(request, 'callback.html', {'social_user' : social_user})
+

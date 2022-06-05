@@ -16,6 +16,7 @@ class Community(models.Model):
 
     def __str__(self):
         return self.title
+        
 
 class Comment(models.Model):
     writer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)

@@ -72,3 +72,7 @@ def comment(request, community_id):
 @login_required(login_url='/accounts/naver/login/')
 def calendar(request):
     return render(request, 'calendar.html')
+
+@login_required(login_url='/accounts/naver/login/') #jian
+def faq(request):
+    return render(request, 'faq.html')

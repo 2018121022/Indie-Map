@@ -52,11 +52,13 @@
     <div id="profile_detail" style="display:column; margin-top: 15px; font-size:14px; ">
         <div style="display: flex; justify-content: center; margin: 8px 0;">
             <img src="{% static 'instagram.png' %}" width="25" height="25" style="margin-right: 5px;">
-            <input type="text" maxlength="8" name="insta" placeholder="인스타 계정" value={{user.insta}}>
+            <!--<input type="text" maxlength="8" name="insta" placeholder="인스타 계정" value={{user.insta}}>-->
+            <input type="url" name="insta" placeholder="인스타 계정 url" value="{{user.insta}}">
         </div>
         <div style="display:flex; justify-content: center; margin: 8px 0;">
             <img src="{% static 'youtube.png' %}" width="25" height="25" style="margin-right: 5px;">
-            <input type="text" maxlength="8" name="youtube" placeholder="유튜브 계정" value={{user.youtube}}>
+            <!--<input type="text" maxlength="8" name="youtube" placeholder="유튜브 계정" value={{user.youtube}}>-->
+            <input type="url" name="youtube" placeholder="유튜브 계정 url" value="{{user.youtube}}">
         </div>
         <div style="padding-bottom: 5px; width:250px; display: flex; margin: 12px auto; justify-content: center;">
             <input type="text" maxlength="15" name="intro" placeholder="한 줄 소개" value={{user.intro}}>

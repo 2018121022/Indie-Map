@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% extends 'indie_app/calendar.html' %}
+{% extends 'indie_app/community.html' %}
+{% extends 'indie_app/calendar.html' %}
+{% extends 'indie_app/calendar.html' %}
+
 
 {% block content %}
 {% load static %}
@@ -67,11 +72,13 @@
 <div id="profile_detail" style="display:column; margin-top: 15px; font-size:14px; ">
     <div style="display: flex; justify-content: center; margin: 8px 0;">
         <img src="{% static 'instagram.png' %}" width="25" height="25" style="margin-right: 5px;">
-        <div>{{person.insta}}</div>
+        <!--<div>{{person.insta}}</div>-->
+        <a href={{user.insta}}>instagram</a>
     </div>
     <div style="display:flex; justify-content: center; margin: 8px 0;">
         <img src="{% static 'youtube.png' %}" width="25" height="25" style="margin-right: 5px;">
-        <div>{{person.youtube}}</div>
+        <!--<div>{{person.youtube}}</div>-->
+        <a href={{user.youtube}}> Youtube</a>
     </div>
     <div style="padding-bottom: 5px; border-bottom:1px solid rgb(89, 88, 88); width:250px; display: flex; margin: 8px auto; justify-content: center;">
         {{person.intro}}
@@ -85,14 +92,16 @@
 </a>
 
 <div style="display:flex; border-width: 1px 0 0 0; border-style: solid;">
-    <div style="flex-grow:1;text-align: center; border-width: 0 0 1px 0; border-style: solid;">게시판</div>
-    <div style="flex-grow:1;text-align: center; border-width: 0 1px 1px 1px; border-style: solid;">
+    <div id="community" style="flex-grow:1;text-align: center; border-width: 0 0 1px 0; border-style: solid;">
+        게시판
+    </div>
+    <div id="calendar" style="flex-grow:1;text-align: center; border-width: 0 1px 1px 1px; border-style: solid;">
         달력
     </div>
-    <div style="flex-grow:1;text-align: center;">
+    <div id="favorites" style="flex-grow:1;text-align: center;">
         즐겨찾기
     </div>
-    <div style="flex-grow:1;text-align: center; border-width: 0 0 1px 1px; border-style: solid;">
+    <div id="review" style="flex-grow:1;text-align: center; border-width: 0 0 1px 1px; border-style: solid;">
         후기</div>
 </div>
 
@@ -120,3 +129,27 @@
     <button class="yellow_button" style="font-size:14px; display:flex; justify-content:center; margin: 50px auto; padding-top:7px;width:80px;height:33px;background-color: rgb(145, 144, 144);">로그아웃</button>
 </a>
 {% endblock %}
+
+<!--
+<script 
+    src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous"></script>  jQuery 불러오기
+
+<script>
+        $("#community").on("click", function() {
+            $("#answer1").slideDown(1000);
+        })
+        $("#calendar").on("click", function() {
+            $("#answer2").slideDown(1000);
+        })
+        $("#favorites").on("click", function() {
+            $("#answer3").slideDown(1000);
+        })
+        $("#q4").on("click", function() {
+            $("#answer4").slideDown(1000);
+        })
+        $("#review").on("click", function() {
+            $("#answer5").slideDown(1000);
+        })
+</script> -->
