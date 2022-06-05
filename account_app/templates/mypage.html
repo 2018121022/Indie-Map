@@ -54,7 +54,7 @@
         display: flex;
     }
     .nav .item {
-        width: 33%;
+        width: 33.33%;
         height: 50px;
         border-right: 1px solid #86e4e1;
         border-bottom: 1px solid #86e4e1;
@@ -105,6 +105,7 @@
     }
 
     .subscribe-button {
+        z-index: 3;
         position: fixed;
         bottom: 3px;
         margin: 30px auto;
@@ -200,6 +201,11 @@
     @media screen and (max-width: 425px) {
         .calendar-events { 
         height: 100%;
+    }
+    }
+    @media screen and (max-width: 280px) {
+        #writing { 
+        width: 100px;
     }
     }
 </style>
@@ -303,7 +309,7 @@
     {% endif %}
 </div>
 
-<div style="display:flex; flex-direction:column; margin-top:30px; justify-content: center;">
+<div style="display:flex; flex-direction:column; justify-content: center;">
 
 {% if request.user == person %}
 <div style="font-size:14px; display:flex; justify-content:center; margin: 15px auto; padding-top:7px;width:100px;height:33px;">
@@ -350,7 +356,7 @@
                     <div style="align-self: center; padding-left: 10px; margin-right: 10px;">{{myWriting.author.name}}</div>
                     {% endif %}
                 
-                    <div style="font-size:15px;margin-left:auto; align-self: center;">{{myWriting.created_at}}</div>
+                    <div id="writing" style="font-size:15px;margin-left:auto; align-self: center;">{{myWriting.created_at}}</div>
                 </div>
             
                 <div id="detail_content">{{myWriting.content}}</div>
@@ -432,8 +438,13 @@
                                 <img src="{% static 'profile_color.png' %}" alt="profile" width="100px" height="100px">
                                 {% endif %}
                             </div>
-                            <div>
+                            <div style="width: 100%;">
+                                <div style="display:flex; flex-direction:row;justify-content: space-between;">
                                 <div style="align-self: center; padding:0 0 5px 10px;margin: 2px; font-weight: bold; font-size: large;">{{person.name}}</div>
+                                <a href="{% url 'follow' person.id %}">
+                                    <img src="{% static 'full_star.png' %}" width="30px" height="30px">
+                                </a>
+                                </div>
                                 <div style="align-self: center; padding-left: 10px;margin: 2px;">{{person.intro}}</div>
                             </div>
                         </div>
