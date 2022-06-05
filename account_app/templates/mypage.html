@@ -336,7 +336,7 @@
             {% for myWriting in community%}
             {% if person == myWriting.author %}
             <a href="{% url 'detail' myWriting.id %}">
-            <div id="content_index" style="width:95%;margin:10px auto;border: 1px solid rgb(139 134 134 / 27%);border-radius: 10px; ">
+            <div id="content_index" style="width:95%;margin:10px auto;border: 1px solid rgb(139 134 134 / 27%);border-radius: 10px;">
                 <div id="detail_title">
                     {% if myWriting.author.image %}
                     <img src="{{myWriting.author.image.url}}" alt="profile" style="width:40px;height:40px;border-radius:100px;">
@@ -425,18 +425,18 @@
                     {% if request.user in person.follower.all %}
                     <a href="{% url 'mypage' person.id %}">
                         <div id="content_index" style="display:flex; padding: 15px;border: 1px solid rgb(139 134 134 / 27%);border-radius: 10px; ">
-                        <div>
-                        {% if person.image %}
-                        <img src="{{person.image.url}}" alt="profile" width="100px" height="100px" style="object-fit:cover;border-radius: 100px;">
-                        {% else %}
-                        <img src="{% static 'profile_color.png' %}" alt="profile" width="100px" height="100px">
-                        {% endif %}
+                            <div>
+                                {% if person.image %}
+                                <img src="{{person.image.url}}" alt="profile" width="100px" height="100px" style="object-fit:cover;border-radius: 100px;">
+                                {% else %}
+                                <img src="{% static 'profile_color.png' %}" alt="profile" width="100px" height="100px">
+                                {% endif %}
+                            </div>
+                            <div>
+                                <div style="align-self: center; padding:0 0 5px 10px;margin: 2px; font-weight: bold; font-size: large;">{{person.name}}</div>
+                                <div style="align-self: center; padding-left: 10px;margin: 2px;">{{person.intro}}</div>
+                            </div>
                         </div>
-                        <div>
-                            <div style="align-self: center; padding:0 0 5px 10px;margin: 2px; font-weight: bold; font-size: large;">{{person.name}}</div>
-                            <div style="align-self: center; padding-left: 10px;margin: 2px;">{{person.intro}}</div>
-                        </div>
-                    </div>
                     </a>
                     {% else %}
                     {% endif %}
