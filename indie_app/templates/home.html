@@ -41,6 +41,16 @@
         </div>
     </form>
 
+    
+    {% if user.is_authenticated %}
+    <div>
+    <img id = "favorite" src="{% static 'blank_star.png' %}" width="50px" height="50px" style="position:absolute;right:0;z-index:3;border-style: outset;">
+    <a id = "home" href = "{% url 'home' %}" style="visibility: hidden;">
+    <img src="{% static 'map_star.png' %}" width="50px" height="50px" style="position:absolute;right:0;z-index:3;">
+    </a>
+    <p style="position:absolute;right:0;z-index:3;margin-top: 55px;margin-right: 7px;font-weight: bold;">클릭!</p>
+    </div>
+    {% endif %}
     <!--api 및 라이브러리(services) 불러오기-->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8692f5c3c759c152297171d014cffebe&libraries=services"></script>
     
@@ -49,8 +59,6 @@
     <div id = "logout_map" style="width:100%;height:300px;"></div>
     {% else %}
     <div id = "login_map" style="width:100%; height:300px;"></div>
-    <button id = "favorite">즐겨찾기 공연</button>
-    <button id = "home"><a href = "{% url 'home' %}">모든 공연</a></button>
     {% endif %} 
     
     <!--공연정보 리스트-->
@@ -75,9 +83,9 @@
                                 <span>{{ concert.date }} {{ concert.time }}</span>
                             </div>
                             <div>{{ concert.address }}</div>
+                            <div id="detail_content"> {{ concert.introduce }}</div>
                         </div>
                     </div>
-                    <div id="detail_content"> {{ concert.introduce }}</div>
                 </div>
             </a>
         </section>         
@@ -249,7 +257,10 @@
             position: latlng, // 마커를 표시할 위치
             image : markerImage
          });
-        };};
+        };
+        document.getElementById('home').style.visibility = "visible";
+        favorite.style.visibility = "hidden";
+    };
             
         
     </script>
