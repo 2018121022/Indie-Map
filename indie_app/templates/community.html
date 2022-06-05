@@ -129,16 +129,17 @@
 
 <div style="float: right; padding-top: 5px; padding-right: 20px;" class="filtering">
     <select class="who">
-        <option value="">전체</option>
-        <option value="1">뮤지션</option>
-        <option value="0">관객</option>
-      </select>
-      <select class="how">
-        <option value="">전체</option>
-        <option value="1">최신순</option>
-        <option value="0">좋아요순</option>
-      </select>
-</div>
+        <a href="">
+            <option value="전체" name="who">전체</option>
+        </a>
+        <option value="뮤지션" name="who">뮤지션</option>
+        <option value="관객" name="who">관객</option>
+    </select>
+    <select class="how" name="how">
+        <option value="최신순">최신순</option>
+        <option value="좋아요순">좋아요순</option>
+    </select>
+</div>    
 
 <section style="padding-top: 30px;">
     {% for community in community_index %}

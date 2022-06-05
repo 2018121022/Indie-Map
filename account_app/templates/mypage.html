@@ -203,18 +203,35 @@
     }
 </style>
 
-{% if request.user == person or user.status == 1 %}
+{% if request.user == person %}
+    {% if user.status == 1 %}
     <div id="profile_img" style="margin-top:30px;">
+    {% else %}
+    <div id="profile_img">
+        {% if user.alarm == 1%}
+        <a href="{% url 'alarm' %}">
+        <div style="margin-left:78%; margin-top:17px;">
+            <img  src="{% static 'notification.png'%}" alt="alarm_on" width="30px" height="30px">
+        </div>
+        </a>
+        {% else %}
+        <a href="{% url 'alarm' %}">
+        <div style="margin-left:78%; margin-top:17px;">
+            <img src="{% static 'disable-alarm.png'%}" alt="alarm_on" width="30px" height="30px">
+        </div>
+        </a>
+        {% endif %}
+    {% endif %}
 {% else %}
     {% if user in person.follower.all %}
     <a href="{% url 'follow' person.id %}">
-    <div style="margin-left:85%; margin-top:15px;">
+    <div style="margin-left:83%; margin-top:15px;">
         <img src="{% static 'full_star.png' %}" width="30px" height="30px">
     </div>
     </a>
     {% else %}
     <a href="{% url 'follow' person.id %}">
-    <div style="margin-left:85%; margin-top:15px;">
+    <div style="margin-left:83%; margin-top:15px;">
         <img src="{% static 'blank_star.png' %}" width="30px" height="30px">
     </div>
     </a>
@@ -242,17 +259,7 @@
         <a href="{% url 'transition' %}" >
             <img src="{% static 'no_check.png'%}" alt="no_check" width="20px" height="20px" >
         </a>
-        <!--알림 설정-->
-        <!--user.alarm 데이터베이스 추가해야 함-->
-        
-        <a href=#>
-            <img style="position:absolute;float:right;margin-left:15px;" src="{% static 'notification.png'%}" alt="alarm_on" width="30px" height="30px">
-        </a>
-        <!--
-        <a href=#>
-            <img style="z-index: 3; position: absolute; margin:60px 60px 0 0; right: 5px;" src="{% static 'disable-alarm.png'%}" alt="alarm_on" width="30px" height="30px">
-        </a>
-        -->
+       
         {% else %}
         <a href="{% url 'transition' %}">
             <img src="{% static 'yes_check.png'%}" alt="no_check" width="20px" height="20px">
@@ -436,7 +443,7 @@
         {% else %}
         <!--후기-->
         <section><span>
-            {% for feedback in person.feedback_set.all %}
+            {% for feedback in feedback_set %}
             <div id="content_index" style="width:95%;margin:10px auto;border: 1px solid rgb(139 134 134 / 27%);border-radius: 10px; ">
                 <div id="detail_title">
                     {% if feedback.feedback_profile %}
@@ -461,7 +468,7 @@
                 </div>
                 <div style="display:flex; margin: 10px;">
                     <!--뮤지션만 후기 삭제-->
-                    {% if request.user.name == feedback.feedback_name %}
+                    {% if request.user.name == feedback.feedback_name or request.user == person %}
                     <button style="margin-left:80%; border-radius: 50px; background-color: #ff7e7e; width: 50px;">삭제</button>
                     {% endif %}
                 </div>

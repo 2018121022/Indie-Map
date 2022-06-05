@@ -52,8 +52,8 @@ def send_notification(concert_name, concert_date, concert_time, concert_address,
                 "subject": "공연 알림",
                 "content": message,
                 "messages": [{"to": receiver}],
-                "reserveTime": notification_time,
-                "reserveTimeZone": "Asia/Seoul"
+                # "reserveTime": notification_time,
+                # "reserveTimeZone": "Asia/Seoul"
         }
 
         # body를 json으로 변환

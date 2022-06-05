@@ -8,8 +8,14 @@
 </head>
 <body>
     {% for user in social_user %}
+        {{user.id}}
+        {{user.name}}
         {{user.extra_data.mobile}}
-        {{user.extra_data.name}}
+    {% endfor %}
+    {% for user in person %}
+        {{user.id}}
+        {{user.uid}}
+        {{user.extra_data.mobile}}
     {% endfor %}
 </body>
 </html>

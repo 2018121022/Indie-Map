@@ -43,8 +43,10 @@
         date: concert_date, // Event date MONTH/dd/yyyy (required)
         description: "{{ concert.time }}" + " {{ concert.address }}", // Event description (optional)
         type: "event", // Event type (required - USE event!!)
-        {% if request.user in concert.musician.follower.all %}
-        color: "#63d867"
+        {% if user.status == 0 %}
+          {% if request.user in concert.musician.follower.all %}
+          color: "#63d867"
+          {% endif %}
         {% endif %}
       }
     ]);
