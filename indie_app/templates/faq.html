@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>faq</title>
+    <style>
+        div{
+            background-color: #86e4e1;
+            border:  solid;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items : center;
+            justify-content : center;
+            height: 65px;
+        }
+        span{
+            height:max-content;
+            /**border: solid;**/
+            display: flex;
+            flex-direction: row;
+            margin: 2px;
+        }
+        .remove img{
+            width: 15px;
+            height: 15px;
+            margin-right: 20px;
+            /**margin-top: 10px;**/
+            /**position: absolute;**/
+            /**z-index: 1;**/
+        }
+        img{
+            width: 50px;
+            height: 50px;
+            margin: 20px;
+        }
+        #call-center{
+            height: 200px;
+            border: solid;
+        }
+        .answer{
+            height: 100px;
+            border: solid;
+            display: none;
+        }
+        .answer h5{
+            text-align: center;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    {% load static %}
+    </div>
+    <p>자주 묻는 질문 - 질문을 클릭하세요.</p>
+    
+    <div id="q1" onClick="answer1();">
+        <span><img src="{% static 'qa.png' %}"></img></span>
+        <span>뮤지션 계정은 어떻게 등록/해제하나요?</span>
+    </div>
+
+    <div id="answer1" class="answer">
+<h5 >
+마이페이지 닉네임 옆 체크표시를 
+누르면 계정이 뮤지션 계정으로 전환됩니다. 
+<br>
+뮤지션 계정은 닉네임 옆 파란 체크 표시가 
+뜨며뮤지션 전용 기능(공연 일정 등록 등)이
+활성화됩니다. 
+<br>
+다만 뮤지션 계정 전환 후 
+일반 계정으로 되돌릴 수 없으니 
+유의하시길 바랍니다. 
+<br>
+해제는 불가능합니다.</h5>
+<span class="remove" id="x1"><img src="{% static 'remove.png'%}"></span>
+    </div>
+
+    <div id="q2" onClick="answer2();">
+        <span>공연 정보는 어떻게 확인하나요?</span>
+        <span><img src="{% static 'qa.png' %}"></span>
+    </div>
+
+    <div id="answer2" class="answer">
+    <h5 >
+홈 화면 지도의 아이콘을 누르거나 
+공연일정 달력의 점을 누르면 
+화면 아래에서 상세한 공연 정보를 
+볼 수 있습니다</h5>
+<span class="remove" id="x2"><img src="{% static 'remove.png'%}"></span>
+    </div>
+
+    <div id="q3" onClick="answer3();">
+        <span><img src="{% static 'qa.png' %}"></span>
+        <span>어떻게 뮤지션을 즐겨찾기에 추가/삭제하나요?</span>
+    </div>
+
+<div id="answer3" class="answer">    
+<h5 >
+ 
+뮤지션 개인 페이지 프로필 사진 옆의 
+별을 누르면 해당 뮤지션이 즐겨찾기에 
+추가됩니다.
+<br>
+별을 다시 누르면 즐겨찾기가 해제됩니다. 
+<br>
+즐겨찾기 목록은 마이페이지에서 
+확인할 수 있습니다.</h5>  
+<span class="remove" id="x3"><img src="{% static 'remove.png'%}"></span>
+    </div>
+
+    <div id="q4" onClick="answer4();">
+        <span>SMS 알림 서비스는 무엇인가요?</span>
+        <span><img src="{% static 'qa.png' %}"></span>
+    </div>
+
+    <div id="answer4" class="answer">
+<h5>
+즐겨찾기한 뮤지션이 공연을 하는 
+당일 아침 9시에 공연 정보를 
+문자로 보내드립니다.
+<br>
+SMS 수신을 원치 않을 경우,
+마이 프로필 - 캘린더에서 알람 해제를 
+선택할 수 있습니다.</h5>
+<span class="remove" id="x4"><img src="{% static 'remove.png'%}"></span>
+    </div>
+
+    <div id="q5" onClick="answer5();">
+        <span><img src="{% static 'qa.png' %}"></span>
+        <span>공연은 언제 홈 화면의 지도에 표시되나요?</span>
+    </div>
+
+    <div id="answer5"  class="answer">
+        <h5>       
+지도에는 오늘의 공연만 표시됩니다.
+자정에 그날의 공연이 표시되고 
+24시간 뒤 삭제됩니다. </h5> 
+<span class="remove" id="x5"><img src="{% static 'remove.png'%}"></span> 
+    </div>
+
+
+    <div id="call-center">
+        <span><img src="{% static 'call-center.png' %}"></span>
+        <span>기타 문의 사항은 
+        010-0000-0000 | 000000@yonsei.ac.kr <br>
+        위 연락처로 문의 주시면 24시간 내에 <br>
+        답변 드리도록 하겠습니다.<br>
+
+        평일(공휴일 제외) 09:00 ~ 18:00</span>
+    </div>
+
+    <script 
+    src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous"></script> <!-- jQuery 불러오기 -->
+ 
+    <script>
+        $("#q1").on("click", function() {
+            $("#answer1").slideDown(1000);
+        })
+        $("#q2").on("click", function() {
+            $("#answer2").slideDown(1000);
+        })
+        $("#q3").on("click", function() {
+            $("#answer3").slideDown(1000);
+        })
+        $("#q4").on("click", function() {
+            $("#answer4").slideDown(1000);
+        })
+        $("#q5").on("click", function() {
+            $("#answer5").slideDown(1000);
+        })
+        
+        $("#x1").on("click", function() {
+            $("#answer1").slideUp(1000);
+        })
+        $("#x2").on("click", function() {
+            $("#answer2").slideUp(1000);
+        })
+        $("#x3").on("click", function() {
+            $("#answer3").slideUp(1000);
+        })
+        $("#x4").on("click", function() {
+            $("#answer4").slideUp(1000);
+        })
+        $("#x5").on("click", function() {
+            $("#answer5").slideUp(1000);
+        })
+
+        /*
+(1)마이페이지 닉네임 옆 체크표시를 
+누르면 계정이 뮤지션 계정으로 전환됩니다. 
+
+뮤지션 계정은 닉네임 옆 파란 체크 표시가 
+뜨며뮤지션 전용 기능(공연 일정 등록 등)이
+활성화됩니다. 
+
+다만 뮤지션 계정 전환 후 
+일반 계정으로 되돌릴 수 없으니 
+유의하시길 바랍니다. 
+
+해제는 불가능합니다.
+-
+(2) 홈 화면 지도의 아이콘을 누르거나 
+공연일정 달력의 점을 누르면 
+화면 아래에서 상세한 공연 정보를 
+볼 수 있습니다
+-
+(3) 뮤지션 개인 페이지 프로필 사진 옆의 
+별을 누르면 해당 뮤지션이 즐겨찾기에 
+추가됩니다.
+
+별을 다시 누르면 즐겨찾기가 해제됩니다. 
+
+즐겨찾기 목록은 마이페이지에서 
+확인할 수 있습니다.
+-
+(4) 즐겨찾기한 뮤지션이 공연을 하는 
+당일 아침 9시에 공연 정보를 
+문자로 보내드립니다.
+
+SMS 수신을 원치 않을 경우,
+마이 프로필 - 캘린더에서 알람 해제를 
+선택할 수 있습니다.
+
+-
+(5) 지도에는 오늘의 공연만 표시됩니다.
+자정에 그날의 공연이 표시되고 
+24시간 뒤 삭제됩니다.  
+        */
+    </script>
+</body>
+</html>

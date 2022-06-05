@@ -1,3 +1,4 @@
+from telnetlib import STATUS
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import CommentForm
@@ -76,3 +77,16 @@ def comment(request, community_id):
 def calendar(request):
     concerts = Concert.objects.all()
     return render(request, 'calendar.html', {'concerts': concerts})
+
+
+@login_required(login_url='/accounts/naver/login/') #jian
+def faq(request):
+    return render(request, 'faq.html')
+
+@login_required(login_url='/accounts/naver/login/') #jian
+def post_del(request, community_id):
+    #login_session= request.session.get('login_session', '')
+    del_post = get_object_or_404(Community, id=community_id)
+    del_post.delete()
+    return redirect('mypage')
+

@@ -95,7 +95,19 @@
     <div class="row">
         <div class="col-25">
             <label>이름</label>
+    <!--
+    <div id="profile_name">
+        <input type="text" maxlength="8" name="name" placeholder="이름" value={{user.name}}>
+    </div>
+    
+    <div id="profile_detail" style="display:column; margin-top: 15px; font-size:14px; ">
+        <div style="display: flex; justify-content: center; margin: 8px 0;">
+            <img src="{% static 'instagram.png' %}" width="25" height="25" style="margin-right: 5px;">
+            
+            <input type="url" name="insta" placeholder="인스타 계정 url" value="{{user.insta}}">
         </div>
+    -->
+
         <div class="col-75">
         {% if user.name == None or user.name == '' %}
         <input type="text" maxlength="10" name="name" placeholder="이름" value='익명'>
@@ -145,7 +157,10 @@
         
         
         <div style="display:flex; justify-content: center; margin: 8px 0;">
+            <!--
+            <img src="{% static 'youtube.png' %}" width="25" height="25" style="margin-right: 5px;">
             
+            <input type="url" name="youtube" placeholder="유튜브 계정 url" value="{{user.youtube}}">-->
         </div>
         <div style="padding-bottom: 5px; width:250px; display: flex; margin: 12px auto; justify-content: center;">
             
