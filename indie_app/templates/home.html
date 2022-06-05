@@ -44,11 +44,10 @@
     
     {% if user.is_authenticated %}
     <div>
-    <img id = "favorite" src="{% static 'blank_star.png' %}" width="50px" height="50px" style="position:absolute;right:0;z-index:3;border-style: outset;">
+    <img id = "favorite" src="{% static 'blank_star.png' %}" width="40px" height="40px" style="position:absolute;right:0;z-index:3; margin: 10px 10px 0 0;">
     <a id = "home" href = "{% url 'home' %}" style="visibility: hidden;">
-    <img src="{% static 'map_star.png' %}" width="50px" height="50px" style="position:absolute;right:0;z-index:3;">
+    <img src="{% static 'map_star.png' %}" width="40px" height="40px" style="position:absolute;right:0;z-index:3;margin: 10px 10px 0 0;">
     </a>
-    <p style="position:absolute;right:0;z-index:3;margin-top: 55px;margin-right: 7px;font-weight: bold;">클릭!</p>
     </div>
     {% endif %}
     <!--api 및 라이브러리(services) 불러오기-->
