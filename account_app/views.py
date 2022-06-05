@@ -30,7 +30,7 @@ def mypage(request, user_id):
     concerts = Concert.objects.all()
     community = Community.objects.all().order_by('-created_at')
     feedback_set = Feedback.objects.filter(feedback_post = person).order_by('-feedback_time')
-    highlight_set = Highlight.objects.filter(uploader = person).order_by()
+    highlight_set = Highlight.objects.filter(uploader = person).order_by('-highlight_time')
     return render(request, 'mypage.html', {'person' : person, 'people': people, 'concerts': concerts, 
     'community': community, 'feedback_set' : feedback_set, 'highlight_set' : highlight_set })
 
