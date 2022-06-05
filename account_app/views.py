@@ -23,7 +23,8 @@ def userpage(request):
 def mypage(request, user_id):
     person = get_object_or_404(get_user_model(), id=user_id)
     people = User.objects.all()
-    return render(request, 'mypage.html', {'person' : person, 'people': people})
+    concerts = Concert.objects.all()
+    return render(request, 'mypage.html', {'person' : person, 'people': people, 'concerts': concerts})
 
 @login_required(login_url='/accounts/naver/login/')
 def transition(request):

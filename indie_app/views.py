@@ -74,4 +74,5 @@ def comment(request, community_id):
 
 @login_required(login_url='/accounts/naver/login/')
 def calendar(request):
-    return render(request, 'calendar.html')
+    concerts = Concert.objects.all()
+    return render(request, 'calendar.html', {'concerts': concerts})

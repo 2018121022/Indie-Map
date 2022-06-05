@@ -3,6 +3,13 @@
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Add the evo-calendar.css for styling -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.2/evo-calendar/css/evo-calendar.min.css"/>
+ <!-- Add jQuery library (required) -->
+ <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+ <!-- Add the evo-calendar.js for functionality -->
+ <script src="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.2/evo-calendar/js/evo-calendar.min.js"></script>
+
 <style>
     #profile_img {
         text-align: center;
@@ -188,6 +195,12 @@
     .heart-like-button.liked::after {
         background-color: #d65076;
     }
+    
+    @media screen and (max-width: 425px) {
+        .calendar-events { 
+        height: 100%;
+    }
+    }
 </style>
 
 {% if request.user == person %}
@@ -225,6 +238,17 @@
         <a href="{% url 'transition' %}">
             <img src="{% static 'no_check.png'%}" alt="no_check" width="20px" height="20px">
         </a>
+        <!--알림 설정-->
+        <!--user.alarm 데이터베이스 추가해야 함-->
+        
+        <a href=#>
+            <img style="position:absolute;float:right;margin-left:15px;" src="{% static 'notification.png'%}" alt="alarm_on" width="30px" height="30px">
+        </a>
+        <!--
+        <a href=#>
+            <img style="z-index: 3; position: absolute; margin:60px 60px 0 0; right: 5px;" src="{% static 'disable-alarm.png'%}" alt="alarm_on" width="30px" height="30px">
+        </a>
+        -->
         {% else %}
         <a href="{% url 'transition' %}">
             <img src="{% static 'yes_check.png'%}" alt="no_check" width="20px" height="20px">
@@ -330,7 +354,7 @@
         </span></section>
 
         <!--달력-->
-        <section><span>달력
+        <section><span style="width:100%">
             {% if request.user == person %}
                 <!--공연 등록-->
                 {% if person.status == 1 %}
@@ -346,14 +370,8 @@
                     </a>
                 </div>
                 {% endif %}
-                <!--알림 설정-->
-                {% if person.status == 0%}
-                <!--user.alarm 데이터베이스 추가해야 함-->
-                <a href=#>
-                    <img style="z-index: 3; position: absolute; margin:60px 60px 0 0; right: 5px;" src="{% static 'notification.png'%}" alt="alarm_on" width="30px" height="30px">
-                </a>
-                {% endif %}
             {% endif %}
+            <div id="evoCalendar" style="z-index:0;"></div>
         </span></section>
 
         <!--즐겨찾기-->
@@ -363,7 +381,7 @@
                 {% for person in people %}
                     {% if request.user in person.follower.all %}
                     <a href="{% url 'mypage' person.id %}">
-                        <div id="content_index" style="display:flex; padding: 15px; border-bottom: solid 1px grey; ">
+                        <div id="content_index" style="display:flex; padding: 15px;border: 1px solid rgb(139 134 134 / 27%);border-radius: 10px; ">
                         <div>
                         {% if person.image %}
                         <img src="{{person.image.url}}" alt="profile" width="100px" height="100px" style="object-fit:cover;border-radius: 100px;">
@@ -423,6 +441,7 @@
 </div>
 
 <script>
+    /*세부 메뉴바*/
     const items=document.querySelectorAll('.item');
     const sections=document.querySelectorAll('section');
 
@@ -443,5 +462,56 @@
             sections[index].classList.add('active');
         });
     })
+
+    /*달력 생성하기*/
+    $("#evoCalendar").evoCalendar({
+      calendarEvents: [
+      ]
+    });
+
+    {% for concert in concerts %}
+        var text = "{{ concert.date }}"; // Format: June 15, 2022 
+        var month = text.split(",")[0].split(" ")[0];
+        var day = text.split(",")[0].split(" ")[1];
+        var year = text.split(",")[1];
+        var concert_date = month + "/" + day + "/" + year; // Format: June/15/2022
+
+        {% if person.status == 0 %}
+            {% if request.user in concert.musician.follower.all %}
+            $("#evoCalendar").evoCalendar('addCalendarEvent', [
+            {
+                id: "{{ concert.id }}", // Event's ID (required)
+                name: "{{ concert.musician.name }}", // Event name (required)
+                date: concert_date, // Event date MONTH/dd/yyyy (required)
+                description: "{{ concert.time }}" + " {{ concert.address }}", // Event description (optional)
+                type: "event", // Event type (required - USE event!!)
+            }
+            ]);
+            {% endif %}
+        {% else %}
+            {% if person == concert.musician %}
+            $("#evoCalendar").evoCalendar('addCalendarEvent', [
+            {
+                id: "{{ concert.id }}", // Event's ID (required)
+                name: "{{ concert.musician.name }}", // Event name (required)
+                date: concert_date, // Event date MONTH/dd/yyyy (required)
+                description: "{{ concert.time }}" + " {{ concert.address }}", // Event description (optional)
+                type: "event", // Event type (required - USE event!!)
+            }
+            ]);
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+    
+    function dp_menu(){
+        let click = document.getElementById("drop-content");
+        let clickable = document.getElementById("evoCalendar");
+        if(click.style.display === "none" || click.style.display === ""){
+            click.style.display = "inline-block";
+            clickable.style.zIndex = "0";
+        }else{
+            click.style.display = "none";
+        }
+    }
 </script>
 {% endblock %}
