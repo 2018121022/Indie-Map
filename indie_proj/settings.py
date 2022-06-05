@@ -42,9 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'indie_app',
     'account_app',
-    'sms_app',
-    'mypage_app',
-    
+
     'django.contrib.sites',
     'allauth',
     'allauth.account',

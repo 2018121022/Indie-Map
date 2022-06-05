@@ -262,9 +262,7 @@
         </a>
        
         {% else %}
-        <a href="{% url 'transition' %}">
             <img src="{% static 'yes_check.png'%}" alt="no_check" width="20px" height="20px">
-        </a>
         {% endif %}
     {% else %}
         {% if person.status == 0 %}
@@ -297,16 +295,34 @@
     {% endif %}
     {% if person.intro == None or person.intro == '' %}
     {% else %}
-    <div style="padding-bottom: 5px; border-bottom:1px solid rgb(89, 88, 88); width:250px; display: flex; margin: 8px auto; justify-content: center;">
+    <div style="padding-bottom: 5px; border-bottom:1px solid rgb(89, 88, 88); width:250px; display: flex; margin: 8px auto 4px auto; justify-content: center;">
         {{person.intro}}
     </div>
     {% endif %}
 </div>
 
-<div style="display:flex; flex-direction:column; margin-top:30px; justify-content: center;">
+<div style="display:flex; margin: 20px auto 10px auto;overflow-x: auto; width: 80%;">
+    {% if request.user == person %}
+    <a href="{% url 'highlight' person.id %}">
+        <img src="{%static 'plus.png'%}" style="height: 40px; width: 40px; border-radius: 10px;">
+    </a>
+    {% else %}
+    {% endif %}
+    {% for high in highlight_set %}
+        {% if high.uploader == person %}
+            {% if high.highlight %}
+            <a href="{% url 'highlight_detail' high.id %}">
+                <img src="{{high.highlight.url}}" style="height: 40px; width: 40px; border-radius: 100px; margin-left: 10px;">
+            </a>
+            {% else %}
+            {% endif %}
+        {% else %}
+        {% endif %}
+    {% endfor %}
+</div>
 
 {% if request.user == person %}
-<div style="font-size:14px; display:flex; justify-content:center; margin: 15px auto; padding-top:7px;width:100px;height:33px;">
+<div style="font-size:14px; display:flex; justify-content:center; margin: 5px auto 35px auto; padding-top:7px;width:100px;height:33px;">
     <a href="{% url 'edit'%}" >
         <button class="yellow_button" >
             프로필 편집
@@ -318,7 +334,7 @@
 </div>
 {% endif %}
 
-<div style="border-top: 1px solid #86e4e1; margin-top:25px">
+<div style="border-top: 1px solid #86e4e1; margin-top:15px">
     <!--메뉴바-->
     <div class="nav">
         <div class="item active"><img src="{% static 'megaphone.png'%}" alt="posts" width="30px" height="30px"></div>
@@ -356,7 +372,7 @@
                 <div id="detail_content">{{myWriting.content}}</div>
                 <div>
                     {% if myWriting.photo %}
-                    <img src="{{myWriting.photo.url}}" alt="photo" width="200px" height="150px" style="margin: 20px;">
+                    <img src="{{myWriting.photo.url}}" alt="photo" width="200px" height="150px" style="margin: 20px; border-radius: 10px;">
                     {% else %}
                     {% endif %}    
                 </div>
@@ -466,7 +482,7 @@
                 <div id="detail_content">{{feedback.feedback_content}}</div>
                 <div>
                     {% if feedback.feedback_image %}
-                    <img src="{{feedback.feedback_image.url}}" alt="feedback_image" width="200px" height="150px" style="margin: 20px;">
+                    <img src="{{feedback.feedback_image.url}}" alt="feedback_image" width="200px" height="150px" style="margin: 20px; border-radius: 10px;">
                     {% else %}
                     {% endif %}    
                 </div>

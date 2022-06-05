@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<div style="display:flex; justify-content: center; margin-top: 45px;">
+    <img src="{{high.highlight.url}}" style="width: 80%; height: 350px;object-fit:cover;border-radius: 10px;">
+</div>
+
+<a href="{{ request.META.HTTP_REFERER }}">
+    <button class="yellow_button" style="background-color:rgb(236, 125, 125);font-size:14px; display:flex; justify-content:center; margin: 30px auto; padding-top:7px;width:100px;height:33px;">
+        뒤로 가기
+    </button>    
+</a>
+
+{% endblock %}
