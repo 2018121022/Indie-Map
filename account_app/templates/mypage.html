@@ -230,21 +230,25 @@
         {% endif %}
     {% endif %}
 {% else %}
-    {% if user in person.follower.all %}
-    <a href="{% url 'follow' person.id %}">
-    <div style="margin-left:83%; margin-top:15px;">
-        <img src="{% static 'full_star.png' %}" width="30px" height="30px">
-    </div>
-    </a>
+    {% if user.status == 0 %}
+        {% if user in person.follower.all %}
+        <a href="{% url 'follow' person.id %}">
+        <div style="margin-left:83%; margin-top:15px;">
+            <img src="{% static 'full_star.png' %}" width="30px" height="30px">
+        </div>
+        </a>
+        <div id="profile_img">
+        {% else %}
+        <a href="{% url 'follow' person.id %}">
+        <div style="margin-left:83%; margin-top:15px;">
+            <img src="{% static 'blank_star.png' %}" width="30px" height="30px">
+        </div>
+        </a>
+        <div id="profile_img">
+        {% endif %}
     {% else %}
-    <a href="{% url 'follow' person.id %}">
-    <div style="margin-left:83%; margin-top:15px;">
-        <img src="{% static 'blank_star.png' %}" width="30px" height="30px">
-    </div>
-    </a>
+    <div id="profile_img" style="margin-top:30px;">
     {% endif %}
-
-<div id="profile_img">
 {% endif %}
 
     {% if person.image %}
@@ -307,7 +311,7 @@
     {% endif %}
 </div>
 
-<div style="display:flex; margin: 20px auto 10px auto;overflow-x: auto; width: 80%;">
+<div style="display:flex; justify-content: center; margin: 20px auto 10px auto;overflow-x: auto; width: 80%;">
     {% if request.user == person %}
     <a href="{% url 'highlight' person.id %}">
         <img src="{%static 'plus.png'%}" style="height: 40px; width: 40px; border-radius: 10px;">
