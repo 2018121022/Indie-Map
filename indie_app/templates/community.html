@@ -125,21 +125,42 @@
     .heart-like-button.liked::after {
         background-color: #d65076;
     }
+
+    form{
+        display: flex;
+    }
+    select{
+        display: flex;
+        flex-direction: row;
+    }
 </style>
 
 <div style="float: right; padding-top: 5px; padding-right: 20px;" class="filtering">
-    <select class="who">
-        <a href="">
+    <form name="sort_who" action="{% url 'sort_who' %}" method="GET">
+        <select onchange="submit_who()" class="who" id="sort" name="sort">
+            <option value="전체" name="who" selected>대상</option>
             <option value="전체" name="who">전체</option>
-        </a>
-        <option value="뮤지션" name="who">뮤지션</option>
-        <option value="관객" name="who">관객</option>
-    </select>
-    <select class="how" name="how">
-        <option value="최신순">최신순</option>
-        <option value="좋아요순">좋아요순</option>
-    </select>
+            <option id="1" value="1" name="who">뮤지션</option>
+            <option id="0" value="0" name="who">관객</option>
+        </select>
+    </form>
+    <form name="sort_how" action="{% url 'sort_how' %}" method="GET">
+        <select onchange="submit_how()" class="how"  id="sort" name="sort">
+            <option value=" " name="who" selected>순서</option>
+            <option id="1" value="1">최신순</option>
+            <option id="0" value="0">좋아요순</option>
+        </select>
+    </form>
 </div>    
+
+<script>
+    function submit_who() {
+        document.sort_who.submit();
+    }
+    function submit_how() {
+        document.sort_how.submit();
+    }
+</script>
 
 <section style="padding-top: 30px;">
     {% for community in community_index %}

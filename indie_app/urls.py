@@ -12,5 +12,7 @@ urlpatterns = [
     path('comment/<int:community_id>/', comment, name="comment"),
     path('calendar/', calendar, name="calendar"),
     path('faq/',faq,name="faq"), #jian
-    
+    path('sort_who/',sort_who,name="sort_who"),
+    path('sort_how/',sort_how,name="sort_how"),
+    #path('sort/',sort,name="sort"),
 ]

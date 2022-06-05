@@ -5,6 +5,7 @@ from .forms import CommentForm
 from account_app.models import User, Concert
 from .models import Community
 from datetime import date
+#from django.utils import timezone #추가
 
 # Create your views here.
 
@@ -22,6 +23,7 @@ def new(request):
         community.author = request.user
         community.content = request.POST["content"]
         community.photo = request.FILES.get('photo')
+        #community.date = timezone.now() #추가
         community.save()
         return redirect('detail', community.id)
 
@@ -83,10 +85,27 @@ def calendar(request):
 def faq(request):
     return render(request, 'faq.html')
 
-@login_required(login_url='/accounts/naver/login/') #jian
-def post_del(request, community_id):
-    #login_session= request.session.get('login_session', '')
-    del_post = get_object_or_404(Community, id=community_id)
-    del_post.delete()
-    return redirect('mypage')
+
+@login_required(login_url='/accounts/naver/login/')
+def sort_who(request):
+    sort = request.GET.get('sort','')
+    if sort == '0':
+        community_index = Community.objects.filter(author__status='0')
+    elif sort ==  '1':
+        community_index = Community.objects.filter(author__status='1')
+    else:
+        community_index = Community.objects.all()
+    return render(request, 'community.html',{'community_index': community_index})
+
+@login_required(login_url='/accounts/naver/login/')
+def sort_how(request):
+    sort = request.GET.get('sort','')
+    if sort == '0':
+        community_index = Community.objects.all().order_by('-like_count')
+    elif sort ==  '1':
+        community_index = Community.objects.all().order_by('-created_at')
+    else:
+        community_index = Community.objects.all().order_by('created_at')
+    return render(request, 'community.html',{'community_index': community_index})
+
 
