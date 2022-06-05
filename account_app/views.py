@@ -26,7 +26,8 @@ def mypage(request, user_id):
     people = User.objects.all()
     concerts = Concert.objects.all()
     community = Community.objects.all().order_by('-created_at')
-    return render(request, 'mypage.html', {'person' : person, 'people': people, 'concerts': concerts, 'community': community})
+    feedback_set = Feedback.objects.filter(feedback_post = person).order_by('-feedback_time')
+    return render(request, 'mypage.html', {'person' : person, 'people': people, 'concerts': concerts, 'community': community, 'feedback_set' : feedback_set})
 
 @login_required(login_url='/accounts/naver/login/')
 def transition(request):
@@ -91,12 +92,14 @@ def concert_create(request):
         concert.longitude = request.POST['longitude']
         concert.address = request.POST['address']
         concert.save() 
-        social_user = SocialAccount.objects.all()
-        # person = get_object_or_404(get_user_model(), id=request.user.id)
-        for user in social_user:
-            # if user in person.follower.all():  
-            #     if user.alarm == 1:
-                send_notification(concert.musician, concert.date, concert.time, concert.address, user.extra_data['mobile']) 
+
+        person = get_object_or_404(get_user_model(), id=request.user.id)
+        followers = User.objects.all()
+        for follower in followers:
+            if follower in person.follower.all():
+                if follower.status == 0 and follower.alarm == 1:
+                    social_user = get_object_or_404(SocialAccount, id=follower.id-1)
+                    send_notification(concert.musician.name, concert.date, concert.time, concert.address, social_user.extra_data['mobile']) 
     return redirect('home')
 
 @login_required(login_url='/accounts/naver/login/')
@@ -113,4 +116,15 @@ def feedback_form(request, user_id):
         feedback.feedback_image = request.FILES.get('feedback_image')
         feedback.save()
         return redirect('mypage', user_id)
+
+@login_required(login_url='/accounts/naver/login/')
+def alarm(request):
+    user = request.user
+    if user.alarm == 0:
+        user.alarm = 1
+        user.save()
+    else:
+        user.alarm = 0
+        user.save()
+    return redirect('mypage', user.id)
 

@@ -60,10 +60,18 @@
             <a href=#>
                 <div id="content_index" >
                     <div style="display:flex;">
+                        {% if concert.musician.image %}
                         <img src= "{{ concert.musician.image.url }}" alt="" style="width:40px;height:40px;margin-right:15px;border-radius:100px; ">
+                        {% else %}
+                        <img src= "{% static 'profile_color.png' %}" alt="" style="width:40px;height:40px;margin-right:15px;border-radius:100px; ">                      
+                        {% endif %}
                         <div style="flex-direction: column;width: 100%;">
                             <div style="display:flex; flex-wrap: wrap; flex-direction: row;justify-content: space-between;">
-                                <span style="font-weight: bold;">{{ concert.musician.name }} </span>
+                                {% if concert.musician.name == None or concert.musician.name == '' %}
+                                <span style="font-weight: bold;">익명</span>                                
+                                {% else %}
+                                <span style="font-weight: bold;">{{ concert.musician.name }}</span>
+                                {% endif %}
                                 <span>{{ concert.date }} {{ concert.time }}</span>
                             </div>
                             <div>{{ concert.address }}</div>

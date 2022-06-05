@@ -51,7 +51,7 @@ def send_notification():
         send_time = showtime.split()[1]
 
         notification_time = year + "-" + month + "-" + str(day) + " " + "09:00"
-        message = name + "님 오늘 " + showtime + " " + place + "에서 라이브 공연할 예정입니다!"
+        message = name + "님이 오늘 " + showtime + " " + place + "에서 라이브 공연할 예정입니다!"
 
         '''
         if alert_timing == '1일 전':
@@ -78,7 +78,7 @@ def send_notification():
                 hour = "00"
             send_time = hour + ":" + minute
             notification_time = year + "-" + month + "-" + str(day) + " " + send_time
-            message = name + "님 30분 후 " + showtime + " " + place + "에서 라이브 공연할 예정입니다!"
+            message = name + "님이 30분 후 " + showtime + " " + place + "에서 라이브 공연할 예정입니다!"
         '''
         body = {
                 "type": "SMS",
@@ -87,8 +87,8 @@ def send_notification():
                 "subject": "공연 알림",
                 "content": message,
                 "messages": [{"to": receiver}],
-                "reserveTime": notification_time,
-                "reserveTimeZone": "Asia/Seoul"
+                # "reserveTime": "2022-06-05 22:20",
+                # "reserveTimeZone": "Asia/Seoul"
         }
 
         # body를 json으로 변환
