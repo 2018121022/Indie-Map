@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
-<<<<<<< HEAD
 
 
-=======
->>>>>>> jian
 
 {% block content %}
 {% load static %}
@@ -366,8 +363,8 @@
                     {% endif %}
                     <div id ="like_count" style="font-size: 20px;">{{myWriting.like_count}}</div>
                     {% if request.user == person %}
-                    <a href="{% url 'post_del'%}"><button style="margin-left: 50%; margin-right:2%; border-radius: 50px; background-color: #ff7e7e; width: 50px; height: 25px;
-                    align-self: center;">삭제</button></a>
+                    <button style="margin-left: 50%; margin-right:2%; border-radius: 50px; background-color: #ff7e7e; width: 50px; height: 25px;
+                    align-self: center;">삭제</button>
                     <button style="border-radius: 50px; background-color: beige;width: 50px; height: 25px;
                     align-self: center;">수정</button>
                     {% endif %}
