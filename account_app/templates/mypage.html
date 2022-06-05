@@ -89,7 +89,6 @@
     }
     section{
         width:100%;
-        display: flex;
         justify-content: center;
         align-items: center;
         position: absolute;
@@ -334,9 +333,9 @@
                     {% endif %}
                     
                     {% if myWriting.author.name == None or myWriting.author.name == '' %}
-                    <div style="align-self: center; padding-left: 10px;">익명</div>
+                    <div style="align-self: center; padding-left: 10px; margin-right: 10px;">익명</div>
                     {% else %}
-                    <div style="align-self: center; padding-left: 10px;">{{myWriting.author.name}}</div>
+                    <div style="align-self: center; padding-left: 10px; margin-right: 10px;">{{myWriting.author.name}}</div>
                     {% endif %}
                 
                     <div style="font-size:15px;margin-left:auto; align-self: center;">{{myWriting.created_at}}</div>
@@ -345,7 +344,7 @@
                 <div id="detail_content">{{myWriting.content}}</div>
                 <div>
                     {% if myWriting.photo %}
-                    <img src="{{myWriting.photo.url}}" alt="photo" width="200px" height="150px">
+                    <img src="{{myWriting.photo.url}}" alt="photo" width="200px" height="150px" style="margin: 20px;">
                     {% else %}
                     {% endif %}    
                 </div>
@@ -358,10 +357,10 @@
                     {% endif %}
                     <div id ="like_count" style="font-size: 20px;">{{myWriting.like_count}}</div>
                     {% if request.user == person %}
-                    <button style="margin-left: 50%; margin-right:2%; border-radius: 50px; background-color: #ff7e7e; width: 50px; height: 25px;
+                    <button style="right: 5%;position: absolute;margin-right: 55px;border-radius: 50px; background-color: #ff7e7e; width: 50px; height: 25px;
                     align-self: center;">삭제</button>
                     <button style="border-radius: 50px; background-color: beige;width: 50px; height: 25px;
-                    align-self: center;">수정</button>
+                    align-self: center; position: absolute; right: 5%;">수정</button>
                     {% endif %}
                 </div>
             </div>
@@ -437,7 +436,7 @@
         <!--후기-->
         <section><span>
             {% for feedback in person.feedback_set.all %}
-            <div id="content_index" style="width:95%;margin:10px auto;border: 1px solid rgb(139 134 134 / 27%);border-radius: 10px; ">
+            <div id="content_index" style="width:95%;margin:10px auto;border: 1px solid rgb(139 134 134 / 27%);border-radius: 10px; padding-bottom: 10px;">
                 <div id="detail_title">
                     {% if feedback.feedback_profile %}
                     <img src="{{feedback.feedback_profile.url}}" alt="profile" style="width:40px;height:40px;border-radius:100px;">
@@ -462,7 +461,7 @@
                 <div style="display:flex; margin: 10px;">
                     <!--뮤지션만 후기 삭제-->
                     {% if request.user.name == feedback.feedback_name %}
-                    <button style="margin-left:80%; border-radius: 50px; background-color: #ff7e7e; width: 50px;">삭제</button>
+                    <button style="align-self: center; position: absolute; right: 5%;border-radius: 50px; background-color: #ff7e7e; width: 50px;">삭제</button>
                     {% endif %}
                 </div>
             </div>
