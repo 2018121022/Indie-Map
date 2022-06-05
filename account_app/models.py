@@ -14,8 +14,8 @@ class User(AbstractUser):
     status = models.SmallIntegerField(choices = STATUS_CHOICES, default=0)
     name = models.CharField(max_length=200, default="익명")
     intro = models.TextField(null=True)
-    insta = models.CharField(max_length=200, null=True)
-    youtube = models.CharField(max_length=200, null=True)
+    insta = models.URLField( null=True) #url 필드
+    youtube = models.URLField( null=True) #url 필드
     image = models.ImageField(blank = True, null = True)
     follower = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="followers", blank=True)
 

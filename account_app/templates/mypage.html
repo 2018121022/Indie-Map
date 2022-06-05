@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+
+
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -294,6 +296,9 @@
     </div>
     {% endif %}
 </div>
+
+<div style="display:flex; flex-direction:column; margin-left: 35%; margin-top:30px; justify-content: center;">
+
 {% if request.user == person %}
 <div style="font-size:14px; display:flex; justify-content:center; margin: 15px auto; padding-top:7px;width:100px;height:33px;">
     <a href="{% url 'edit'%}" >
@@ -358,8 +363,8 @@
                     {% endif %}
                     <div id ="like_count" style="font-size: 20px;">{{myWriting.like_count}}</div>
                     {% if request.user == person %}
-                    <button style="margin-left: 50%; margin-right:2%; border-radius: 50px; background-color: #ff7e7e; width: 50px; height: 25px;
-                    align-self: center;">삭제</button>
+                    <a href="{% url 'post_del'%}"><button style="margin-left: 50%; margin-right:2%; border-radius: 50px; background-color: #ff7e7e; width: 50px; height: 25px;
+                    align-self: center;">삭제</button></a>
                     <button style="border-radius: 50px; background-color: beige;width: 50px; height: 25px;
                     align-self: center;">수정</button>
                     {% endif %}
@@ -559,5 +564,6 @@
             click.style.display = "none";
         }
     }
+
 </script>
 {% endblock %}
