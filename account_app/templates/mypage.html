@@ -368,12 +368,14 @@
                 </div>
                 
                 <div style="display:flex; margin: 10px;">
-                    {% if myWriting.author in myWriting.like.all %}
-                    <div class="heart-like-button liked"></div>
-                    {% else %}
-                    <div class="heart-like-button"></div>
-                    {% endif %}
-                    <div id ="like_count" style="font-size: 20px;">{{myWriting.like_count}}</div>
+                    <div style="display: flex;">
+                        {% if myWriting.author in myWriting.like.all %}
+                        <div class="heart-like-button liked"></div>
+                        {% else %}
+                        <div class="heart-like-button"></div>
+                        {% endif %}
+                        <div id ="like_count" style="font-size: 20px;">{{myWriting.like_count}}</div>
+                    </div>
                     {% if request.user == person %}
                     <button style="right: 5%;position: absolute;margin-right: 55px;border-radius: 50px; background-color: #ff7e7e; width: 50px; height: 25px;
                     align-self: center;"><a href = "{% url 'delete_post' myWriting.id %}">삭제</a></button>
