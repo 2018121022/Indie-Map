@@ -10,7 +10,7 @@ class Community(models.Model):
     content = models.TextField()
     photo = models.ImageField(null=True, blank=True)
     created_at = models.DateTimeField(default=timezone.now)
-
+    #date = models.DateField(auto_now_add = True) #추가
     like = models.ManyToManyField(User, related_name='likes', blank=True)
     like_count = models.PositiveIntegerField(default=0)
 
