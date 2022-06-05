@@ -190,7 +190,7 @@
     }
 </style>
 
-{% if request.user == person %}
+{% if request.user == person or user.status == 1 %}
     <div id="profile_img" style="margin-top:30px;">
 {% else %}
     {% if user in person.follower.all %}
@@ -218,12 +218,16 @@
 </div>
 
 <div id="profile_name">
+    {% if person.name == None or person.name == '' %}
+    <div style="margin-right:10px;">익명</div>
+    {% else %}
     <div style="margin-right:10px;">{{person.name}}</div>
+    {% endif %}
     <div>
     {% if request.user == person %}
         {% if person.status == 0 %}
-        <a href="{% url 'transition' %}">
-            <img src="{% static 'no_check.png'%}" alt="no_check" width="20px" height="20px">
+        <a href="{% url 'transition' %}" >
+            <img src="{% static 'no_check.png'%}" alt="no_check" width="20px" height="20px" >
         </a>
         {% else %}
         <a href="{% url 'transition' %}">
@@ -241,21 +245,30 @@
 </div>
 
 <div id="profile_detail" style="display:column; margin-top: 15px; font-size:14px; ">
+    {% if person.insta == None or person.insta == '' %}
+    {% else %}
     <div style="display: flex; justify-content: center; margin: 8px 0;">
         <img src="{% static 'instagram.png' %}" width="25" height="25" style="margin-right: 5px;">
         <a href="https://instagram.com/{{person.insta}}/">
             <div>{{person.insta}}</div>
         </a>
     </div>
+    {% endif %}
+    {% if person.youtube == None or person.youtube == '' %}
+    {% else %}
     <div style="display:flex; justify-content: center; margin: 8px 0;">
         <img src="{% static 'youtube.png' %}" width="25" height="25" style="margin-right: 5px;">
-        <a href="https://youtube.com/">
-            <div>{{person.youtube}}</div>
+        <a href="https://www.youtube.com/results?search_query={{person.youtube}}">
+            {{person.youtube}}
         </a>
     </div>
+    {% endif %}
+    {% if person.intro == None or person.intro == '' %}
+    {% else %}
     <div style="padding-bottom: 5px; border-bottom:1px solid rgb(89, 88, 88); width:250px; display: flex; margin: 8px auto; justify-content: center;">
         {{person.intro}}
     </div>
+    {% endif %}
 </div>
 {% if request.user == person %}
 <div style="font-size:14px; display:flex; justify-content:center; margin: 15px auto; padding-top:7px;width:100px;height:33px;">
@@ -284,27 +297,42 @@
     <!--내용-->
     <div class="content">
         <!--게시판-->
-        <section class="active"><span> 
+        <section class="active"><span>
+            {% for myWriting in community%}
+            {% if person == myWriting.author %}
+            <a href="{% url 'detail' myWriting.id %}">
             <div id="content_index" style="width:95%;margin:10px auto;border: 1px solid rgb(139 134 134 / 27%);border-radius: 10px; ">
                 <div id="detail_title">
-                    {% if user.image %}
-                    <img src="{{user.image.url}}" alt="profile" style="width:40px;height:40px;border-radius:100px;">
+                    {% if myWriting.author.image %}
+                    <img src="{{myWriting.author.image.url}}" alt="profile" style="width:40px;height:40px;border-radius:100px;">
                     {% else %}
                     <img src="{% static 'profile_color.png' %}" alt="profile" style="width:40px;height:40px">
                     {% endif %}
                     
-                    <div style="align-self: center; padding-left: 10px;">{{user.name}}</div>
+                    {% if myWriting.author.name == None or myWriting.author.name == '' %}
+                    <div style="align-self: center; padding-left: 10px;">익명</div>
+                    {% else %}
+                    <div style="align-self: center; padding-left: 10px;">{{myWriting.author.name}}</div>
+                    {% endif %}
                 
-                    <div style="font-size:15px;margin-left:auto; align-self: center;">May 21, 2022 08:30pm</div>
+                    <div style="font-size:15px;margin-left:auto; align-self: center;">{{myWriting.created_at}}</div>
                 </div>
             
-                <div id="detail_content">지금 신촌역 2분 출구 할리스 커피 앞에 무진님 깜짝 공연이 있어요!! 빨리 보러 오세요~~~</div>
+                <div id="detail_content">{{myWriting.content}}</div>
+                <div>
+                    {% if myWriting.photo %}
+                    <img src="{{myWriting.photo.url}}" alt="photo" width="200px" height="150px">
+                    {% else %}
+                    {% endif %}    
+                </div>
                 
                 <div style="display:flex; margin: 10px;">
-        
+                    {% if myWriting.author in myWriting.like.all %}
                     <div class="heart-like-button liked"></div>
-        
-                    <div id ="like_count" style="font-size: 20px;">3</div>
+                    {% else %}
+                    <div class="heart-like-button"></div>
+                    {% endif %}
+                    <div id ="like_count" style="font-size: 20px;">{{myWriting.like_count}}</div>
                     {% if request.user == person %}
                     <button style="margin-left: 50%; margin-right:2%; border-radius: 50px; background-color: #ff7e7e; width: 50px; height: 25px;
                     align-self: center;">삭제</button>
@@ -313,6 +341,10 @@
                     {% endif %}
                 </div>
             </div>
+            </a>
+            {% else %}
+            {% endif %}
+            {% endfor %}
             <!--새 글 작성하기-->
             {% if request.user == person %}
             <div>
@@ -386,27 +418,41 @@
         {% else %}
         <!--후기-->
         <section><span>
+            {% for feedback in person.feedback_set.all %}
             <div id="content_index" style="width:95%;margin:10px auto;border: 1px solid rgb(139 134 134 / 27%);border-radius: 10px; ">
                 <div id="detail_title">
-                    {% if user.image %}
-                    <img src="{{user.image.url}}" alt="profile" style="width:40px;height:40px;border-radius:100px;">
+                    {% if feedback.feedback_profile %}
+                    <img src="{{feedback.feedback_profile.url}}" alt="profile" style="width:40px;height:40px;border-radius:100px;">
                     {% else %}
                     <img src="{% static 'profile_color.png' %}" alt="profile" style="width:40px;height:40px;border-radius:100px;">
                     {% endif %}
-                    <div style="align-self: center; padding-left: 10px;">{{user.name}}</div>
+                    {% if feedback.feedback_name == None or feedback.feedback_name == '' %}
+                    <div style="align-self: center; padding-left: 10px;">익명</div>
+                    {% else %}
+                    <div style="align-self: center; padding-left: 10px;">{{feedback.feedback_name}}</div>
+                    {% endif %}
+
+                    <div style="font-size:15px;margin-left:auto; align-self: center;">{{feedback.feedback_time}}</div>
                 </div>
-                <div id="detail_content">지금 신촌역 2분 출구 할리스 커피 앞에 무진님 깜짝 공연이 있어요!! 빨리 보러 오세요~~~</div>
+                <div id="detail_content">{{feedback.feedback_content}}</div>
+                <div>
+                    {% if feedback.feedback_image %}
+                    <img src="{{feedback.feedback_image.url}}" alt="feedback_image" width="200px" height="150px">
+                    {% else %}
+                    {% endif %}    
+                </div>
                 <div style="display:flex; margin: 10px;">
                     <!--뮤지션만 후기 삭제-->
-                    {% if request.user == person %}
+                    {% if request.user.name == feedback.feedback_name %}
                     <button style="margin-left:80%; border-radius: 50px; background-color: #ff7e7e; width: 50px;">삭제</button>
                     {% endif %}
                 </div>
             </div>
+            {% endfor %}
             <!--관객만 후기 작성-->
             {% if request.user.status == 0 %}
             <div>
-                <a href="#" class="subscribe-button">
+                <a href="{% url 'feedback_form' person.id %}" class="subscribe-button">
                     <svg xmlns="http://www.w3.org/2000/svg">
                     <g>
                         <rect class="plus__line1" width="2" height="12" x="5" y="0"></rect>

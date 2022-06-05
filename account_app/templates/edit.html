@@ -97,7 +97,11 @@
             <label>이름</label>
         </div>
         <div class="col-75">
-        <input type="text" maxlength="8" name="name" placeholder="이름" value={{user.name}}>
+        {% if user.name == None or user.name == '' %}
+        <input type="text" maxlength="10" name="name" placeholder="이름" value='익명'>
+        {% else %}
+        <input type="text" maxlength="10" name="name" placeholder="이름" value={{user.name}}>
+        {% endif %}
         </div>
     </div>
     <div class="row">
@@ -105,7 +109,11 @@
             <label><img src="{% static 'instagram.png' %}" width="25" height="25" style="margin-right: 5px;"></label>          
         </div>
         <div class="col-75">
-            <input type="text" maxlength="8" name="insta" placeholder="인스타 계정" value={{user.insta}}>
+            {% if user.insta == None or user.insta == '' %}
+            <input type="text" maxlength="10" name="insta" placeholder="인스타 계정">
+            {% else %}
+            <input type="text" maxlength="10" name="insta" placeholder="인스타 계정" value={{user.insta}}>
+            {% endif%}
         </div>
     </div>
     <div class="row">
@@ -113,7 +121,11 @@
             <label><img src="{% static 'youtube.png' %}" width="25" height="25" style="margin-right: 5px;"></label>
         </div>
         <div class="col-75">
-            <input type="text" maxlength="8" name="youtube" placeholder="유튜브 계정" value={{user.youtube}}>
+            {% if user.youtube == None or user.youtube == '' %}
+            <input type="text" maxlength="10" name="youtube" placeholder="유튜브 계정">
+            {% else %}
+            <input type="text" maxlength="10" name="youtube" placeholder="유튜브 계정" value={{user.youtube}}>
+            {% endif %}
         </div>
     </div>
     <div class="row">
@@ -121,7 +133,11 @@
             <label>한 줄 소개</label>
         </div>
         <div class="col-75">
-            <input type="text" maxlength="15" name="intro" placeholder="한 줄 소개" value={{user.intro}}>
+            {% if user.intro == None or user.intro == '' %}
+            <input type="text" maxlength="20" name="intro" placeholder="한 줄 소개">
+            {% else %}
+            <input type="text" maxlength="20" name="intro" placeholder="한 줄 소개" value={{user.intro}}>
+            {% endif %}
         </div>
     </div>
 

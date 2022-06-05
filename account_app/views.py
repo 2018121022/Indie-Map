@@ -1,15 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
-from .models import User, Concert
+from .models import User, Concert, Feedback
+from indie_app.models import Community
 from django.http import JsonResponse
 from .api import *
 from .keys import (
-                            serviceId,
-                            AUTH_SECRET_KEY,
-                            AUTH_ACCESS_KEY,
-                            SMS_SEND_PHONE_NUMBER,
-)
+    serviceId,
+    AUTH_SECRET_KEY,
+    AUTH_ACCESS_KEY,
+    SMS_SEND_PHONE_NUMBER,
+    )
 import json
 
 # Create your views here.
@@ -23,7 +24,8 @@ def userpage(request):
 def mypage(request, user_id):
     person = get_object_or_404(get_user_model(), id=user_id)
     people = User.objects.all()
-    return render(request, 'mypage.html', {'person' : person, 'people': people})
+    community = Community.objects.all().order_by('-created_at')
+    return render(request, 'mypage.html', {'person' : person, 'people': people, 'community': community})
 
 @login_required(login_url='/accounts/naver/login/')
 def transition(request):
@@ -71,10 +73,12 @@ def callback(request):
     return render(request, 'callback.html', {'social_user' : social_user})
 
 # 공연 등록 창
+@login_required(login_url='/accounts/naver/login/')
 def concert_form(request):
     return render(request, 'concert_form.html')
 
 # 공연 등록 
+@login_required(login_url='/accounts/naver/login/')
 def concert_create(request):
     if(request.method == 'POST'):
         concert = Concert() 
@@ -92,4 +96,20 @@ def concert_create(request):
             # if user in person.follower.all():  
             #     if user.alarm == 1:
                 send_notification(concert.musician, concert.date, concert.time, concert.address, user.extra_data['mobile']) 
-    return redirect('home') 
+    return redirect('home')
+
+@login_required(login_url='/accounts/naver/login/')
+def feedback_form(request, user_id):
+    if request.method == 'GET':
+        person = get_object_or_404(get_user_model(), id=user_id)
+        return render(request, 'feedback_form.html', {'person': person})
+    else:
+        feedback = Feedback()
+        feedback.feedback_post = get_object_or_404(get_user_model(), id=user_id)
+        feedback.feedback_name = request.user.name
+        feedback.feedback_profile = request.user.image
+        feedback.feedback_content = request.POST["feedback_content"]
+        feedback.feedback_image = request.FILES.get('feedback_image')
+        feedback.save()
+        return redirect('mypage', user_id)
+
