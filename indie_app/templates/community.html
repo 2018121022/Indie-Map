@@ -128,7 +128,6 @@
     .heart-like-button.liked::after {
         background-color: #d65076;
     }
-<<<<<<< HEAD
 
     form{
         display: flex;
@@ -139,22 +138,22 @@
     }
 </style>
 
-<div style="float: right; padding-top: 5px; padding-right: 20px;" class="filtering">
+<div style="display:flex;margin-top:8px;float: right; padding-top: 5px; padding-right: 20px;" class="filtering">
     <form name="sort_who" action="{% url 'sort_who' %}" method="GET">
-        <select onchange="submit_who()" class="who" id="sort" name="sort">
+        <select onchange="submit_who()" class="who" id="sort" name="sort" style="border-radius:10px;margin-right: 15px;">
             <option value="전체" name="who" selected>대상</option>
             <option value="전체" name="who">전체</option>
             <option id="1" value="1" name="who">뮤지션</option>
             <option id="0" value="0" name="who">관객</option>
         </select>
-    </form>
+    </form>    
     <form name="sort_how" action="{% url 'sort_how' %}" method="GET">
-        <select onchange="submit_how()" class="how"  id="sort" name="sort">
+        <select onchange="submit_how()" class="how"  id="sort" name="sort" style="border-radius:10px;margin-right: 3px;">
             <option value=" " name="who" selected>순서</option>
             <option id="1" value="1">최신순</option>
             <option id="0" value="0">좋아요순</option>
         </select>
-    </form>
+    </form>    
 </div>    
 
 <script>
@@ -167,30 +166,6 @@
 </script>
 
 <section style="padding-top: 30px;">
-=======
-    @media screen and (max-width: 280px) {
-        #writing { 
-        width: 100px;
-    }
-    }
-</style>
-
-<div style="padding-top: 5px; padding-right: 20px; margin:5px;margin-bottom: 10px;position: absolute;right: 0;" class="filtering">
-    <select class="who" style="padding: 4px; width:95px;">
-        <a href="">
-            <option value="전체" name="who">전체</option>
-        </a>
-        <option value="뮤지션" name="who">뮤지션</option>
-        <option value="관객" name="who">관객</option>
-    </select>
-    <select class="how" name="how" style="padding: 4px;width:95px">
-        <option value="최신순">최신순</option>
-        <option value="좋아요순">좋아요순</option>
-    </select>
-</div>    
-
-<section style="padding-top: 30px;margin-top: 10px;">
->>>>>>> 2703596dcfb054cc79cbe2b7cb241a706cdeff32
     {% for community in community_index %}
         <a href="{% url 'detail' community.id %}">
         <div id="content_index">
