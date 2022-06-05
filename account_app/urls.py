@@ -13,4 +13,7 @@ urlpatterns = [
     path('alarm/', alarm, name="alarm"),
     path('highlight/<int:user_id>', highlight, name="highlight"),
     path('highlight_detail/<int:high_id>', highlight_detail, name="highlight_detail"),
+    path('delete_post/<int:post_id>', delete_post, name="delete_post"),
+    path('modify_post/<int:post_id>', modify_post, name="modify_post"),
+    path('delete_feedback/<int:feedback_id>', delete_feedback, name="delete_feedback"),
 ]

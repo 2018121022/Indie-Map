@@ -54,7 +54,7 @@
         display: flex;
     }
     .nav .item {
-        width: 33%;
+        width: 33.33%;
         height: 50px;
         border-right: 1px solid #86e4e1;
         border-bottom: 1px solid #86e4e1;
@@ -105,6 +105,7 @@
     }
 
     .subscribe-button {
+        z-index: 3;
         position: fixed;
         bottom: 3px;
         margin: 30px auto;
@@ -200,6 +201,11 @@
     @media screen and (max-width: 425px) {
         .calendar-events { 
         height: 100%;
+    }
+    }
+    @media screen and (max-width: 280px) {
+        #writing { 
+        width: 100px;
     }
     }
 </style>
@@ -352,7 +358,7 @@
             {% for myWriting in community%}
             {% if person == myWriting.author %}
             <a href="{% url 'detail' myWriting.id %}">
-            <div id="content_index" style="width:95%;margin:10px auto;border: 1px solid rgb(139 134 134 / 27%);border-radius: 10px; ">
+            <div id="content_index" style="width:95%;margin:10px auto;border: 1px solid rgb(139 134 134 / 27%);border-radius: 10px;">
                 <div id="detail_title">
                     {% if myWriting.author.image %}
                     <img src="{{myWriting.author.image.url}}" alt="profile" style="width:40px;height:40px;border-radius:100px;">
@@ -366,7 +372,7 @@
                     <div style="align-self: center; padding-left: 10px; margin-right: 10px;">{{myWriting.author.name}}</div>
                     {% endif %}
                 
-                    <div style="font-size:15px;margin-left:auto; align-self: center;">{{myWriting.created_at}}</div>
+                    <div id="writing" style="font-size:15px;margin-left:auto; align-self: center;">{{myWriting.created_at}}</div>
                 </div>
             
                 <div id="detail_content">{{myWriting.content}}</div>
@@ -378,17 +384,20 @@
                 </div>
                 
                 <div style="display:flex; margin: 10px;">
-                    {% if myWriting.author in myWriting.like.all %}
-                    <div class="heart-like-button liked"></div>
-                    {% else %}
-                    <div class="heart-like-button"></div>
-                    {% endif %}
-                    <div id ="like_count" style="font-size: 20px;">{{myWriting.like_count}}</div>
+                    <div style="display: flex;">
+                        {% if myWriting.author in myWriting.like.all %}
+                        <div class="heart-like-button liked"></div>
+                        {% else %}
+                        <div class="heart-like-button"></div>
+                        {% endif %}
+                        <div id ="like_count" style="font-size: 20px;">{{myWriting.like_count}}</div>
+                    </div>
                     {% if request.user == person %}
                     <button style="right: 5%;position: absolute;margin-right: 55px;border-radius: 50px; background-color: #ff7e7e; width: 50px; height: 25px;
-                    align-self: center;">삭제</button>
+                    align-self: center;"><a href = "{% url 'delete_post' myWriting.id %}">삭제</a></button>
                     <button style="border-radius: 50px; background-color: beige;width: 50px; height: 25px;
-                    align-self: center; position: absolute; right: 5%;">수정</button>
+                    align-self: center; position: absolute; right: 5%;">
+                    <a href = "{% url 'modify_post' myWriting.id %}">수정</a></button>
                     {% endif %}
                 </div>
             </div>
@@ -441,18 +450,23 @@
                     {% if request.user in person.follower.all %}
                     <a href="{% url 'mypage' person.id %}">
                         <div id="content_index" style="display:flex; padding: 15px;border: 1px solid rgb(139 134 134 / 27%);border-radius: 10px; ">
-                        <div>
-                        {% if person.image %}
-                        <img src="{{person.image.url}}" alt="profile" width="100px" height="100px" style="object-fit:cover;border-radius: 100px;">
-                        {% else %}
-                        <img src="{% static 'profile_color.png' %}" alt="profile" width="100px" height="100px">
-                        {% endif %}
+                            <div>
+                                {% if person.image %}
+                                <img src="{{person.image.url}}" alt="profile" width="100px" height="100px" style="object-fit:cover;border-radius: 100px;">
+                                {% else %}
+                                <img src="{% static 'profile_color.png' %}" alt="profile" width="100px" height="100px">
+                                {% endif %}
+                            </div>
+                            <div style="width: 100%;">
+                                <div style="display:flex; flex-direction:row;justify-content: space-between;">
+                                <div style="align-self: center; padding:0 0 5px 10px;margin: 2px; font-weight: bold; font-size: large;">{{person.name}}</div>
+                                <a href="{% url 'follow' person.id %}">
+                                    <img src="{% static 'full_star.png' %}" width="30px" height="30px">
+                                </a>
+                                </div>
+                                <div style="align-self: center; padding-left: 10px;margin: 2px;">{{person.intro}}</div>
+                            </div>
                         </div>
-                        <div>
-                            <div style="align-self: center; padding:0 0 5px 10px;margin: 2px; font-weight: bold; font-size: large;">{{person.name}}</div>
-                            <div style="align-self: center; padding-left: 10px;margin: 2px;">{{person.intro}}</div>
-                        </div>
-                    </div>
                     </a>
                     {% else %}
                     {% endif %}
@@ -487,9 +501,10 @@
                     {% endif %}    
                 </div>
                 <div style="display:flex; margin: 10px;">
-                    <!--뮤지션만 후기 삭제-->
+                    <!--뮤지션과 후기 작성자(관객)만 후기 삭제-->
                     {% if request.user.name == feedback.feedback_name or request.user == person %}
-                    <button style="align-self: center; position: absolute; right: 5%;border-radius: 50px; background-color: #ff7e7e; width: 50px;">삭제</button>
+                    <button style="align-self: center; position: absolute; right: 5%;border-radius: 50px; background-color: #ff7e7e; width: 50px;">
+                        <a href = "{% url 'delete_feedback' feedback.id %}">삭제</a></button>
                     
                     {% endif %}
                 </div>

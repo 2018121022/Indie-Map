@@ -13,6 +13,8 @@ from .keys import (
     SMS_SEND_PHONE_NUMBER,
     )
 import json
+from django.utils import timezone
+
 
 # Create your views here.
 
@@ -139,3 +141,37 @@ def highlight_detail(request, high_id):
     high = get_object_or_404(Highlight, pk=high_id)
     return render(request, 'highlight_detail.html', {'high': high})
 
+# 게시글 삭제 
+@login_required(login_url='/accounts/naver/login/')
+def delete_post(request, post_id):
+    post = get_object_or_404(Community, pk=post_id)
+    if request.method == 'GET':
+        post.delete()
+    return redirect('mypage', request.user.id)
+
+# 게시글 수정
+@login_required(login_url='/accounts/naver/login/')
+def modify_post(request, post_id):
+    post = get_object_or_404(Community, pk=post_id)
+    if request.method == 'POST':
+        post.author = request.user
+        post.content = request.POST['content']
+        post.created_at = timezone.now()
+        try:
+            #user.image = request.FILES['image']
+            post.photo = request.FILES['photo']
+            post.save()
+        except:
+            post.save()
+        return redirect('mypage', request.user.id)
+
+    else:
+        return render(request, 'modify_post.html', {'post': post})
+
+# 후기 삭제
+@login_required(login_url='/accounts/naver/login/')
+def delete_feedback(request, feedback_id):
+    feedback = get_object_or_404(Feedback, pk=feedback_id)
+    if request.method == 'GET':
+        feedback.delete()
+    return redirect('mypage', request.user.id)
