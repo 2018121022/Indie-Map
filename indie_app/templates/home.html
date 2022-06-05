@@ -54,11 +54,10 @@
         <section style="padding-top: 5px;" id = "{{ concert.introduce }}">
             <a href=#>
                 <div id="content_index" >
-                    <div id="detail_title" style="flex-direction: row;">
-                        <img src= "{{ concert.musician.image.url }}" alt="" style="width:40px;height:40px;margin-right: 10px;">
-                        <div style="flex-direction: column;">
-                            <div style="display:flex; flex-wrap: wrap; flex-direction: row; justify-content: space-between;">
-                                <span style="font-weight: bold;"> {{ concert.musician.name }}</span>
+                        <img src= "{{ concert.musician.image.url }}" alt="" style="width:40px;height:40px;margin-right:10px;border-radius:100px; ">
+                        <div style="flex-direction: column;width: 100%;">
+                            <div style="display:flex; flex-wrap: wrap; flex-direction: row;justify-content: space-between;">
+                                <span style="font-weight: bold;">{{ concert.musician.name }} </span>
                                 <span>{{ concert.date }} {{ concert.time }}</span>
                             </div>
                             <div>{{ concert.address }}</div>
@@ -73,7 +72,6 @@
 
     <!--로그인 전-->
     <script>
-
         // 지도 생성 및 영역에 담기
         var logout_container = document.getElementById('logout_map');
         var options = {
