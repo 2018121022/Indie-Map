@@ -242,7 +242,7 @@
         <!--user.alarm 데이터베이스 추가해야 함-->
         
         <a href=#>
-            <img style="z-index: 3; position: absolute; margin:60px 60px 0 0; right: 5px;" src="{% static 'notification.png'%}" alt="alarm_on" width="30px" height="30px">
+            <img style="position:absolute;float:right;margin-left:15px;" src="{% static 'notification.png'%}" alt="alarm_on" width="30px" height="30px">
         </a>
         <!--
         <a href=#>
@@ -381,7 +381,7 @@
                 {% for person in people %}
                     {% if request.user in person.follower.all %}
                     <a href="{% url 'mypage' person.id %}">
-                        <div id="content_index" style="display:flex; padding: 15px; border-bottom: solid 1px grey; ">
+                        <div id="content_index" style="display:flex; padding: 15px;border: 1px solid rgb(139 134 134 / 27%);border-radius: 10px; ">
                         <div>
                         {% if person.image %}
                         <img src="{{person.image.url}}" alt="profile" width="100px" height="100px" style="object-fit:cover;border-radius: 100px;">

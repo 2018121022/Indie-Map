@@ -48,24 +48,6 @@
     <div id = "login_map" style="width:100%; height:300px;"></div>
     {% endif %} 
     
-    <!-- <section style="padding-top: 5px;">
-        <a href=#>
-            <div id="content_index" >
-                <div id="detail_title" style="flex-direction: row;">
-                    <img src="{% static 'profile_color.png' %}" alt="" style="width:40px;height:40px;margin-right: 10px;">
-                    <div style="flex-direction: column;">
-                        <div style="display:flex; flex-wrap: wrap; flex-direction: row; justify-content: space-between;">
-                            <span style="font-weight: bold;">핑핑 </span>
-                            <span>2022년 6월 1일 20:30</span>
-                        </div>
-                        <div>공연 장소: 홍대입구역 2번 출구</div>
-                    </div>
-                </div>
-                <div id="detail_content">오늘 신곡 '독수수' 공연할 예정입니다!</div>
-            </div>
-        </a>
-    </section> -->
-    
     <!--공연정보 리스트-->
     <section id = "concert_list">
         {% for concert in concerts %}
@@ -73,7 +55,7 @@
             <a href=#>
                 <div id="content_index" >
                     <div id="detail_title">
-                        <img src= "{{ concert.musician.image.url }}" alt="" style="width:40px;height:40px;margin-right: 10px;border-radius: 10px; ">
+                        <img src= "{{ concert.musician.image.url }}" alt="" style="width:40px;height:40px;margin-right:10px;border-radius:100px; ">
                         <div style="flex-direction: column;width: 100%;">
                             <div style="display:flex; flex-wrap: wrap; flex-direction: row;justify-content: space-between;">
                                 <span style="font-weight: bold;">{{ concert.musician.name }} </span>
