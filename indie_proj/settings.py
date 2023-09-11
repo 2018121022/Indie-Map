@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-^^73!z#35(#_vkqef(sq$ala(6jibe28+s^o%*595-mc%a64ge
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['indiemap.pythonanywhere.com/', '127.0.0.1' ]
+ALLOWED_HOSTS = ['indiemap.pythonanywhere.com', '127.0.0.1' ]
 
 AUTH_USER_MODEL = 'account_app.User'
 AUTH_FOLLOWER_MODEL = "account_app.User"
